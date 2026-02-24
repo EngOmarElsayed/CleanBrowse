@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>DNSSettings</key>
+			<dict>
+				<key>DNSProtocol</key>
+				<string>HTTPS</string>
+				<key>ServerAddresses</key>
+				<array>
+					<string>185.228.168.168</string>
+					<string>185.228.169.168</string>
+					<string>2a0d:2a00:1::1</string>
+					<string>2a0d:2a00:2::1</string>
+				</array>
+				<key>ServerURL</key>
+				<string>https://doh.cleanbrowsing.org/doh/family-filter/</string>
+			</dict>
+			<key>OnDemandRules</key>
+			<array>
+				<dict>
+					<key>Action</key>
+					<string>EvaluateConnection</string>
+					<key>ActionParameters</key>
+					<array>
+						<dict>
+							<key>DomainAction</key>
+							<string>NeverConnect</string>
+							<key>Domains</key>
+							<array>
+								<string>localhost</string>
+								<string>*.local</string>
+							</array>
+						</dict>
+					</array>
+				</dict>
+				<dict>
+					<key>Action</key>
+					<string>Connect</string>
+				</dict>
+			</array>
+			<key>PayloadDisplayName</key>
+			<string>CleanBrowse DNS</string>
+			<key>PayloadIdentifier</key>
+			<string>com.omarelsayed.cleanbrowse.dns</string>
+			<key>PayloadType</key>
+			<string>com.apple.dnsSettings.managed</string>
+			<key>PayloadUUID</key>
+			<string>B5E4F8A1-3C7D-4E9B-A1F2-8D6C3E5A7B90</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>ProhibitDisablement</key>
+			<false/>
+		</dict>
+	</array>
+	<key>PayloadDescription</key>
+	<string>Routes all DNS queries through CleanBrowsing Family Filter (DNS-over-HTTPS) to block adult content at the network level.</string>
+	<key>PayloadDisplayName</key>
+	<string>CleanBrowse - Family DNS Filter</string>
+	<key>PayloadIdentifier</key>
+	<string>com.omarelsayed.cleanbrowse.profile</string>
+	<key>PayloadOrganization</key>
+	<string>CleanBrowse</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>A3D2C1B0-9E8F-4A7B-B6C5-D4E3F2A1B0C9</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>
