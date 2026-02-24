@@ -5,14 +5,18 @@
 <h1 align="center">CleanBrowse</h1>
 
 <p align="center">
-  A macOS menu bar app that blocks adult content at the system level.
-</p>
-
+  <a href="https://viberank.dev/apps/CleanBrowse" target="_blank" rel="noopener noreferrer"><img src="https://viberank.dev/badge?app=CleanBrowse&theme=dark" alt="CleanBrowse on VibeRank" /></a>
+  </p>
+  
 <p align="center">
   <a href="https://github.com/EngOmarElsayed/CleanBrowse/releases/latest"><img src="https://img.shields.io/github/v/release/EngOmarElsayed/CleanBrowse?style=flat-square" alt="Latest Release"></a>
   <img src="https://img.shields.io/badge/platform-macOS%2014%2B-blue?style=flat-square" alt="Platform">
   <img src="https://img.shields.io/badge/swift-5.9%2B-orange?style=flat-square" alt="Swift">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/EngOmarElsayed/CleanBrowse?style=flat-square" alt="License"></a>
+</p>
+
+<p align="center">
+  A macOS menu bar app that blocks adult content at the system level.
 </p>
 
 ---
