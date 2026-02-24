@@ -17,6 +17,10 @@
 
 ---
 
+<p align="center">
+  <img src="assets/screenshot.png" width="340" alt="CleanBrowse Screenshot">
+</p>
+
 ## What is CleanBrowse?
 
 CleanBrowse is a lightweight macOS menu bar application that provides system-level protection against adult content. It runs quietly in the background, blocking access to inappropriate websites across all browsers and applications on your Mac.
