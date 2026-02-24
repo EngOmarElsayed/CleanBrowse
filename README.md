@@ -80,6 +80,28 @@ Download the latest `.zip` from the [Releases](https://github.com/EngOmarElsayed
 - **Network Extension** — `NEDNSProxyProvider` for system-wide DNS interception
 - **ServiceManagement** — Launch at login via `SMAppService`
 
+## Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Fork** the repository
+2. **Create a branch** for your feature or fix:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. **Commit** your changes with a clear message
+4. **Push** to your fork and open a **Pull Request**
+
+### Ideas for contributions
+
+- Expanding the blocklist with additional domains
+- Improving the DNS proxy performance
+- Adding new SafeSearch engine support
+- UI/UX improvements
+- Bug fixes and documentation updates
+
+> **Note:** Since CleanBrowse uses a Network Extension, you'll need an Apple Developer account to build and test locally.
+
 ## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
