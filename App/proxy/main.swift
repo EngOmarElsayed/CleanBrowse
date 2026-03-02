@@ -7,9 +7,16 @@
 
 import Foundation
 import NetworkExtension
+import os
 
-autoreleasepool {
-    NEProvider.startSystemExtensionMode()
+let log = Logger(subsystem: "com.omarelsayed.cleanbrowse.network-extension", category: "dns")
+
+func main() -> Never {
+    autoreleasepool {
+        log.info("first light")
+        NEProvider.startSystemExtensionMode()
+    }
+    dispatchMain()
 }
 
-dispatchMain()
+main()

@@ -1,6 +1,7 @@
 import AppKit
 import NetworkExtension
 import Observation
+import SystemExtensions
 
 /// Manages the CleanBrowse DNS Proxy network extension for system-wide domain blocking.
 ///
@@ -24,7 +25,7 @@ import Observation
 /// The DNS Proxy intercepts ALL query types, closing this bypass.
 @Observable
 @MainActor
-final class DNSProfileService {
+final class DNSProfileService: NSObject {
 
     /// The most recent error message, or `nil` if the last operation succeeded.
     var lastError: String?
@@ -34,15 +35,21 @@ final class DNSProfileService {
 
     /// Whether an activation/deactivation is in progress.
     var isInstalling: Bool = false
+    
+    /// Whether the system extension is installed.
+    var isExtensionInstalled: Bool = false
 
     /// The bundle identifier of the DNS Proxy extension.
-    private let proxyBundleIdentifier = "com.omarelsayed.cleanbrowse.CleanBrowse.DNSProxy"
+    private let proxyBundleIdentifier = "com.omarelsayed.cleanbrowse.proxy"
 
     /// The App Group identifier shared between the main app and the DNS extension.
     private let appGroupIdentifier = "group.com.omarelsayed.cleanbrowse"
 
     /// The Darwin notification name used to tell the DNS extension to reload.
     private static let reloadNotification = "com.omarelsayed.cleanbrowse.blocklistUpdated" as CFString
+    
+    /// Continuation for async extension installation.
+    private var installationContinuation: CheckedContinuation<Void, Error>?
 
     // MARK: - Blocklist Management
 
@@ -123,6 +130,50 @@ final class DNSProfileService {
         }
     }
 
+    // MARK: - System Extension Installation
+    
+    /// Installs the system extension and then activates the DNS proxy.
+    ///
+    /// This is the main entry point. It first requests system extension installation,
+    /// waits for user approval, and then configures the DNS proxy manager.
+    func installAndActivate() async {
+        isInstalling = true
+        lastError = nil
+        
+        do {
+            // Step 1: Install the system extension
+            try await installSystemExtension()
+            isExtensionInstalled = true
+            NSLog("[CleanBrowse] System extension installed successfully")
+            
+            // Step 2: Activate the DNS proxy
+            try await activateDNSProxy()
+            isProxyActive = true
+            NSLog("[CleanBrowse] DNS proxy activated successfully")
+        } catch {
+            lastError = "Failed to install/activate: \(error.localizedDescription)"
+            NSLog("[CleanBrowse] Failed to install/activate: \(error)")
+        }
+        
+        isInstalling = false
+    }
+    
+    /// Requests installation of the system extension.
+    private func installSystemExtension() async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            self.installationContinuation = continuation
+            
+            let request = OSSystemExtensionRequest.activationRequest(
+                forExtensionWithIdentifier: proxyBundleIdentifier,
+                queue: .main
+            )
+            request.delegate = self
+            OSSystemExtensionManager.shared.submitRequest(request)
+            
+            NSLog("[CleanBrowse] Submitted system extension activation request")
+        }
+    }
+
     // MARK: - DNS Proxy Activation
 
     /// Activates the DNS Proxy extension.
@@ -131,29 +182,22 @@ final class DNSProfileService {
     /// The user will be prompted by macOS to allow the network extension
     /// in **System Settings → Privacy & Security → Network Extensions**.
     func activateProxy() async {
-        isInstalling = true
-        lastError = nil
-        defer { isInstalling = false }
+        await installAndActivate()
+    }
+    
+    /// Internal method to activate the DNS proxy after extension is installed.
+    private func activateDNSProxy() async throws {
+        let manager = NEDNSProxyManager.shared()
+        try await manager.loadFromPreferences()
 
-        do {
-            let manager = NEDNSProxyManager.shared()
-            try await manager.loadFromPreferences()
+        let providerProtocol = NEDNSProxyProviderProtocol()
+        providerProtocol.providerBundleIdentifier = proxyBundleIdentifier
 
-            let providerProtocol = NEDNSProxyProviderProtocol()
-            providerProtocol.providerBundleIdentifier = proxyBundleIdentifier
+        manager.providerProtocol = providerProtocol
+        manager.isEnabled = true
 
-            manager.providerProtocol = providerProtocol
-            manager.isEnabled = true
-
-            try await manager.saveToPreferences()
-            try await manager.loadFromPreferences()
-
-            isProxyActive = true
-            NSLog("[CleanBrowse] DNS proxy activated successfully")
-        } catch {
-            lastError = "Failed to activate DNS proxy: \(error.localizedDescription)"
-            NSLog("[CleanBrowse] Failed to activate DNS proxy: \(error)")
-        }
+        try await manager.saveToPreferences()
+        try await manager.loadFromPreferences()
     }
 
     /// Checks the current status of the DNS proxy.
@@ -184,3 +228,46 @@ final class DNSProfileService {
         }
     }
 }
+// MARK: - OSSystemExtensionRequestDelegate
+
+extension DNSProfileService: OSSystemExtensionRequestDelegate {
+    
+    nonisolated func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
+        NSLog("[CleanBrowse] Replacing existing extension \(existing.bundleIdentifier) with \(ext.bundleIdentifier)")
+        return .replace
+    }
+    
+    nonisolated func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
+        NSLog("[CleanBrowse] System extension needs user approval - check System Settings → Privacy & Security → Network Extensions")
+    }
+    
+    nonisolated func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
+        NSLog("[CleanBrowse] System extension request finished with result: \(result.rawValue)")
+        
+        Task { @MainActor in
+            switch result {
+            case .completed:
+                self.installationContinuation?.resume()
+            case .willCompleteAfterReboot:
+                self.installationContinuation?.resume(throwing: NSError(
+                    domain: "DNSProfileService",
+                    code: 1,
+                    userInfo: [NSLocalizedDescriptionKey: "System extension will be available after reboot"]
+                ))
+            @unknown default:
+                self.installationContinuation?.resume()
+            }
+            self.installationContinuation = nil
+        }
+    }
+    
+    nonisolated func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
+        NSLog("[CleanBrowse] System extension request failed: \(error)")
+        
+        Task { @MainActor in
+            self.installationContinuation?.resume(throwing: error)
+            self.installationContinuation = nil
+        }
+    }
+}
+

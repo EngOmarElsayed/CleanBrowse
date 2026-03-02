@@ -61,7 +61,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// Called after the application has finished launching.
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Ensure the app always launches at login
+        updateHostAndDNSBlockLists()
+        activateProxy()
         if !launchAtLogin {
             launchAtLogin = true
         }
@@ -82,6 +83,35 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// `.showQuitRiddle` notification and return `.terminateCancel` instead.
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         return .terminateNow
+    }
+}
+
+// MARK: - Private AppDelegate Methods
+extension AppDelegate {
+    private func updateHostAndDNSBlockLists() {
+        let hasPreloadedDomains = UserDefaults.standard.bool(forKey: "hasPreloadedDomains")
+        if hasPreloadedDomains == false {
+            let blockedDomains = SwiftDataManager.shared.fetch(BlockedDomain.self).map(\.domain)
+            let allDomains = PreloadedDomains.domains + blockedDomains
+            preloadDomainsInHostFile(with: allDomains)
+            updateAppContainerBlockList(with: allDomains)
+        }
+    }
+
+    private func updateAppContainerBlockList(with domains: [String]) {
+        dnsProfileService.writeBlocklist(domains)
+    }
+
+    private func activateProxy() {
+        Task { await dnsProfileService.installAndActivate() }
+    }
+
+    private func preloadDomainsInHostFile(with domains: [String]) {
+        Task {
+            await hostsFileService.applyDomains(domains)
+            // Apply SafeSearch (always on)
+            await hostsFileService.applySafeSearch()
+        }
     }
 }
 

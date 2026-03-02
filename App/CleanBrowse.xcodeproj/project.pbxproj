@@ -52,10 +52,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4175587E2F4D8C40007DF6FE /* Exceptions for "proxy" folder in "proxy" target */ = {
+		4141A17B2F52B13200DE85DB /* Exceptions for "CleanBrowse" folder in "CleanBrowse" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				DNSProxyProvider.swift,
+				Info.plist,
+			);
+			target = 41857F212F3E75C5003C2389 /* CleanBrowse */;
+		};
+		4175587E2F4D8C40007DF6FE /* Exceptions for "proxy" folder in "proxy" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
 				Info.plist,
 			);
 			target = 417558712F4D8C40007DF6FE /* proxy */;
@@ -73,6 +80,9 @@
 		};
 		41857F242F3E75C5003C2389 /* CleanBrowse */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4141A17B2F52B13200DE85DB /* Exceptions for "CleanBrowse" folder in "CleanBrowse" target */,
+			);
 			path = CleanBrowse;
 			sourceTree = "<group>";
 		};
@@ -259,6 +269,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = proxy/proxy.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -276,6 +287,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse.proxy;
 				PRODUCT_NAME = "$(inherited)";
@@ -295,6 +307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = proxy/proxy.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -312,6 +325,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse.proxy;
 				PRODUCT_NAME = "$(inherited)";
@@ -476,10 +490,12 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CleanBrowse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CleanBrowser;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "Used to filter traffic";
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a DNS proxy to block unwanted websites system-wide.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -529,10 +545,12 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CleanBrowse/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = CleanBrowser;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "Used to filter traffic";
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a DNS proxy to block unwanted websites system-wide.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

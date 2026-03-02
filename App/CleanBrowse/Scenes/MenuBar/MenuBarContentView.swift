@@ -27,13 +27,8 @@ import SwiftData
 /// an admin password (triggered by ``HostsFileService``).
 struct MenuBarContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(HostsFileService.self) private var hostsService
-    @Environment(RiddleService.self) private var riddleService
-    @Environment(DNSProfileService.self) private var dnsService
     @Query(sort: \BlockedDomain.dateAdded, order: .reverse) private var blockedDomains: [BlockedDomain]
 
-    /// Whether the quit riddle sheet is currently presented.
-    @State private var showingRiddle = false
     /// Whether the first-launch domain preloading is in progress.
     @State private var isPreloading = false
     /// Persisted flag indicating whether the ~249K domains have been written to `/etc/hosts`.
@@ -78,49 +73,5 @@ struct MenuBarContentView: View {
             .padding(.vertical, 10)
         }
         .frame(width: 340)
-        .onReceive(NotificationCenter.default.publisher(for: .showQuitRiddle)) { _ in
-            riddleService.generateRiddle()
-            showingRiddle = true
-        }
-        .sheet(isPresented: $showingRiddle) {
-            RiddleView(isPresented: $showingRiddle)
-        }
-        .task {
-            if hasPreloadedDomains == false {
-                await preloadDomains()
-                hasPreloadedDomains = true
-            }
-
-            // Write blocklist to shared container for DNS proxy extension
-            let allDomains = PreloadedDomains.domains + blockedDomains.map(\.domain)
-            dnsService.writeBlocklist(allDomains)
-
-            // Activate DNS proxy if not already active
-            await dnsService.checkProxyStatus()
-            if !dnsService.isProxyActive {
-                await dnsService.activateProxy()
-            }
-        }
-    }
-
-    // MARK: - Preload
-
-    /// Writes all blocked domains and SafeSearch entries to `/etc/hosts`.
-    ///
-    /// Called once on first launch. Merges the ~249K preloaded NSFW domains
-    /// from ``PreloadedDomains`` with any user-added custom domains from SwiftData,
-    /// then writes them all via ``HostsFileService/applyDomains(_:)``.
-    /// Also applies SafeSearch via ``HostsFileService/applySafeSearch()``.
-    private func preloadDomains() async {
-        isPreloading = true
-        defer { isPreloading = false }
-
-        // Write preloaded domains directly to /etc/hosts (no SwiftData for these).
-        // Custom user domains from SwiftData are merged in by HostsFileService.
-        let allDomains = PreloadedDomains.domains + blockedDomains.map(\.domain)
-        await hostsService.applyDomains(allDomains)
-
-        // Apply SafeSearch (always on)
-        await hostsService.applySafeSearch()
     }
 }

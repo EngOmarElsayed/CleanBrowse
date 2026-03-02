@@ -18,29 +18,10 @@ struct CleanBrowseApp: App {
     /// The app delegate that owns all core services.
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
-    /// The shared SwiftData container for ``BlockedDomain`` persistence.
-    ///
-    /// Uses on-disk storage (not in-memory) so that user-added custom domains
-    /// persist across app launches.
-    let sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            BlockedDomain.self
-        ])
-        let modelConfiguration = ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: false
-        )
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
     var body: some Scene {
         MenuBarExtra("CleanBrowse", systemImage: "staroflife.shield.fill") {
             MenuBarContentView()
-                .modelContainer(sharedModelContainer)
+                .modelContainer(SwiftDataManager.shared.container)
                 .environment(appDelegate.hostsFileService)
                 .environment(appDelegate.riddleService)
                 .environment(appDelegate.dnsProfileService)
