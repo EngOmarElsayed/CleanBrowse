@@ -13,7 +13,7 @@ let log = Logger(subsystem: "com.omarelsayed.cleanbrowse.network-extension", cat
 
 func main() -> Never {
     autoreleasepool {
-        log.info("first light")
+        log.debug("first light")
         NEProvider.startSystemExtensionMode()
     }
     dispatchMain()
