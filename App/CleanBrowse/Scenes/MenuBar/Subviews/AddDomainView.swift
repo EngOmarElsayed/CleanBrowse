@@ -73,8 +73,6 @@ struct AddDomainView: View {
             // Append the new domain to the DNS proxy blocklist
             dnsService.appendToBlocklist(normalized)
 
-            await hostsService.addSingleDomain(normalized)
-
             // Save to SwiftData
             let blocked = BlockedDomain(domain: normalized)
             modelContext.insert(blocked)
