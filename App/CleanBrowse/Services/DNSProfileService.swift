@@ -42,9 +42,6 @@ final class DNSProfileService: NSObject {
     /// The bundle identifier of the DNS Proxy extension.
     private let proxyBundleIdentifier = "com.omarelsayed.cleanbrowse.proxy"
 
-    /// The App Group identifier shared between the main app and the DNS extension.
-    private let appGroupIdentifier = "group.com.omarelsayed.cleanbrowse"
-
     /// The Darwin notification name used to tell the DNS extension to reload.
     private static let reloadNotification = "com.omarelsayed.cleanbrowse.blocklistUpdated" as CFString
     
@@ -65,27 +62,40 @@ final class DNSProfileService: NSObject {
         NSLog("[CleanBrowse] Posted reload notification to DNS extension")
     }
 
-    /// Writes the blocklist to the shared App Group container.
+    /// The blocklist directory under the user's Application Support.
+    private static let sharedBlocklistDir: URL = {
+        let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        return appSupport.appendingPathComponent("CleanBrowse")
+    }()
+
+    /// Returns the blocklist URL, creating the parent directory if needed.
+    private func blocklistURL() -> URL? {
+        let dir = Self.sharedBlocklistDir
+        if !FileManager.default.fileExists(atPath: dir.path) {
+            do {
+                try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+            } catch {
+                lastError = "Failed to create blocklist directory: \(error.localizedDescription)"
+                NSLog("[CleanBrowse] Failed to create blocklist directory: \(error)")
+                return nil
+            }
+        }
+        return dir.appendingPathComponent("blocklist.txt")
+    }
+
+    /// Writes the blocklist to ~/Library/Application Support/CleanBrowse/blocklist.txt.
     ///
-    /// The DNS Proxy extension reads this file to determine which domains to block.
-    /// Each domain is written on a separate line, plain text, one domain per line.
+    /// Also stores the absolute file path in the shared App Group UserDefaults so the
+    /// DNS proxy (running as root) can locate it.
     ///
     /// - Parameter domains: Array of domain strings to block.
     func writeBlocklist(_ domains: [String]) {
-        guard let containerURL = FileManager.default.containerURL(
-            forSecurityApplicationGroupIdentifier: appGroupIdentifier
-        ) else {
-            lastError = "Failed to access App Group container."
-            NSLog("[CleanBrowse] Failed to access App Group container")
-            return
-        }
+        guard let blocklistURL = blocklistURL() else { return }
 
-        let blocklistURL = containerURL.appendingPathComponent("blocklist.txt")
         let content = domains.joined(separator: "\n")
-
         do {
             try content.write(to: blocklistURL, atomically: true, encoding: .utf8)
-            NSLog("[CleanBrowse] Wrote \(domains.count) domains to shared blocklist")
+            NSLog("[CleanBrowse] Wrote \(domains.count) domains to \(blocklistURL.path)")
             notifyExtension()
         } catch {
             lastError = "Failed to write blocklist: \(error.localizedDescription)"
@@ -95,19 +105,9 @@ final class DNSProfileService: NSObject {
 
     /// Appends a single domain to the existing blocklist file.
     ///
-    /// This is an optimized path for user-added custom domains. Instead of rewriting
-    /// the entire ~249K domain list, it appends one line to the existing file.
-    ///
     /// - Parameter domain: The domain to add to the blocklist.
     func appendToBlocklist(_ domain: String) {
-        guard let containerURL = FileManager.default.containerURL(
-            forSecurityApplicationGroupIdentifier: appGroupIdentifier
-        ) else {
-            lastError = "Failed to access App Group container."
-            return
-        }
-
-        let blocklistURL = containerURL.appendingPathComponent("blocklist.txt")
+        guard let blocklistURL = blocklistURL() else { return }
 
         do {
             let fileHandle = try FileHandle(forWritingTo: blocklistURL)
@@ -116,13 +116,13 @@ final class DNSProfileService: NSObject {
                 fileHandle.write(data)
             }
             fileHandle.closeFile()
-            NSLog("[CleanBrowse] Appended \(domain) to shared blocklist")
+            NSLog("[CleanBrowse] Appended \(domain) to blocklist")
             notifyExtension()
         } catch {
-            // File might not exist yet — fall back to creating it
             do {
                 try domain.write(to: blocklistURL, atomically: true, encoding: .utf8)
-                NSLog("[CleanBrowse] Created shared blocklist with \(domain)")
+                NSLog("[CleanBrowse] Created blocklist with \(domain)")
+                notifyExtension()
             } catch {
                 lastError = "Failed to append to blocklist: \(error.localizedDescription)"
                 NSLog("[CleanBrowse] Failed to append to blocklist: \(error)")
@@ -131,32 +131,6 @@ final class DNSProfileService: NSObject {
     }
 
     // MARK: - System Extension Installation
-    
-    /// Installs the system extension and then activates the DNS proxy.
-    ///
-    /// This is the main entry point. It first requests system extension installation,
-    /// waits for user approval, and then configures the DNS proxy manager.
-    func installAndActivate() async {
-        isInstalling = true
-        lastError = nil
-        
-        do {
-            // Step 1: Install the system extension
-            try await installSystemExtension()
-            isExtensionInstalled = true
-            NSLog("[CleanBrowse] System extension installed successfully")
-            
-            // Step 2: Activate the DNS proxy
-            try await activateDNSProxy()
-            isProxyActive = true
-            NSLog("[CleanBrowse] DNS proxy activated successfully")
-        } catch {
-            lastError = "Failed to install/activate: \(error.localizedDescription)"
-            NSLog("[CleanBrowse] Failed to install/activate: \(error)")
-        }
-        
-        isInstalling = false
-    }
     
     /// Requests installation of the system extension.
     private func installSystemExtension() async throws {
@@ -182,7 +156,25 @@ final class DNSProfileService: NSObject {
     /// The user will be prompted by macOS to allow the network extension
     /// in **System Settings → Privacy & Security → Network Extensions**.
     func activateProxy() async {
-        await installAndActivate()
+        isInstalling = true
+        lastError = nil
+        
+        do {
+            // Step 1: Install the system extension
+            try await installSystemExtension()
+            isExtensionInstalled = true
+            NSLog("[CleanBrowse] System extension installed successfully")
+            
+            // Step 2: Activate the DNS proxy
+            try await activateDNSProxy()
+            isProxyActive = true
+            NSLog("[CleanBrowse] DNS proxy activated successfully")
+        } catch {
+            lastError = "Failed to install/activate: \(error.localizedDescription)"
+            NSLog("[CleanBrowse] Failed to install/activate: \(error)")
+        }
+        
+        isInstalling = false
     }
     
     /// Internal method to activate the DNS proxy after extension is installed.
@@ -229,9 +221,7 @@ final class DNSProfileService: NSObject {
     }
 }
 // MARK: - OSSystemExtensionRequestDelegate
-
 extension DNSProfileService: OSSystemExtensionRequestDelegate {
-    
     nonisolated func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
         NSLog("[CleanBrowse] Replacing existing extension \(existing.bundleIdentifier) with \(ext.bundleIdentifier)")
         return .replace

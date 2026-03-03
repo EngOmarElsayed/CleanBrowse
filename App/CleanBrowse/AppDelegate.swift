@@ -90,11 +90,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 extension AppDelegate {
     private func updateHostAndDNSBlockLists() {
         let hasPreloadedDomains = UserDefaults.standard.bool(forKey: "hasPreloadedDomains")
-        if hasPreloadedDomains == false {
-            let blockedDomains = SwiftDataManager.shared.fetch(BlockedDomain.self).map(\.domain)
-            let allDomains = PreloadedDomains.domains + blockedDomains
-            preloadDomainsInHostFile(with: allDomains)
+        let blockedDomains = SwiftDataManager.shared.fetch(BlockedDomain.self).map(\.domain)
+        let allDomains = PreloadedDomains.domains + blockedDomains
+
+        if !hasPreloadedDomains {
             updateAppContainerBlockList(with: allDomains)
+            preloadDomainsInHostFile(with: allDomains)
         }
     }
 
@@ -103,12 +104,13 @@ extension AppDelegate {
     }
 
     private func activateProxy() {
-        Task { await dnsProfileService.installAndActivate() }
+        Task { await dnsProfileService.activateProxy() }
     }
 
     private func preloadDomainsInHostFile(with domains: [String]) {
         Task {
             await hostsFileService.applyDomains(domains)
+
             // Apply SafeSearch (always on)
             await hostsFileService.applySafeSearch()
         }

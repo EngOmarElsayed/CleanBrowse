@@ -56,6 +56,7 @@ struct AddDomainView: View {
     private func addDomain() {
         let normalized = domainText.normalizedDomain
         guard !normalized.isEmpty else { return }
+        errorMessage = nil
 
         // Check if already blocked (custom domains or preloaded list)
         if blockedDomains.contains(where: { $0.domain == normalized }) {
@@ -67,28 +68,25 @@ struct AddDomainView: View {
             return
         }
 
-        errorMessage = nil
-
-        // Save to SwiftData
-        let blocked = BlockedDomain(domain: normalized)
-        modelContext.insert(blocked)
-        try? modelContext.save()
-
         // Write to hosts file + update DNS proxy blocklist
         Task {
-            await hostsService.addSingleDomain(normalized)
-
             // Append the new domain to the DNS proxy blocklist
             dnsService.appendToBlocklist(normalized)
+
+            await hostsService.addSingleDomain(normalized)
+
+            // Save to SwiftData
+            let blocked = BlockedDomain(domain: normalized)
+            modelContext.insert(blocked)
+            try? modelContext.save()
 
             if let error = hostsService.lastError {
                 errorMessage = error
             } else {
                 showSuccess = true
                 domainText = ""
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    showSuccess = false
-                }
+                try? await Task.sleep(for: .seconds(0.5))
+                showSuccess = false
             }
         }
     }

@@ -6,39 +6,46 @@
 //
 import NetworkExtension
 import os.log
+import SystemConfiguration
 
 class DNSProxyProvider: NEDNSProxyProvider {
     // Safe DNS resolver (Cloudflare Family - blocks malware + adult content)
     private let safeDNSAddress = "1.1.1.3"
     private let safeDNSPort: UInt16 = 53
 
+    // Logger used for Debug
+    private let logger = Logger(subsystem: "com.omarelsayed.cleanbrowse.proxy", category: "dns")
+
+    /// The Darwin notification name used to signal blocklist updates.
+    private static let reloadNotification = "com.omarelsayed.cleanbrowse.blocklistUpdated" as CFString
+
     // Your custom blocked domains (on top of Cloudflare's filtering)
-    private let blockedDomains: Set<String> = [
-        "linkedin.com",
-        "www.linkedin.com"
-    ]
-    
+    private var blockedDomains: Set<String> = []
+
     // MARK: - Lifecycle
     override func startProxy(options: [String: Any]? = nil, completionHandler: @escaping (Error?) -> Void) {
+        registerForReloadNotification()
+        loadBlocklist()
         completionHandler(nil)
     }
     
     override func stopProxy(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
+        unregisterForReloadNotification()
         completionHandler()
     }
     
     override func sleep(completionHandler: @escaping () -> Void) {
+        unregisterForReloadNotification()
         completionHandler()
     }
     
-    override func wake() {}
+    override func wake() {
+        registerForReloadNotification()
+    }
     
     // MARK: - Flow Handling
-    
     override func handleNewFlow(_ flow: NEAppProxyFlow) -> Bool {
-        guard let udpFlow = flow as? NEAppProxyUDPFlow else {
-            return false
-        }
+        guard let udpFlow = flow as? NEAppProxyUDPFlow else { return false }
         
         flow.open(withLocalEndpoint: nil) { [weak self] error in
             guard let self, error == nil else { return }
@@ -90,8 +97,8 @@ extension DNSProxyProvider {
         connection.stateUpdateHandler = { (state: Network.NWConnection.State) in
             switch state {
             case .ready:
-                connection.send(content: query, completion: Network.NWConnection.SendCompletion.contentProcessed({ error in
-                    if let error {
+                connection.send(content: query, completion: Network.NWConnection.SendCompletion.contentProcessed { error in
+                    guard error == nil else {
                         connection.cancel()
                         return
                     }
@@ -101,9 +108,9 @@ extension DNSProxyProvider {
                         guard let data, error == nil else { return }
                         flow.writeDatagrams([data], sentBy: [originalEndpoint]) { _ in }
                     }
-                }))
+                })
                 
-            case .failed(let error):
+            case .failed:
                 connection.cancel()
 
             default:
@@ -112,12 +119,6 @@ extension DNSProxyProvider {
         }
         
         connection.start(queue: .global(qos: .userInitiated))
-    }
-
-    private func responseWithInvalidDNS(flow: NEAppProxyUDPFlow, query: Data, originalEndpoint: NWEndpoint) {
-        if let blockedResponse = buildBlockedDNSResponse(for: query) {
-            flow.writeDatagrams([blockedResponse], sentBy: [originalEndpoint]) { _ in }
-        }
     }
     
     // MARK: - DNS Packet Helpers
@@ -153,6 +154,12 @@ extension DNSProxyProvider {
     }
 
     // MARK: - Invalid DNS response
+    private func responseWithInvalidDNS(flow: NEAppProxyUDPFlow, query: Data, originalEndpoint: NWEndpoint) {
+        if let blockedResponse = buildBlockedDNSResponse(for: query) {
+            flow.writeDatagrams([blockedResponse], sentBy: [originalEndpoint]) { _ in }
+        }
+    }
+    
     private func buildBlockedDNSResponse(for query: Data) -> Data? {
         guard query.count > 12 else { return nil }
         
@@ -224,5 +231,55 @@ extension DNSProxyProvider {
         }
         
         return response
+    }
+
+    // MARK: - Darwin Notification (Cross-Process Reload Signal)
+    private func registerForReloadNotification() {
+        let observer = Unmanaged.passUnretained(self).toOpaque()
+
+        CFNotificationCenterAddObserver(
+            CFNotificationCenterGetDarwinNotifyCenter(),
+            observer,
+            { _, observer, _, _, _ in
+                guard let observer = observer else { return }
+                let provider = Unmanaged<DNSProxyProvider>.fromOpaque(observer).takeUnretainedValue()
+                provider.loadBlocklist()
+            },
+            DNSProxyProvider.reloadNotification,
+            nil,
+            .deliverImmediately
+        )
+    }
+
+    private func unregisterForReloadNotification() {
+        CFNotificationCenterRemoveEveryObserver(
+            CFNotificationCenterGetDarwinNotifyCenter(),
+            Unmanaged.passUnretained(self).toOpaque()
+        )
+    }
+
+    // MARK: - Blocklist Loading
+    /// Loads the blocklist from ~/Library/Application Support/CleanBrowse/blocklist.txt.
+    ///
+    /// The proxy runs as root, so we use `SCDynamicStoreCopyConsoleUser` to find the
+    /// logged-in user and construct the path. File access is granted via the
+    /// `com.apple.security.temporary-exception.files.absolute-path.read-only` entitlement.
+    private func loadBlocklist() {
+        guard let consoleUser = SCDynamicStoreCopyConsoleUser(nil, nil, nil) as String?,
+              !consoleUser.isEmpty,
+              consoleUser != "loginwindow" else { return }
+
+        let blocklistPath = "/Users/\(consoleUser)/Library/Application Support/CleanBrowse/blocklist.txt"
+        let blocklistURL = URL(fileURLWithPath: blocklistPath)
+
+        guard FileManager.default.fileExists(atPath: blocklistPath) else { return }
+
+        let content = try? String(contentsOf: blocklistURL, encoding: .utf8)
+        let domains = content?.components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+            .filter { !$0.isEmpty && !$0.hasPrefix("#") }
+        
+        guard let domains else { return }
+        blockedDomains = Set(domains)
     }
 }
