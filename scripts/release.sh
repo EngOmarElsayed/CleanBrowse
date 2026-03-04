@@ -3,11 +3,14 @@ set -euo pipefail
 
 # ─────────────────────────────────────────────
 # CleanBrowse Release Script
-# Creates a GitHub release with the zipped app
+# Creates a DMG and publishes a GitHub release
 # ─────────────────────────────────────────────
 
 REPO="EngOmarElsayed/CleanBrowse"
 APP_PATH=""
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
+BG_IMAGE="${REPO_ROOT}/assets/dmg-background.png"
 
 # ── Parse arguments ──
 usage() {
@@ -48,22 +51,8 @@ if [[ ! -d "$APP_PATH" ]]; then
   exit 1
 fi
 
-# ── Prompt for version ──
-echo ""
-read -rp "Enter release version (e.g. 1.5.0): " VERSION
-
-if [[ -z "$VERSION" ]]; then
-  echo "Error: Version cannot be empty."
-  exit 1
-fi
-
-TAG="v${VERSION}"
-ZIP_NAME="CleanBrowse.zip"
-ZIP_PATH="/tmp/${ZIP_NAME}"
-
-# ── Check for existing release ──
-if gh release view "$TAG" --repo "$REPO" &>/dev/null; then
-  echo "Error: Release $TAG already exists. Use a different version."
+if [[ ! -f "$BG_IMAGE" ]]; then
+  echo "Error: Background image not found at '$BG_IMAGE'"
   exit 1
 fi
 
@@ -78,26 +67,137 @@ if ! command -v ditto &>/dev/null; then
   exit 1
 fi
 
+# ── Prompt for version ──
+echo ""
+read -rp "Enter release version (e.g. 1.5.0): " VERSION
+
+if [[ -z "$VERSION" ]]; then
+  echo "Error: Version cannot be empty."
+  exit 1
+fi
+
+TAG="v${VERSION}"
+DMG_NAME="CleanBrowse.dmg"
+DMG_PATH="${REPO_ROOT}/${DMG_NAME}"
+DMG_TEMP="/tmp/CleanBrowse-temp.dmg"
+VOL_NAME="CleanBrowse"
+MOUNT_POINT="/Volumes/${VOL_NAME}"
+
+# ── Check for existing release ──
+if gh release view "$TAG" --repo "$REPO" &>/dev/null; then
+  echo "Error: Release $TAG already exists. Use a different version."
+  exit 1
+fi
+
 # ── Read app info ──
 APP_VERSION=$(defaults read "${APP_PATH}/Contents/Info.plist" CFBundleShortVersionString 2>/dev/null || echo "unknown")
 MIN_MACOS=$(defaults read "${APP_PATH}/Contents/Info.plist" LSMinimumSystemVersion 2>/dev/null || echo "unknown")
 
+VOLICON="${APP_PATH}/Contents/Resources/CleanBrowserLogo.icns"
+if [[ ! -f "$VOLICON" ]]; then
+  echo "Warning: Volume icon not found, DMG will use default icon."
+  VOLICON=""
+fi
+
+echo ""
 echo "╔══════════════════════════════════════════╗"
 echo "║       CleanBrowse Release Script         ║"
 echo "╠══════════════════════════════════════════╣"
 echo "║  App version:    ${APP_VERSION}"
 echo "║  Min macOS:      ${MIN_MACOS}"
 echo "║  Release tag:    ${TAG}"
-echo "║  Zip name:       ${ZIP_NAME}"
+echo "║  Output:         ${DMG_NAME}"
 echo "╚══════════════════════════════════════════╝"
 echo ""
 
-# ── Zip the app ──
-echo "→ Zipping app..."
-rm -f "$ZIP_PATH"
-ditto -c -k --sequesterRsrc --keepParent "$APP_PATH" "$ZIP_PATH"
-ZIP_SIZE=$(du -h "$ZIP_PATH" | cut -f1 | xargs)
-echo "  ✓ Created $ZIP_NAME ($ZIP_SIZE)"
+# ═══════════════════════════════════════════════
+# STEP 1: Create DMG
+# ═══════════════════════════════════════════════
+echo "── Step 1: Creating DMG ──"
+echo ""
+
+# ── Clean up previous ──
+rm -f "$DMG_PATH" "$DMG_TEMP"
+if [[ -d "$MOUNT_POINT" ]]; then
+  hdiutil detach "$MOUNT_POINT" -quiet 2>/dev/null || true
+fi
+
+# ── Create writable DMG ──
+echo "→ Creating writable DMG..."
+hdiutil create -size 50m -fs HFS+ -volname "$VOL_NAME" "$DMG_TEMP" -quiet
+
+# ── Mount it ──
+echo "→ Mounting DMG..."
+hdiutil attach "$DMG_TEMP" -quiet
+
+# ── Copy app ──
+echo "→ Copying app..."
+cp -R "$APP_PATH" "${MOUNT_POINT}/CleanBrowse.app"
+
+# ── Create Applications symlink ──
+ln -s /Applications "${MOUNT_POINT}/Applications"
+
+# ── Copy background ──
+mkdir -p "${MOUNT_POINT}/.background"
+cp "$BG_IMAGE" "${MOUNT_POINT}/.background/background.png"
+
+# ── Set volume icon ──
+if [[ -n "$VOLICON" ]]; then
+  cp "$VOLICON" "${MOUNT_POINT}/.VolumeIcon.icns"
+  SetFile -a C "$MOUNT_POINT" 2>/dev/null || true
+fi
+
+# ── Style with AppleScript ──
+echo "→ Styling DMG window..."
+osascript <<APPLESCRIPT
+tell application "Finder"
+  tell disk "${VOL_NAME}"
+    open
+    set current view of container window to icon view
+    set toolbar visible of container window to false
+    set statusbar visible of container window to false
+    set the bounds of container window to {100, 100, 700, 530}
+    set theViewOptions to the icon view options of container window
+    set arrangement of theViewOptions to not arranged
+    set icon size of theViewOptions to 128
+    set text size of theViewOptions to 10
+    set background picture of theViewOptions to file ".background:background.png"
+    set label position of theViewOptions to bottom
+    set position of item "CleanBrowse.app" of container window to {150, 180}
+    set position of item "Applications" of container window to {450, 180}
+    close
+    open
+    update without registering applications
+    delay 2
+    close
+  end tell
+end tell
+APPLESCRIPT
+
+# ── Hide background folder ──
+SetFile -a V "${MOUNT_POINT}/.background" 2>/dev/null || true
+
+# ── Unmount ──
+echo "→ Finalizing DMG..."
+sync
+hdiutil detach "$MOUNT_POINT" -quiet
+
+# ── Convert to compressed read-only DMG ──
+echo "→ Compressing DMG..."
+hdiutil convert "$DMG_TEMP" -format UDZO -imagekey zlib-level=9 -o "$DMG_PATH" -quiet
+
+# ── Clean up temp DMG ──
+rm -f "$DMG_TEMP"
+
+DMG_SIZE=$(du -h "$DMG_PATH" | cut -f1 | xargs)
+echo "  ✓ DMG created: ${DMG_PATH} (${DMG_SIZE})"
+echo ""
+
+# ═══════════════════════════════════════════════
+# STEP 2: Create GitHub Release
+# ═══════════════════════════════════════════════
+echo "── Step 2: GitHub Release ──"
+echo ""
 
 # ── Resolve macOS name ──
 MACOS_MAJOR="${MIN_MACOS%.*}"
@@ -114,7 +214,6 @@ else
 fi
 
 # ── Collect release notes ──
-echo ""
 echo "Enter your release notes (press Enter twice to finish):"
 echo "───────────────────────────────────────────"
 CUSTOM_NOTES=""
@@ -146,8 +245,8 @@ ${CUSTOM_NOTES}
 - ${MACOS_LABEL}
 
 ### Installation
-1. Download \`${ZIP_NAME}\`
-2. Unzip and move \`CleanBrowse.app\` to your Applications folder
+1. Download \`${DMG_NAME}\`
+2. Open the DMG and drag \`CleanBrowse.app\` to your Applications folder
 3. Launch the app from your menu bar"
 
 echo ""
@@ -157,21 +256,21 @@ echo "────────────────────────�
 echo ""
 read -rp "Looks good? (y/n): " CONFIRM
 if [[ "$CONFIRM" != "y" && "$CONFIRM" != "Y" ]]; then
-  rm -f "$ZIP_PATH"
-  echo "Release cancelled."
+  rm -f "$DMG_PATH"
+  echo "Release cancelled. DMG deleted."
   exit 0
 fi
 
 # ── Create release ──
 echo "→ Creating GitHub release $TAG..."
 
-gh release create "$TAG" "$ZIP_PATH" \
+gh release create "$TAG" "$DMG_PATH" \
   --repo "$REPO" \
   --title "CleanBrowse ${TAG}" \
   --notes "$RELEASE_NOTES"
 
 RELEASE_URL="https://github.com/${REPO}/releases/tag/${TAG}"
-DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${TAG}/${ZIP_NAME}"
+DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${TAG}/${DMG_NAME}"
 
 echo ""
 echo "✅ Release created successfully!"
@@ -180,7 +279,7 @@ echo "  Release:  $RELEASE_URL"
 echo "  Download: $DOWNLOAD_URL"
 echo ""
 
-# ── Clean up ──
-rm -f "$ZIP_PATH"
-echo "→ Cleaned up temp files."
+# ── Clean up DMG ──
+rm -f "$DMG_PATH"
+echo "→ Cleaned up local DMG."
 echo "Done!"

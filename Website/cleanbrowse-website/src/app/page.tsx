@@ -138,7 +138,7 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-4">
               <a
-                href="https://github.com/EngOmarElsayed/CleanBrowse/releases/latest/download/CleanBrowse.zip"
+                href="https://github.com/EngOmarElsayed/CleanBrowse/releases/latest/download/CleanBrowse.dmg"
                 download
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-green-500 hover:bg-green-600 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-green-500/20"
               >
