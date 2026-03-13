@@ -11,7 +11,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "CleanBrowse — System-Level Adult Content Blocker for macOS",
   description:
-    "A free, open-source macOS menu bar app that blocks adult content at the system level. Protect yourself and your loved ones.",
+    "A free macOS menu bar app that blocks adult content at the system level. Protect yourself and your loved ones.",
   icons: {
     icon: [
       { url: "/Favicons/favicon.ico", sizes: "any" },
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "CleanBrowse",
     description:
-      "A free, open-source macOS menu bar app that blocks adult content at the system level.",
+      "A free macOS menu bar app that blocks adult content at the system level.",
     type: "website",
   },
 };

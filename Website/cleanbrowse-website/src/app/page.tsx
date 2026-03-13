@@ -1,4 +1,6 @@
 import Image from "next/image";
+import EmailSignup from "./components/EmailSignup";
+import Navbar from "./components/Navbar";
 
 /* ───────────────────────── Icons (inline SVGs) ───────────────────────── */
 
@@ -50,29 +52,33 @@ function PhoneIcon() {
   );
 }
 
-function BlockIcon() {
+function EyeOffIcon() {
   return (
     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-green-400">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+      <line x1="1" y1="1" x2="23" y2="23" />
+      <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
     </svg>
   );
 }
 
-function GlobeIcon() {
+function UsersIcon() {
   return (
     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-green-400">
-      <circle cx="12" cy="12" r="10" />
-      <line x1="2" y1="12" x2="22" y2="12" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
     </svg>
   );
 }
 
-function GitHubIcon({ className = "w-5 h-5" }: { className?: string }) {
+function LockIcon() {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-green-400">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
     </svg>
   );
 }
@@ -92,29 +98,7 @@ function DownloadIcon() {
 export default function Home() {
   return (
     <main className="min-h-screen overflow-hidden">
-      {/* ── Navbar ── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#050505]/80 border-b border-white/5">
-        <div className="w-full h-20 flex items-center justify-between" style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
-          <a href="#" className="flex items-center gap-3">
-            <Image src="/app-icon.png" alt="CleanBrowse" width={32} height={32} className="rounded-lg" />
-            <span className="font-semibold text-white text-lg">CleanBrowse</span>
-          </a>
-          <div className="flex items-center gap-8">
-            <a href="#about" className="text-sm text-neutral-400 hover:text-white transition-colors hidden sm:block">About</a>
-            <a href="#why" className="text-sm text-neutral-400 hover:text-white transition-colors hidden sm:block">Why</a>
-            <a href="#roadmap" className="text-sm text-neutral-400 hover:text-white transition-colors hidden sm:block">Roadmap</a>
-            <a
-              href="https://github.com/EngOmarElsayed/CleanBrowse"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors"
-            >
-              <GitHubIcon className="w-5 h-5" />
-              <span className="hidden sm:inline">GitHub</span>
-            </a>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-center justify-center px-6 py-32 pt-32">
@@ -125,7 +109,12 @@ export default function Home() {
           {/* Left content */}
           <div className="text-center lg:text-left animate-fade-in-up">
             <div className="flex items-center justify-center lg:justify-start gap-3 mb-8">
-              <Image src="/app-icon.png" alt="CleanBrowse" width={80} height={80} className="rounded-2xl" />
+              <div className="relative">
+                <Image src="/app-icon.png" alt="CleanBrowse" width={80} height={80} className="rounded-2xl" />
+                <span className="absolute -bottom-2 -right-3 text-[10px] font-semibold text-green-400 border border-green-400/30 bg-green-400/10 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                  Beta
+                </span>
+              </div>
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight mb-6">
@@ -133,26 +122,17 @@ export default function Home() {
             </h1>
 
             <p className="text-xl text-neutral-400 max-w-lg mx-auto lg:mx-0 mb-10 leading-relaxed">
-              A free, open-source macOS menu bar app that blocks adult content at the system level. No subscriptions. No data collection.
+              A macOS menu bar app that blocks adult content at the system level. Free forever — with premium features coming soon.
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-4">
               <a
-                href="https://github.com/EngOmarElsayed/CleanBrowse/releases/latest/download/CleanBrowse.dmg"
+                href="https://mwxjmxew0wyerqxi.public.blob.vercel-storage.com/CleanBrowse.dmg"
                 download
                 className="inline-flex items-center gap-2 px-7 py-3.5 bg-green-500 hover:bg-green-600 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-green-500/20"
               >
                 <DownloadIcon />
                 Download for macOS
-              </a>
-              <a
-                href="https://github.com/EngOmarElsayed/CleanBrowse"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-7 py-3.5 border border-white/10 text-white hover:border-white/30 font-medium rounded-xl transition-all hover:bg-white/5"
-              >
-                <GitHubIcon />
-                View on GitHub
               </a>
             </div>
 
@@ -250,10 +230,7 @@ export default function Home() {
               The internet is an incredible resource — but not all of it is safe, especially for families. The tools to stay protected shouldn&apos;t cost a monthly subscription or require handing your data to a third party.
             </p>
             <p>
-              CleanBrowse is completely <span className="text-green-400 font-medium">free</span>, <span className="text-green-400 font-medium">open source</span>, and runs entirely on your Mac. No cloud. No data collection. No accounts. Just protection that works.
-            </p>
-            <p>
-              This isn&apos;t a product — it&apos;s a tool for the community. If it helps even one family browse safer, it was worth building.
+              CleanBrowse is completely <span className="text-green-400 font-medium">free</span> — and always will be. Premium plans with advanced features like ad blocking, parental controls, and VPN are coming soon.
             </p>
           </div>
         </div>
@@ -263,7 +240,7 @@ export default function Home() {
       <section id="roadmap" className="py-40 relative">
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/20 to-transparent" />
 
-        <div className="w-full max-w-5xl mx-auto px-6">
+        <div className="w-full max-w-6xl mx-auto px-6">
           <div className="text-center mb-20">
             <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
               What&apos;s <span className="text-gradient-green">Next</span>
@@ -273,8 +250,23 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Roadmap card 1 */}
+            <div className="card-hover rounded-2xl bg-white/[0.03] p-10 text-center relative overflow-hidden">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 to-green-400" />
+              <div className="mb-5 flex justify-center">
+                <EyeOffIcon />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-3">Ad Blocking & Tracker Protection</h3>
+              <p className="text-neutral-400 text-sm leading-relaxed">
+                Block ads and trackers system-wide across every browser and app.
+              </p>
+              <span className="inline-block mt-5 text-xs font-medium text-green-400 bg-green-400/10 px-3 py-1 rounded-full">
+                Coming Soon
+              </span>
+            </div>
+
+            {/* Roadmap card 2 */}
             <div className="card-hover rounded-2xl bg-white/[0.03] p-10 text-center relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 to-green-400" />
               <div className="mb-5 flex justify-center">
@@ -289,30 +281,30 @@ export default function Home() {
               </span>
             </div>
 
-            {/* Roadmap card 2 */}
+            {/* Roadmap card 3 */}
             <div className="card-hover rounded-2xl bg-white/[0.03] p-10 text-center relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500/50 to-green-400/50" />
               <div className="mb-5 flex justify-center">
-                <BlockIcon />
+                <UsersIcon />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Expanded Blocklist</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">Parent Mode</h3>
               <p className="text-neutral-400 text-sm leading-relaxed">
-                Community-driven blocklist expansion with more categories and sources.
+                Remote configuration, activity dashboard, and device passcode protection.
               </p>
               <span className="inline-block mt-5 text-xs font-medium text-neutral-400 bg-white/5 px-3 py-1 rounded-full">
                 Planned
               </span>
             </div>
 
-            {/* Roadmap card 3 */}
+            {/* Roadmap card 4 */}
             <div className="card-hover rounded-2xl bg-white/[0.03] p-10 text-center relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500/30 to-green-400/30" />
               <div className="mb-5 flex justify-center">
-                <GlobeIcon />
+                <LockIcon />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">More Search Engines</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">VPN & DNS Encryption</h3>
               <p className="text-neutral-400 text-sm leading-relaxed">
-                Adding SafeSearch enforcement for additional search engines and browsers.
+                Browse privately with encrypted DNS protocols and a built-in VPN.
               </p>
               <span className="inline-block mt-5 text-xs font-medium text-neutral-400 bg-white/5 px-3 py-1 rounded-full">
                 Planned
@@ -322,26 +314,31 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── Email Signup ── */}
+      <section className="py-40 relative">
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-500/20 to-transparent" />
+
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6">
+            Stay in the <span className="text-gradient-green">Loop</span>
+          </h2>
+          <p className="text-neutral-400 text-lg mb-12">
+            Get notified when new features and plans launch.
+          </p>
+          <div className="relative">
+            <EmailSignup />
+          </div>
+        </div>
+      </section>
+
       {/* ── Footer ── */}
       <footer className="border-t border-white/5" style={{ marginTop: '2rem', paddingTop: '2rem', paddingBottom: '2rem' }}>
         <div className="w-full flex items-center justify-between" style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
           <div className="flex items-center gap-3">
             <Image src="/app-icon.png" alt="CleanBrowse" width={28} height={28} className="rounded-lg" />
-            <span className="text-sm"><span className="font-semibold text-white">CleanBrowse</span> <span className="text-neutral-500">by </span><a href="https://github.com/EngOmarElsayed" target="_blank" rel="noopener noreferrer" className="text-green-400 hover:text-green-300 transition-colors">Omar Elsayed</a></span>
+            <span className="text-sm"><span className="font-semibold text-white">CleanBrowse</span> <span className="text-neutral-500">by </span><span className="text-green-400">Hamy Digital</span></span>
           </div>
-
-          <div className="flex items-center gap-6">
-            <a
-              href="https://github.com/EngOmarElsayed/CleanBrowse"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-neutral-400 hover:text-white transition-colors"
-            >
-              <GitHubIcon className="w-4 h-4" />
-              GitHub
-            </a>
-            <span className="text-neutral-500 text-sm">MIT License</span>
-          </div>
+          <span className="text-neutral-500 text-sm">&copy; {new Date().getFullYear()} CleanBrowse</span>
         </div>
       </footer>
     </main>
