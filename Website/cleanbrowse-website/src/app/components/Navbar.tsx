@@ -92,18 +92,18 @@ export default function Navbar({ activePage }: { activePage?: string }) {
           aria-label="Toggle menu"
         >
           <span
-            className={`block w-5 h-0.5 bg-neutral-400 transition-all duration-300 ${
-              isOpen ? "rotate-45 translate-y-[3px]" : ""
+            className={`block w-5 h-0.5 bg-neutral-400 transition-all duration-300 origin-center ${
+              isOpen ? "rotate-45 translate-y-[6px]" : ""
             }`}
           />
           <span
-            className={`block w-5 h-0.5 bg-neutral-400 mt-1 transition-all duration-300 ${
-              isOpen ? "opacity-0" : ""
+            className={`block w-5 h-0.5 bg-neutral-400 mt-1.5 transition-all duration-300 ${
+              isOpen ? "opacity-0 scale-0" : ""
             }`}
           />
           <span
-            className={`block w-5 h-0.5 bg-neutral-400 mt-1 transition-all duration-300 ${
-              isOpen ? "-rotate-45 -translate-y-[7px]" : ""
+            className={`block w-5 h-0.5 bg-neutral-400 mt-1.5 transition-all duration-300 origin-center ${
+              isOpen ? "-rotate-45 -translate-y-[6px]" : ""
             }`}
           />
         </button>
@@ -111,8 +111,10 @@ export default function Navbar({ activePage }: { activePage?: string }) {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden overflow-hidden transition-all duration-300 ${
-          isOpen ? "max-h-80 border-b border-white/5" : "max-h-0"
+        className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen
+            ? "max-h-80 opacity-100 border-b border-white/5"
+            : "max-h-0 opacity-0"
         }`}
         style={{
           backgroundColor: scrolled ? "rgba(5, 5, 5, 0.95)" : "rgba(5, 5, 5, 0.98)",
@@ -120,16 +122,24 @@ export default function Navbar({ activePage }: { activePage?: string }) {
         }}
       >
         <div className="px-6 py-4 flex flex-col gap-3">
-          {navLinks.map((link) => (
+          {navLinks.map((link, i) => (
             <a
               key={link.href}
               href={link.href}
               onClick={handleLinkClick}
-              className={`transition-colors text-base font-medium py-2 ${
+              className={`transition-all text-base font-medium py-2 ${
+                isOpen
+                  ? "translate-y-0 opacity-100"
+                  : "-translate-y-2 opacity-0"
+              } ${
                 activePage === link.label.toLowerCase()
                   ? "text-white"
                   : "text-neutral-400 hover:text-white"
               }`}
+              style={{
+                transitionDelay: isOpen ? `${i * 50}ms` : "0ms",
+                transitionDuration: "300ms",
+              }}
             >
               {link.label}
             </a>
@@ -138,7 +148,15 @@ export default function Navbar({ activePage }: { activePage?: string }) {
             href="https://mwxjmxew0wyerqxi.public.blob.vercel-storage.com/CleanBrowse.dmg"
             download
             onClick={handleLinkClick}
-            className="inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold mt-1 transition-all"
+            className={`inline-flex justify-center items-center gap-2 px-4 py-2.5 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-semibold mt-1 transition-all ${
+              isOpen
+                ? "translate-y-0 opacity-100"
+                : "-translate-y-2 opacity-0"
+            }`}
+            style={{
+              transitionDelay: isOpen ? `${navLinks.length * 50}ms` : "0ms",
+              transitionDuration: "300ms",
+            }}
           >
             <DownloadIcon />
             Download

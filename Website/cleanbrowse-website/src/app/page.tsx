@@ -1,6 +1,7 @@
 import Image from "next/image";
 import EmailSignup from "./components/EmailSignup";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 /* ───────────────────────── Icons (inline SVGs) ───────────────────────── */
 
@@ -331,16 +332,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Footer ── */}
-      <footer className="border-t border-white/5" style={{ marginTop: '2rem', paddingTop: '2rem', paddingBottom: '2rem' }}>
-        <div className="w-full flex items-center justify-between" style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
-          <div className="flex items-center gap-3">
-            <Image src="/app-icon.png" alt="CleanBrowse" width={28} height={28} className="rounded-lg" />
-            <span className="text-sm"><span className="font-semibold text-white">CleanBrowse</span> <span className="text-neutral-500">by </span><span className="text-green-400">Hamy Digital</span></span>
-          </div>
-          <span className="text-neutral-500 text-sm">&copy; {new Date().getFullYear()} CleanBrowse</span>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }
