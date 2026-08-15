@@ -29,7 +29,6 @@ struct CleanBrowseApp: App {
             MenuBarContentView()
                 .modelContainer(SwiftDataManager.shared.container)
                 .environment(appDelegate.hostsFileService)
-                .environment(appDelegate.riddleService)
                 .environment(appDelegate.dnsProfileService)
         }
         .menuBarExtraStyle(.window)
