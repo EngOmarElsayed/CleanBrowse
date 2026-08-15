@@ -1,3 +1,9 @@
+//
+//  BlockedListView.swift
+//  CleanBrowse
+//
+//  Created by Omar Elsayed on 28/02/2026.
+
 import SwiftUI
 
 struct BlockedListView: View {

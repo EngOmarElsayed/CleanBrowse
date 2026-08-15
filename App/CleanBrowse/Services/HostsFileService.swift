@@ -1,3 +1,9 @@
+//
+//  HostsFileService.swift
+//  CleanBrowse
+//
+//  Created by Omar Elsayed on 28/02/2026.
+
 import Foundation
 import Observation
 

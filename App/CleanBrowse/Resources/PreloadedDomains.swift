@@ -1,3 +1,9 @@
+//
+//  PreloadedDomains.swift
+//  CleanBrowse
+//
+//  Created by Omar Elsayed on 28/02/2026.
+
 import Foundation
 
 /// Provides access to the ~249K preloaded NSFW domain blocklist.

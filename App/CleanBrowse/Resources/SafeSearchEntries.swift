@@ -1,3 +1,9 @@
+//
+//  SafeSearchEntries.swift
+//  CleanBrowse
+//
+//  Created by Omar Elsayed on 28/02/2026.
+
 import Foundation
 
 /// Static domain-to-IP mappings used by ``HostsFileService`` to enforce SafeSearch
