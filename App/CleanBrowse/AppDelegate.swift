@@ -6,16 +6,13 @@
 
 import Cocoa
 import ServiceManagement
+import FactoryKit
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private(set) var hostsFileService = HostsFileService()
-    private(set) var dnsProfileService = DNSProfileService()
-
-    /// Whether the app is configured to launch at login.
-    ///
-    /// Uses `SMAppService.mainApp` to register/unregister the app as a login item.
-    /// The status is checked on access and persists across app launches.
+    @Injected(\.hostFileService) private var hostFileService
+    let userDefaults = UserDefaults.standard
+    let dnsProfileService = DNSProfileService()
     var launchAtLogin: Bool {
         get {
             SMAppService.mainApp.status == .enabled
@@ -54,7 +51,7 @@ extension AppDelegate {
 // MARK: - Private AppDelegate Methods
 extension AppDelegate {
     private func updateHostAndDNSBlockLists() {
-        let hasPreloadedDomains = UserDefaults.standard.bool(forKey: "hasPreloadedDomains")
+        let hasPreloadedDomains = userDefaults.bool(forKey: .hasPreloadedDomains)
         let blockedDomains = SwiftDataManager.shared.fetch(BlockedDomain.self).map(\.domain)
         let allDomains = PreloadedDomains.domains + blockedDomains
 
@@ -74,8 +71,9 @@ extension AppDelegate {
 
     private func preloadDomainsInHostFile(with domains: [String]) {
         Task {
-            await hostsFileService.applyDomains(domains)
-            await hostsFileService.applySafeSearch()
+            await hostFileService.applyDomains(domains)
+            if userDefaults.bool(forKey: .allSafeSearchEnabled) { try? await hostFileService.applySafeSearch() }
+            userDefaults.set(true, forKey: .hasPreloadedDomains)
         }
     }
 }

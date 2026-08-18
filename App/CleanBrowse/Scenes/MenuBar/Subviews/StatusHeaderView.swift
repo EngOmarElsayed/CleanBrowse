@@ -35,7 +35,6 @@ struct StatusHeaderView: View {
 
             Spacer()
         }
-        .padding(16)
     }
 }
 

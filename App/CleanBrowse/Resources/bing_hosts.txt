@@ -1,0 +1,4 @@
+150.171.27.16 bing.com
+2620:1ec:33::16 bing.com
+150.171.27.16 www.bing.com
+2620:1ec:33::16 www.bing.com
