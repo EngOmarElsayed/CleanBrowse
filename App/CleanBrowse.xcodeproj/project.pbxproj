@@ -213,6 +213,11 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				es,
+				de,
+				fr,
+				"zh-Hans",
 			);
 			mainGroup = 41857F192F3E75C5003C2389;
 			minimizedProjectReferenceProxies = 1;
@@ -298,7 +303,7 @@
 				INFOPLIST_FILE = proxy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = proxy;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSSystemExtensionUsageDescription = SYSTEM_EXTENSION_USAGE_DESCRIPTION;
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a system extension to block unwanted domains at the DNS level.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -345,7 +350,7 @@
 				INFOPLIST_FILE = proxy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = proxy;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSSystemExtensionUsageDescription = SYSTEM_EXTENSION_USAGE_DESCRIPTION;
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a system extension to block unwanted domains at the DNS level.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -518,7 +523,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = CleanBrowser;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Omar Elsayed. All rights reserved.";
 				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a DNS proxy to block unwanted websites system-wide.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -572,7 +577,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = CleanBrowser;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Omar Elsayed. All rights reserved.";
 				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a DNS proxy to block unwanted websites system-wide.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

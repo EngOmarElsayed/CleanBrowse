@@ -28,7 +28,7 @@ struct StatusHeaderView: View {
                     .foregroundStyle(allSafeSearchEnabled ? .green: .orange)
 
                 if !isNotificationAuth {
-                    Text("Please enable notifcation")
+                    Text("Please enable notifications")
                         .lineLimit(2)
                         .font(.subheadline)
                         .foregroundStyle(.red)
@@ -39,7 +39,7 @@ struct StatusHeaderView: View {
                     .foregroundStyle(.secondary)
 
                 if enabledSafeSearchs.isEmpty {
-                    Text("SafeSearch is disabled take care !!")
+                    Text("SafeSearch is disabled, take care!")
                         .font(.caption)
                         .foregroundStyle(.red)
                 } else {

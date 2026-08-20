@@ -22,28 +22,28 @@ struct SettingsView: View {
                 .font(.title2)
 
             VStack(alignment: .leading, spacing: 8) {
-                ForEach(SettingsSafeSearch.allCases) { value in
-                    switch value {
-                    case .all:
-                        SafeSearchSettingsToggle(isOn: $allSafeSearchEnabled, value: value)
-                    case .google:
-                        SafeSearchSettingsToggle(isOn: $googleSafeSearchEnabled, value: value)
-                            .padding(8)
-                            .disabled(allSafeSearchEnabled)
-                    case .youtube:
-                        SafeSearchSettingsToggle(isOn: $youtubeSafeSearchEnabled, value: value)
-                            .padding(8)
-                            .disabled(allSafeSearchEnabled)
-                    case .bing:
-                        SafeSearchSettingsToggle(isOn: $bingSafeSearchEnabled, value: value)
-                            .padding(8)
-                            .disabled(allSafeSearchEnabled)
-                    case .duckDuckGo:
-                        SafeSearchSettingsToggle(isOn: $duckDuckGoSafeSearchEnabled, value: value)
-                            .padding(8)
-                            .disabled(allSafeSearchEnabled)
+                SafeSearchSettingsToggle(isOn: $allSafeSearchEnabled, value: .all)
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(SettingsSafeSearch.allCases) { value in
+                        switch value {
+                        case .google:
+                            SafeSearchSettingsToggle(isOn: $googleSafeSearchEnabled, value: value)
+                                .disabled(allSafeSearchEnabled)
+                        case .youtube:
+                            SafeSearchSettingsToggle(isOn: $youtubeSafeSearchEnabled, value: value)
+                                .disabled(allSafeSearchEnabled)
+                        case .bing:
+                            SafeSearchSettingsToggle(isOn: $bingSafeSearchEnabled, value: value)
+                                .disabled(allSafeSearchEnabled)
+                        case .duckDuckGo:
+                            SafeSearchSettingsToggle(isOn: $duckDuckGoSafeSearchEnabled, value: value)
+                                .disabled(allSafeSearchEnabled)
+                        default:
+                            EmptyView()
+                        }
                     }
                 }
+                .padding(.horizontal, 8)
             }
             .disabled(viewModel.isLoading)
         }

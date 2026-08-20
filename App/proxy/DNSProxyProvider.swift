@@ -149,9 +149,14 @@ extension DNSProxyProvider {
     
     // MARK: - Blocking Logic
     private func shouldBlock(hostname: String) -> Bool {
-        let lowercased = hostname.lowercased()
-        return blockedDomains.contains(lowercased) ||
-        blockedDomains.contains(where: { lowercased.hasSuffix(".\($0)") })
+        var candidate = Substring(hostname.lowercased())
+        if candidate.hasSuffix(".") { candidate = candidate.dropLast() }
+        while let dot = candidate.firstIndex(of: ".") {
+            if blockedDomains.contains(String(candidate)) { return true }
+            candidate = candidate[candidate.index(after: dot)...]
+        }
+        
+        return false
     }
 
     // MARK: - Invalid DNS response
