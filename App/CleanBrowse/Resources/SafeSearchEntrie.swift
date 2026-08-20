@@ -15,6 +15,19 @@ enum SafeSearchEntrie {
     case bing
     case duckOnDuck
     
+    var name: String {
+        switch self {
+        case .google:
+            return "Google"
+        case .youtube:
+            return "Youtube"
+        case .bing:
+            return "Bing"
+        case .duckOnDuck:
+            return "DuckOnDuck"
+        }
+    }
+    
     var hostEntry: String? {
         switch self {
         case .google:

@@ -5,18 +5,22 @@
 //  Created by Omar Elsayed on 28/02/2026.
 
 import SwiftUI
-import SwiftData
 import AppKit
+import FactoryKit
+import UserNotifications
+
+//@Environment(\.modelContext) private var modelContext
+//@Query(sort: \BlockedDomain.dateAdded, order: .reverse) private var blockedDomains: [BlockedDomain]
 
 struct MenuBarContentView: View {
     @State private var showSettings: Bool = false
-    @Environment(\.modelContext) private var modelContext
-    @Query(sort: \BlockedDomain.dateAdded, order: .reverse) private var blockedDomains: [BlockedDomain]
+    @State private var isNotificationAuth: Bool = false
+    @Injected(\.notificationService) private var notificationService
 
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 4) {
-                StatusHeaderView()
+                StatusHeaderView(isNotificationAuth: isNotificationAuth)
                     .padding([.horizontal, .top], 16)
 
                 AddDomainView()
@@ -50,5 +54,6 @@ struct MenuBarContentView: View {
             .padding(.horizontal, 16)
         }
         .frame(width: 340)
+        .task { isNotificationAuth = await notificationService.authorizationStatus == .authorized }
     }
 }

@@ -11,4 +11,8 @@ extension Container {
     var hostFileService: Factory<HostsFileService> {
         self { HostsFileService() }.singleton
     }
+
+    var notificationService: Factory<NotificationServiceProtocol> {
+        self { NotificationService() }.singleton
+    }
 }

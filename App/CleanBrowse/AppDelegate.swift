@@ -11,6 +11,8 @@ import FactoryKit
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     @Injected(\.hostFileService) private var hostFileService
+    @Injected(\.notificationService) private var notificationService
+
     let userDefaults = UserDefaults.standard
     let dnsProfileService = DNSProfileService()
     var launchAtLogin: Bool {
@@ -36,6 +38,8 @@ extension AppDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         updateHostAndDNSBlockLists()
         activateProxy()
+        allowNotifications()
+
         if !launchAtLogin { launchAtLogin = true }
     }
 
@@ -60,6 +64,10 @@ extension AppDelegate {
             preloadDomainsInHostFile(with: allDomains)
         }
     }
+    
+    private func allowNotifications() {
+        Task { try? await notificationService.ensureAuthorized() }
+    }
 
     private func updateAppContainerBlockList(with domains: [String]) {
         dnsProfileService.writeBlocklist(domains)
@@ -71,7 +79,7 @@ extension AppDelegate {
 
     private func preloadDomainsInHostFile(with domains: [String]) {
         Task {
-            await hostFileService.applyDomains(domains)
+            try? await hostFileService.applyDomains(domains) // Consider this
             if userDefaults.bool(forKey: .allSafeSearchEnabled) { try? await hostFileService.applySafeSearch() }
             userDefaults.set(true, forKey: .hasPreloadedDomains)
         }
