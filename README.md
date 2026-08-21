@@ -35,7 +35,6 @@ CleanBrowse is a lightweight macOS menu bar application that provides system-lev
 - **DNS Proxy** — Intercepts DNS queries system-wide using a Network Extension, preventing bypass through alternative DNS or encrypted DNS
 - **Forced SafeSearch** — Enforces SafeSearch on Google, YouTube, Bing, and DuckDuckGo across ~190 country-code domains
 - **Custom domain blocking** — Add your own domains to the blocklist through the menu bar UI
-- **Anti-bypass riddle** — Requires solving a riddle before the app can be quit, adding friction against impulsive disabling
 - **Launch at login** — Automatically starts with your Mac
 - **Minimal footprint** — Lives in the menu bar with no Dock icon or main window
 
