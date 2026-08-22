@@ -132,7 +132,7 @@ Contributions are welcome! Here's how you can help:
 
 > "Everyone should have the tools to protect themselves and their loved ones online — without a subscription, and without handing their data to anyone."
 
-CleanBrowse is designed, built, and maintained by [Omar Elsayed](https://github.com/EngOmarElsayed) — and it's completely free. No accounts, no analytics on your browsing, nothing ever leaves your Mac.
+CleanBrowse is designed, built, and maintained by [Omar Elsayed](https://www.swiftdifferently.com/about) — and it's completely free. No accounts, no analytics on your browsing, nothing ever leaves your Mac.
 
 ## License
 
