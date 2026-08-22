@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-export default function EmailSignup() {
+export default function EmailSignup({ dict }: { dict: Dictionary["signup"] }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
@@ -37,23 +38,27 @@ export default function EmailSignup() {
       <input
         type="email"
         required
-        placeholder="Enter your email"
+        placeholder={dict.placeholder}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="flex-1 px-5 py-3.5 rounded-xl bg-white/[0.06] border border-white/10 text-white placeholder:text-neutral-500 focus:outline-none focus:border-green-500/50 transition-colors"
+        className="flex-1 px-5 py-3.5 rounded-full bg-white/[0.07] border border-white/15 text-white placeholder:text-white/40 focus:outline-none focus:border-leaf-bright/60 transition-colors"
       />
       <button
         type="submit"
         disabled={status === "loading"}
-        className="px-7 py-3.5 bg-green-500 hover:bg-green-600 disabled:opacity-50 text-white font-medium rounded-xl transition-all hover:shadow-lg hover:shadow-green-500/20"
+        className="px-7 py-3.5 bg-white/10 hover:bg-white/15 border border-white/15 disabled:opacity-50 text-white font-medium rounded-full transition-all"
       >
-        {status === "loading" ? "Sending..." : "Notify Me"}
+        {status === "loading" ? dict.sending : dict.button}
       </button>
       {status === "success" && (
-        <p className="text-green-400 text-sm self-center mt-4 pt-4 sm:absolute sm:mt-16">You&apos;re on the list!</p>
+        <p className="text-leaf-bright text-sm self-center mt-4 pt-4 sm:absolute sm:mt-16">
+          {dict.success}
+        </p>
       )}
       {status === "error" && (
-        <p className="text-red-400 text-sm self-center mt-4 pt-4 sm:absolute sm:mt-16">Something went wrong. Try again.</p>
+        <p className="text-red-300 text-sm self-center mt-4 pt-4 sm:absolute sm:mt-16">
+          {dict.error}
+        </p>
       )}
     </form>
   );
