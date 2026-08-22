@@ -1,0 +1,14 @@
+216.239.38.120 youtube.com
+2001:4860:4802:32::78 youtube.com
+216.239.38.120 www.youtube.com
+2001:4860:4802:32::78 www.youtube.com
+216.239.38.120 m.youtube.com
+2001:4860:4802:32::78 m.youtube.com
+216.239.38.120 youtubei.googleapis.com
+2001:4860:4802:32::78 youtubei.googleapis.com
+216.239.38.120 youtube.googleapis.com
+2001:4860:4802:32::78 youtube.googleapis.com
+216.239.38.120 youtube-nocookie.com
+2001:4860:4802:32::78 youtube-nocookie.com
+216.239.38.120 www.youtube-nocookie.com
+2001:4860:4802:32::78 www.youtube-nocookie.com

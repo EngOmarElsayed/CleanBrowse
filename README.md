@@ -6,47 +6,55 @@
 
 <p align="center">
   <a href="https://viberank.dev/apps/CleanBrowse" target="_blank" rel="noopener noreferrer"><img src="https://viberank.dev/badge?app=CleanBrowse&theme=dark" alt="CleanBrowse on VibeRank" /></a>
-  </p>
-  
+</p>
+
 <p align="center">
   <a href="https://github.com/EngOmarElsayed/CleanBrowse/releases/latest"><img src="https://img.shields.io/github/v/release/EngOmarElsayed/CleanBrowse?style=flat-square" alt="Latest Release"></a>
+  <a href="https://github.com/EngOmarElsayed/CleanBrowse/releases"><img src="https://img.shields.io/github/downloads/EngOmarElsayed/CleanBrowse/total?style=flat-square" alt="Downloads"></a>
   <img src="https://img.shields.io/badge/platform-macOS%2014%2B-blue?style=flat-square" alt="Platform">
   <img src="https://img.shields.io/badge/swift-5.9%2B-orange?style=flat-square" alt="Swift">
+  <img src="https://img.shields.io/badge/languages-6-brightgreen?style=flat-square" alt="Languages">
   <a href="LICENSE"><img src="https://img.shields.io/github/license/EngOmarElsayed/CleanBrowse?style=flat-square" alt="License"></a>
 </p>
 
 <p align="center">
-  A macOS menu bar app that blocks adult content at the system level.
+  <b>The internet, minus the worst of it.</b><br>
+  A free macOS menu bar app that blocks adult content at the system level —<br>
+  in every browser, in every app. No accounts, no tracking, no subscription.
 </p>
 
 ---
 
 <p align="center">
-  <img src="assets/screenshot.png" width="340" alt="CleanBrowse Screenshot">
+  <img src="assets/screenshot.png" width="420" alt="CleanBrowse menu bar popover with the Configure Safe Search panel open">
 </p>
 
 ## What is CleanBrowse?
 
-CleanBrowse is a lightweight macOS menu bar application that provides system-level protection against adult content. It runs quietly in the background, blocking access to inappropriate websites across all browsers and applications on your Mac.
+CleanBrowse is a lightweight macOS menu bar app that provides system-level protection against adult content. It runs quietly in the background and blocks inappropriate websites across **all** browsers and applications on your Mac — protection that browser extensions can't match, because it works below them, at the DNS level.
+
+**Version 1.0 marks CleanBrowse's first release out of beta** — with a rebuilt, faster and lighter DNS engine, six languages, and configurable SafeSearch.
 
 ## Features
 
-- **System-wide blocking** — Blocks ~249,000 adult domains via `/etc/hosts` modification
-- **DNS Proxy** — Intercepts DNS queries system-wide using a Network Extension, preventing bypass through alternative DNS or encrypted DNS
-- **Forced SafeSearch** — Enforces SafeSearch on Google, YouTube, Bing, and DuckDuckGo across ~190 country-code domains
-- **Custom domain blocking** — Add your own domains to the blocklist through the menu bar UI
-- **Launch at login** — Automatically starts with your Mac
-- **Minimal footprint** — Lives in the menu bar with no Dock icon or main window
+- 🛡️ **System-wide blocking** — ~249,000 adult domains blocked via `/etc/hosts`, covering every app on your Mac
+- 🌐 **DNS proxy** — a Network Extension intercepts every DNS query type system-wide, so blocking can't be bypassed with alternative or encrypted DNS
+- 🔍 **Configurable SafeSearch** — enforces SafeSearch on Google, YouTube, Bing, and DuckDuckGo across ~190 country-code domains, with a per-engine toggle in the new settings panel
+- 🗣️ **Speaks your language** — fully localized in English, Arabic (RTL included), French, Spanish, Chinese, and German
+- ➕ **Custom domain blocking** — add your own domains to the blocklist right from the menu bar
+- ⚡ **Faster & lighter** — the 1.0 engine resolves queries faster with a lower memory footprint and minimal battery impact
+- 🚀 **Launch at login** — starts automatically with your Mac
+- 🫥 **Minimal footprint** — lives in the menu bar; no Dock icon, no main window
 
 ## How It Works
 
-CleanBrowse uses a three-layer blocking strategy:
+CleanBrowse uses a three-layer blocking strategy — each layer backs up the others, so the protection holds everywhere:
 
 | Layer | Method | What it does |
 |-------|--------|-------------|
-| **Hosts file** | `/etc/hosts` rewrite | Redirects blocked domains to `127.0.0.1` |
-| **DNS Proxy** | `NEDNSProxyProvider` | Intercepts all DNS query types (A, AAAA, HTTPS/SVCB) and returns NXDOMAIN for blocked domains |
-| **SafeSearch** | IP-level redirect | Forces search engines to use their SafeSearch/restricted mode IPs |
+| **1 · Hosts file** | `/etc/hosts` rewrite | Redirects ~249,000 known adult domains to `127.0.0.1` — covers every application |
+| **2 · DNS proxy** | `NEDNSProxyProvider` | Inspects all DNS query types (A, AAAA, HTTPS/SVCB) and answers NXDOMAIN for anything on the blocklist — what can't resolve can't load |
+| **3 · SafeSearch** | IP-level redirect | Pins search engines to their SafeSearch/restricted-mode endpoints, so search results stay clean too |
 
 ## Requirements
 
@@ -57,7 +65,7 @@ CleanBrowse uses a three-layer blocking strategy:
 
 ### Download
 
-Download the latest `.zip` from the [Releases](https://github.com/EngOmarElsayed/CleanBrowse/releases/latest) page, unzip it, and move `CleanBrowse.app` to your Applications folder.
+Grab the latest release from the [Releases](https://github.com/EngOmarElsayed/CleanBrowse/releases/latest) page, open the `.dmg`, and drag `CleanBrowse.app` into your Applications folder.
 
 ### Build from source
 
@@ -66,22 +74,36 @@ Download the latest `.zip` from the [Releases](https://github.com/EngOmarElsayed
    git clone https://github.com/EngOmarElsayed/CleanBrowse.git
    ```
 2. Open `CleanBrowse.xcodeproj` in Xcode
-3. Build and run (requires an Apple Developer account for the Network Extension entitlement)
+3. Build and run
+
+> **Note:** the Network Extension entitlement requires an Apple Developer account to build and test locally.
 
 ## Usage
 
 1. Launch CleanBrowse — it appears as a shield icon in the menu bar
-2. On first launch, you'll be prompted for your admin password to apply the blocklist
-3. The DNS proxy activates automatically
-4. To add custom domains, click the menu bar icon and type a domain in the input field
-5. To quit, click the power icon — you'll need to solve a riddle first
+2. On first launch, enter your admin password to apply the blocklist
+3. The DNS proxy activates automatically — you're protected from that moment on
+4. To block extra domains, click the menu bar icon and type a domain into the input field
+5. To tune search filtering, open the ⚙️ settings and toggle SafeSearch per engine — Google, YouTube, Bing, and DuckDuckGo — or flip them all at once
+
+## Roadmap
+
+Version 1.0 is just the start. Here's what's on the road ahead:
+
+| Checkpoint | Status |
+|-----------|--------|
+| **Custom DNS resolver** — choose the upstream DNS you trust (Cloudflare `1.1.1.1`, Google, or any resolver) | 🟢 Coming soon |
+| **Protect me from myself** — lock your own settings so protection can't be switched off in a weak moment | 🛠️ In development |
+| **Import any blocklist** — bring your own lists and CleanBrowse enforces them system-wide | 📋 Planned |
+| **Blocked-domain explorer** — browse everything CleanBrowse blocks and check whether a domain is on the list | 📋 Planned |
 
 ## Tech Stack
 
 - **SwiftUI** — UI framework
-- **SwiftData** — Persistence for custom blocked domains
+- **SwiftData** — persistence for custom blocked domains
 - **Network Extension** — `NEDNSProxyProvider` for system-wide DNS interception
-- **ServiceManagement** — Launch at login via `SMAppService`
+- **ServiceManagement** — launch at login via `SMAppService`
+- **String Catalogs** — localization across all six languages
 
 ## Contributing
 
@@ -98,12 +120,19 @@ Contributions are welcome! Here's how you can help:
 ### Ideas for contributions
 
 - Expanding the blocklist with additional domains
-- Improving the DNS proxy performance
+- Improving DNS proxy performance
 - Adding new SafeSearch engine support
+- New translations, or polish for the existing six languages
 - UI/UX improvements
 - Bug fixes and documentation updates
 
 > **Note:** Since CleanBrowse uses a Network Extension, you'll need an Apple Developer account to build and test locally.
+
+## Why free?
+
+> "Everyone should have the tools to protect themselves and their loved ones online — without a subscription, and without handing their data to anyone."
+
+CleanBrowse is designed, built, and maintained by [Omar Elsayed](https://github.com/EngOmarElsayed) — and it's completely free. No accounts, no analytics on your browsing, nothing ever leaves your Mac.
 
 ## License
 

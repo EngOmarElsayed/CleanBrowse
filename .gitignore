@@ -42,3 +42,6 @@ Pods/
 
 # Claude Code
 .claude/
+
+# Signing certificates — never commit
+.certificates/

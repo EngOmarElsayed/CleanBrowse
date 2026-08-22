@@ -6,16 +6,15 @@
 
 import Cocoa
 import ServiceManagement
+import FactoryKit
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private(set) var hostsFileService = HostsFileService()
-    private(set) var dnsProfileService = DNSProfileService()
+    @Injected(\.hostFileService) private var hostFileService
+    @Injected(\.notificationService) private var notificationService
 
-    /// Whether the app is configured to launch at login.
-    ///
-    /// Uses `SMAppService.mainApp` to register/unregister the app as a login item.
-    /// The status is checked on access and persists across app launches.
+    let userDefaults = UserDefaults.standard
+    let dnsProfileService = DNSProfileService()
     var launchAtLogin: Bool {
         get {
             SMAppService.mainApp.status == .enabled
@@ -39,6 +38,8 @@ extension AppDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         updateHostAndDNSBlockLists()
         activateProxy()
+        allowNotifications()
+
         if !launchAtLogin { launchAtLogin = true }
     }
 
@@ -54,7 +55,7 @@ extension AppDelegate {
 // MARK: - Private AppDelegate Methods
 extension AppDelegate {
     private func updateHostAndDNSBlockLists() {
-        let hasPreloadedDomains = UserDefaults.standard.bool(forKey: "hasPreloadedDomains")
+        let hasPreloadedDomains = userDefaults.bool(forKey: .hasPreloadedDomains)
         let blockedDomains = SwiftDataManager.shared.fetch(BlockedDomain.self).map(\.domain)
         let allDomains = PreloadedDomains.domains + blockedDomains
 
@@ -62,6 +63,10 @@ extension AppDelegate {
             updateAppContainerBlockList(with: allDomains)
             preloadDomainsInHostFile(with: allDomains)
         }
+    }
+    
+    private func allowNotifications() {
+        Task { try? await notificationService.ensureAuthorized() }
     }
 
     private func updateAppContainerBlockList(with domains: [String]) {
@@ -74,8 +79,9 @@ extension AppDelegate {
 
     private func preloadDomainsInHostFile(with domains: [String]) {
         Task {
-            await hostsFileService.applyDomains(domains)
-            await hostsFileService.applySafeSearch()
+            try? await hostFileService.applyDomains(domains) // Consider this
+            if userDefaults.bool(forKey: .allSafeSearchEnabled) { try? await hostFileService.applySafeSearch() }
+            userDefaults.set(true, forKey: .hasPreloadedDomains)
         }
     }
 }

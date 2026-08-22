@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		417558732F4D8C40007DF6FE /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D3B63D2F3FAE860073C910 /* NetworkExtension.framework */; };
 		4175587D2F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 417558722F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4181B7A330309276001B3421 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4181B7A230309276001B3421 /* FactoryKit */; };
+		41C5E02630349446004E4606 /* UserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 41C5E02530349446004E4606 /* UserDefaults */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +102,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4181B7A330309276001B3421 /* FactoryKit in Frameworks */,
+				41C5E02630349446004E4606 /* UserDefaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +182,8 @@
 			);
 			name = CleanBrowse;
 			packageProductDependencies = (
+				4181B7A230309276001B3421 /* FactoryKit */,
+				41C5E02530349446004E4606 /* UserDefaults */,
 			);
 			productName = CleanBrowse;
 			productReference = 41857F222F3E75C5003C2389 /* CleanBrowse.app */;
@@ -207,9 +213,18 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				es,
+				de,
+				fr,
+				"zh-Hans",
 			);
 			mainGroup = 41857F192F3E75C5003C2389;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4181B7A130309276001B3421 /* XCRemoteSwiftPackageReference "Factory" */,
+				41C5E02430349446004E4606 /* XCRemoteSwiftPackageReference "SwiftUserDefaults" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 41857F232F3E75C5003C2389 /* Products */;
 			projectDirPath = "";
@@ -267,13 +282,11 @@
 		417558802F4D8C40007DF6FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = proxy/proxy.entitlements;
+				CODE_SIGN_ENTITLEMENTS = proxy/proxyDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = 9PYC9KWKRS;
+				DEVELOPMENT_TEAM = 9PYC9KWKRS;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
@@ -290,7 +303,7 @@
 				INFOPLIST_FILE = proxy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = proxy;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSSystemExtensionUsageDescription = SYSTEM_EXTENSION_USAGE_DESCRIPTION;
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a system extension to block unwanted domains at the DNS level.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -301,7 +314,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse.proxy;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = Proxy4;
 				REGISTER_APP_GROUPS = YES;
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -338,7 +350,7 @@
 				INFOPLIST_FILE = proxy/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = proxy;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSSystemExtensionUsageDescription = SYSTEM_EXTENSION_USAGE_DESCRIPTION;
+				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a system extension to block unwanted domains at the DNS level.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -485,14 +497,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = CleanBrowserLogo;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = CleanBrowse/CleanBrowse.entitlements;
+				CODE_SIGN_ENTITLEMENTS = CleanBrowse/CleanBrowseDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = 9PYC9KWKRS;
+				DEVELOPMENT_TEAM = 9PYC9KWKRS;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
@@ -513,22 +523,21 @@
 				INFOPLIST_KEY_CFBundleDisplayName = CleanBrowser;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Omar Elsayed. All rights reserved.";
 				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a DNS proxy to block unwanted websites system-wide.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = cleanBrowse2;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -568,14 +577,14 @@
 				INFOPLIST_KEY_CFBundleDisplayName = CleanBrowser;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "© 2026 Omar Elsayed. All rights reserved.";
 				INFOPLIST_KEY_NSSystemExtensionUsageDescription = "CleanBrowse needs to install a DNS proxy to block unwanted websites system-wide.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -583,7 +592,7 @@
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
@@ -621,6 +630,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4181B7A130309276001B3421 /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.3.2;
+			};
+		};
+		41C5E02430349446004E4606 /* XCRemoteSwiftPackageReference "SwiftUserDefaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EngOmarElsayed/SwiftUserDefaults.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4181B7A230309276001B3421 /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4181B7A130309276001B3421 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
+		};
+		41C5E02530349446004E4606 /* UserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41C5E02430349446004E4606 /* XCRemoteSwiftPackageReference "SwiftUserDefaults" */;
+			productName = UserDefaults;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 41857F1A2F3E75C5003C2389 /* Project object */;
 }

@@ -6,10 +6,10 @@
 
 import SwiftUI
 import SwiftData
+import FactoryKit
 
 struct AddDomainView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(HostsFileService.self) private var hostsService
     @Environment(DNSProfileService.self) private var dnsService
     @Query private var blockedDomains: [BlockedDomain]
 
@@ -84,14 +84,10 @@ struct AddDomainView: View {
             modelContext.insert(blocked)
             try? modelContext.save()
 
-            if let error = hostsService.lastError {
-                errorMessage = error
-            } else {
-                showSuccess = true
-                domainText = ""
-                try? await Task.sleep(for: .seconds(0.5))
-                showSuccess = false
-            }
+            showSuccess = true
+            domainText = ""
+            try? await Task.sleep(for: .seconds(1))
+            showSuccess = false
         }
     }
 }
