@@ -52,6 +52,7 @@ export default function Navbar({
   }, []);
 
   const navLinks = [
+    { label: dict.blur, href: `/${locale}#blur`, key: "blur" },
     { label: dict.how, href: `/${locale}#how`, key: "how" },
     { label: dict.whatsNew, href: `/${locale}#whats-new`, key: "whats-new" },
     { label: dict.maker, href: `/${locale}#maker`, key: "maker" },

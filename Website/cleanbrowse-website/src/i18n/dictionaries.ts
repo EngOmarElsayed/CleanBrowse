@@ -2,12 +2,22 @@ import type { Locale } from "./config";
 
 const en = {
   meta: {
-    title: "CleanBrowse — Free Adult Content Blocker for macOS",
+    title: "CleanBrowse — Free Adult Content Blocker & NSFW Image Blur for macOS",
     description:
-      "A free macOS menu bar app that blocks adult content at the DNS level — across every browser and app. Now out of beta, in six languages, with configurable SafeSearch. Made by Omar Elsayed.",
+      "A free macOS menu bar app that blocks adult content at the DNS level and blurs NSFW images in Safari with on-device AI — on Google, social media, and streaming platforms like Netflix. In six languages, with configurable SafeSearch. Made by Omar Elsayed.",
+    keywords: [
+      "adult content blocker macOS",
+      "NSFW image blur",
+      "Safari extension",
+      "blur explicit images",
+      "SafeSearch enforcement",
+      "DNS content filter",
+      "parental controls Mac",
+    ],
   },
   nav: {
     whatsNew: "What's new",
+    blur: "Image blur",
     how: "How it works",
     roadmap: "Roadmap",
     maker: "About",
@@ -18,11 +28,11 @@ const en = {
     language: "Language",
   },
   hero: {
-    badge: "Out of beta — 1.0 is our first full release",
+    badge: "New in 1.3.0 — Safari now blurs explicit images",
     title: "The internet, minus the worst of it",
     titlePunct: ".",
     subtitle:
-      "CleanBrowse lives in your Mac's menu bar and blocks adult content at the DNS level — in every browser, in every app. Free, private, and now speaking your language.",
+      "CleanBrowse lives in your Mac's menu bar and blocks adult content at the DNS level — in every browser, in every app. And in Safari, it now blurs explicit images before you ever see them. Free, private, in your language.",
     ctaNote: "Free forever · macOS 14+",
     statDomainsValue: "249,000+",
     statDomains: "domains blocked",
@@ -49,32 +59,54 @@ const en = {
     srNote:
       "Simulated DNS query log: adult domains resolve to NXDOMAIN, search engines are rewritten to their SafeSearch endpoints, and everything else resolves normally.",
   },
-  whatsNew: {
-    eyebrow: "New in version 1.0",
-    title: "Out of beta. Lighter, faster, and in six languages.",
+  blur: {
+    eyebrow: "New — Safari extension",
+    title: "Explicit images, blurred before you see them.",
     intro:
-      "CleanBrowse has left beta — 1.0 is the first full release. It rebuilds the engine to be faster and lighter, opens the app to five new languages, and puts SafeSearch under your control.",
-    langTitle: "Speaks your language",
-    langBody:
-      "The full app — settings, alerts, everything — is now available in six languages, right-to-left included.",
-    safeTitle: "SafeSearch, your rules",
-    safeBody:
-      "Decide exactly how strict search should be. Toggle SafeSearch enforcement per engine — Google, YouTube, Bing, and DuckDuckGo — from the new settings panel.",
-    safeOn: "on",
-    perfTitle: "Lighter on your Mac",
-    perfBody:
-      "The DNS engine was rebuilt for 1.0 — queries resolve faster, memory use is down, and the app stays invisible in your menu bar until you need it.",
-    perfPoints: [
-      "Faster DNS resolution",
-      "Lower memory footprint",
-      "Minimal battery impact",
+      "Blocking sites isn't enough — explicit images hide on pages you actually use. The new Safari extension classifies every image and video frame with on-device machine learning, and blurs anything explicit before it's rendered.",
+    points: [
+      {
+        title: "Blur first, reveal later",
+        body: "Every image starts blurred and is only revealed once the model clears it. Video frames are checked while they play, so explicit scenes are caught mid-stream.",
+      },
+      {
+        title: "Everywhere Safari goes",
+        body: "Google Images, social media feeds, streaming platforms like Netflix — if Safari can show it, the filter has already checked it.",
+      },
+      {
+        title: "Private by design",
+        body: "Classification runs entirely on your Mac with Core ML. No image, no URL, no pixel ever leaves your machine — and anything that can't be checked stays blurred.",
+      },
     ],
+    chips: ["Google Images", "Social media", "Netflix & streaming"],
+    demoBadge: "Core ML · on-device",
+    demoBlurred: "Blurred",
+    demoNote:
+      "Illustration of Safari image results: explicit images appear blurred while safe images stay visible.",
+  },
+  whatsNew: {
+    eyebrow: "New in version 1.3.0",
+    title: "The blocker just learned to see.",
+    intro:
+      "CleanBrowse 1.3.0 adds a fourth layer of protection — a Safari extension that blurs NSFW images using on-device machine learning — and makes the app easier to manage and update from the menu bar.",
+    blurTitle: "NSFW image blur in Safari",
+    blurBody:
+      "The headline feature of 1.3.0: images and video frames are classified on-device and blurred before they reach your screen — on search, social media, and streaming sites.",
+    blurTag: "Blurred",
+    menuTitle: "One click from the menu bar",
+    menuBody:
+      "A new shortcut in the popover takes you straight to Safari's extension settings, so turning the image filter on takes seconds.",
+    updateTitle: "Updates from the settings panel",
+    updateBody:
+      "Check for new versions right inside CleanBrowse — new protections reach you the moment they ship, no re-downloading from the site.",
+    updateFrom: "v1.2.0",
+    updateTo: "v1.3.0",
   },
   how: {
     eyebrow: "How it works",
-    title: "Three layers. No way around them.",
+    title: "Four layers. No way around them.",
     intro:
-      "Browser extensions can be uninstalled and settings can be reset. CleanBrowse works below all of that — at the system level — so the protection holds everywhere.",
+      "Browser extensions can be uninstalled and settings can be reset. CleanBrowse works below all of that — at the system level — so the protection holds everywhere. And in Safari, a fourth layer catches what a blocklist never could.",
     layerLabel: "Layer",
     layers: [
       {
@@ -88,6 +120,10 @@ const en = {
       {
         title: "Enforced SafeSearch",
         body: "Google, YouTube, Bing, and DuckDuckGo are pinned to their SafeSearch endpoints at the IP level, across 190+ country domains. Search results stay clean too.",
+      },
+      {
+        title: "On-device image blur",
+        body: "A Safari extension classifies every image and video frame with on-device machine learning and blurs explicit content before it's rendered — even on sites no blocklist would ever block.",
       },
     ],
   },
@@ -120,7 +156,7 @@ const en = {
   },
   roadmap: {
     eyebrow: "Roadmap",
-    title: "Version 1.0 is just the start.",
+    title: "Version 1.3.0 is just the start.",
     items: [
       {
         title: "Custom DNS resolver",
@@ -150,7 +186,7 @@ const en = {
   },
   cta: {
     title: "Ready for a cleaner internet?",
-    body: "Download CleanBrowse 1.0 for free — or leave your email and hear about new features first.",
+    body: "Download CleanBrowse 1.3.0 for free — or leave your email and hear about new features first.",
   },
   signup: {
     placeholder: "Enter your email",
@@ -187,12 +223,22 @@ export type Dictionary = typeof en;
 
 const ar: Dictionary = {
   meta: {
-    title: "CleanBrowse — حاجب مجاني للمحتوى الإباحي لنظام macOS",
+    title: "CleanBrowse — حاجب مجاني للمحتوى الإباحي وتمويه الصور غير اللائقة لنظام macOS",
     description:
-      "تطبيق مجاني في شريط قوائم macOS يحجب المحتوى الإباحي على مستوى DNS — في كل متصفح وكل تطبيق. خرج الآن من النسخة التجريبية، بست لغات وبحث آمن قابل للتخصيص. من تطوير عمر السيد.",
+      "تطبيق مجاني في شريط قوائم macOS يحجب المحتوى الإباحي على مستوى DNS ويموّه الصور غير اللائقة في Safari بذكاء اصطناعي يعمل على جهازك — في Google وشبكات التواصل ومنصات البث مثل Netflix. بست لغات وبحث آمن قابل للتخصيص. من تطوير عمر السيد.",
+    keywords: [
+      "حاجب المحتوى الإباحي macOS",
+      "تمويه الصور غير اللائقة",
+      "ملحق Safari",
+      "تمويه الصور الفاضحة",
+      "فرض البحث الآمن",
+      "فلترة DNS",
+      "الرقابة الأبوية على Mac",
+    ],
   },
   nav: {
     whatsNew: "الجديد",
+    blur: "تمويه الصور",
     how: "كيف يعمل",
     roadmap: "خارطة الطريق",
     maker: "حول",
@@ -203,11 +249,11 @@ const ar: Dictionary = {
     language: "اللغة",
   },
   hero: {
-    badge: "خرجنا من التجريبي — 1.0 هو أول إصدار كامل",
+    badge: "جديد في 1.3.0 — Safari يموّه الصور غير اللائقة الآن",
     title: "الإنترنت، من دون أسوأ ما فيه",
     titlePunct: ".",
     subtitle:
-      "يعيش CleanBrowse في شريط قوائم جهاز Mac ويحجب المحتوى الإباحي على مستوى DNS — في كل متصفح وكل تطبيق. مجاني، خاص، ويتحدث لغتك الآن.",
+      "يعيش CleanBrowse في شريط قوائم جهاز Mac ويحجب المحتوى الإباحي على مستوى DNS — في كل متصفح وكل تطبيق. وفي Safari، يموّه الآن الصور غير اللائقة قبل أن تراها. مجاني، خاص، وبلغتك.",
     ctaNote: "مجاني للأبد · macOS 14+",
     statDomainsValue: "249,000+",
     statDomains: "نطاق محجوب",
@@ -234,32 +280,54 @@ const ar: Dictionary = {
     srNote:
       "سجل استعلامات DNS تجريبي: النطاقات الإباحية تُجاب بـ NXDOMAIN، ومحركات البحث تُعاد كتابتها إلى نقاط البحث الآمن، وكل ما عدا ذلك يُحلّ بشكل طبيعي.",
   },
-  whatsNew: {
-    eyebrow: "الجديد في الإصدار 1.0",
-    title: "خرجنا من التجريبي. أخف وأسرع وبست لغات.",
+  blur: {
+    eyebrow: "جديد — ملحق Safari",
+    title: "الصور غير اللائقة، تُموَّه قبل أن تراها.",
     intro:
-      "غادر CleanBrowse المرحلة التجريبية — الإصدار 1.0 هو أول إصدار كامل. محرك أعيد بناؤه ليكون أسرع وأخف، وخمس لغات جديدة، وتحكم كامل في البحث الآمن.",
-    langTitle: "يتحدث لغتك",
-    langBody:
-      "التطبيق بالكامل — الإعدادات والتنبيهات وكل شيء — متاح الآن بست لغات، بما فيها الكتابة من اليمين إلى اليسار.",
-    safeTitle: "البحث الآمن، بقواعدك",
-    safeBody:
-      "حدّد بدقة مدى صرامة البحث. فعّل أو عطّل فرض البحث الآمن لكل محرك — Google وYouTube وBing وDuckDuckGo — من لوحة الإعدادات الجديدة.",
-    safeOn: "مفعّل",
-    perfTitle: "أخف على جهازك",
-    perfBody:
-      "أعيد بناء محرك DNS في الإصدار 1.0 — الاستعلامات تُحلّ أسرع، واستهلاك الذاكرة أقل، ويبقى التطبيق غير مرئي في شريط القوائم حتى تحتاجه.",
-    perfPoints: [
-      "حلّ أسرع لاستعلامات DNS",
-      "استهلاك أقل للذاكرة",
-      "تأثير ضئيل على البطارية",
+      "حجب المواقع لا يكفي — فالصور غير اللائقة تختبئ في صفحات تستخدمها فعلًا. ملحق Safari الجديد يصنّف كل صورة وكل إطار فيديو بتعلّم آلي يعمل على جهازك، ويموّه أي محتوى فاضح قبل أن يُعرض.",
+    points: [
+      {
+        title: "التمويه أولًا، ثم الكشف",
+        body: "كل صورة تبدأ مموّهة ولا تُكشف إلا بعد أن يجيزها النموذج. وتُفحص إطارات الفيديو أثناء التشغيل، فتُلتقط المشاهد الفاضحة في منتصف البث.",
+      },
+      {
+        title: "أينما ذهب Safari",
+        body: "صور Google، وخلاصات شبكات التواصل، ومنصات البث مثل Netflix — إن كان Safari قادرًا على عرضه، فالمرشّح قد فحصه مسبقًا.",
+      },
+      {
+        title: "خصوصية في التصميم",
+        body: "يعمل التصنيف بالكامل على جهازك عبر Core ML. لا صورة ولا رابط ولا بكسل يغادر جهازك — وكل ما يتعذّر فحصه يبقى مموّهًا.",
+      },
     ],
+    chips: ["صور Google", "شبكات التواصل", "Netflix ومنصات البث"],
+    demoBadge: "Core ML · على الجهاز",
+    demoBlurred: "مموّهة",
+    demoNote:
+      "رسم توضيحي لنتائج الصور في Safari: تظهر الصور الفاضحة مموّهة بينما تبقى الصور الآمنة ظاهرة.",
+  },
+  whatsNew: {
+    eyebrow: "الجديد في الإصدار 1.3.0",
+    title: "الحاجب تعلّم أن يرى.",
+    intro:
+      "يضيف الإصدار 1.3.0 من CleanBrowse طبقة حماية رابعة — ملحق Safari يموّه الصور غير اللائقة بتعلّم آلي يعمل على جهازك — ويجعل إدارة التطبيق وتحديثه من شريط القوائم أسهل من أي وقت مضى.",
+    blurTitle: "تمويه الصور غير اللائقة في Safari",
+    blurBody:
+      "الميزة الأبرز في 1.3.0: تُصنَّف الصور وإطارات الفيديو على جهازك وتُموَّه قبل أن تصل إلى شاشتك — في البحث وشبكات التواصل ومواقع البث.",
+    blurTag: "مموّهة",
+    menuTitle: "نقرة واحدة من شريط القوائم",
+    menuBody:
+      "اختصار جديد في النافذة ينقلك مباشرة إلى إعدادات ملحقات Safari، فتفعيل مرشّح الصور يستغرق ثوانٍ.",
+    updateTitle: "التحديثات من لوحة الإعدادات",
+    updateBody:
+      "تحقق من الإصدارات الجديدة من داخل CleanBrowse مباشرة — تصلك وسائل الحماية الجديدة فور صدورها، دون إعادة التنزيل من الموقع.",
+    updateFrom: "v1.2.0",
+    updateTo: "v1.3.0",
   },
   how: {
     eyebrow: "كيف يعمل",
-    title: "ثلاث طبقات. لا سبيل لتجاوزها.",
+    title: "أربع طبقات. لا سبيل لتجاوزها.",
     intro:
-      "إضافات المتصفح يمكن حذفها، والإعدادات يمكن إعادة ضبطها. يعمل CleanBrowse تحت كل ذلك — على مستوى النظام — فتبقى الحماية قائمة في كل مكان.",
+      "إضافات المتصفح يمكن حذفها، والإعدادات يمكن إعادة ضبطها. يعمل CleanBrowse تحت كل ذلك — على مستوى النظام — فتبقى الحماية قائمة في كل مكان. وفي Safari، طبقة رابعة تلتقط ما لا تستطيع قوائم الحجب التقاطه.",
     layerLabel: "الطبقة",
     layers: [
       {
@@ -273,6 +341,10 @@ const ar: Dictionary = {
       {
         title: "فرض البحث الآمن",
         body: "تُثبَّت Google وYouTube وBing وDuckDuckGo على نقاط البحث الآمن على مستوى IP، عبر أكثر من 190 نطاقًا إقليميًا. نتائج البحث تبقى نظيفة أيضًا.",
+      },
+      {
+        title: "تمويه الصور على الجهاز",
+        body: "ملحق Safari يصنّف كل صورة وكل إطار فيديو بتعلّم آلي يعمل على جهازك ويموّه المحتوى الفاضح قبل عرضه — حتى في المواقع التي لن تحجبها أي قائمة.",
       },
     ],
   },
@@ -305,7 +377,7 @@ const ar: Dictionary = {
   },
   roadmap: {
     eyebrow: "خارطة الطريق",
-    title: "الإصدار 1.0 مجرد البداية.",
+    title: "الإصدار 1.3.0 مجرد البداية.",
     items: [
       {
         title: "خادم DNS مخصص",
@@ -335,7 +407,7 @@ const ar: Dictionary = {
   },
   cta: {
     title: "جاهز لإنترنت أنظف؟",
-    body: "حمّل CleanBrowse 1.0 مجانًا — أو اترك بريدك الإلكتروني لتكون أول من يعرف بالميزات الجديدة.",
+    body: "حمّل CleanBrowse 1.3.0 مجانًا — أو اترك بريدك الإلكتروني لتكون أول من يعرف بالميزات الجديدة.",
   },
   signup: {
     placeholder: "أدخل بريدك الإلكتروني",
@@ -370,12 +442,22 @@ const ar: Dictionary = {
 
 const fr: Dictionary = {
   meta: {
-    title: "CleanBrowse — Bloqueur gratuit de contenu adulte pour macOS",
+    title: "CleanBrowse — Bloqueur gratuit de contenu adulte et floutage d'images NSFW pour macOS",
     description:
-      "Une app gratuite dans la barre de menus de macOS qui bloque le contenu adulte au niveau DNS — dans tous les navigateurs et toutes les apps. Désormais hors bêta, en six langues, avec SafeSearch configurable. Créée par Omar Elsayed.",
+      "Une app gratuite dans la barre de menus de macOS qui bloque le contenu adulte au niveau DNS et floute les images NSFW dans Safari grâce à une IA locale — sur Google, les réseaux sociaux et les plateformes de streaming comme Netflix. En six langues, avec SafeSearch configurable. Créée par Omar Elsayed.",
+    keywords: [
+      "bloqueur de contenu adulte macOS",
+      "floutage d'images NSFW",
+      "extension Safari",
+      "flouter les images explicites",
+      "SafeSearch",
+      "filtrage DNS",
+      "contrôle parental Mac",
+    ],
   },
   nav: {
     whatsNew: "Nouveautés",
+    blur: "Floutage d'images",
     how: "Fonctionnement",
     roadmap: "Feuille de route",
     maker: "À propos",
@@ -386,11 +468,11 @@ const fr: Dictionary = {
     language: "Langue",
   },
   hero: {
-    badge: "Fin de la bêta — la 1.0 est notre première version complète",
+    badge: "Nouveau en 1.3.0 — Safari floute désormais les images explicites",
     title: "Internet, sans ce qu'il a de pire",
     titlePunct: ".",
     subtitle:
-      "CleanBrowse vit dans la barre de menus de votre Mac et bloque le contenu adulte au niveau DNS — dans chaque navigateur, dans chaque app. Gratuit, privé, et désormais dans votre langue.",
+      "CleanBrowse vit dans la barre de menus de votre Mac et bloque le contenu adulte au niveau DNS — dans chaque navigateur, dans chaque app. Et dans Safari, il floute désormais les images explicites avant même que vous les voyiez. Gratuit, privé, dans votre langue.",
     ctaNote: "Gratuit pour toujours · macOS 14+",
     statDomainsValue: "249 000+",
     statDomains: "domaines bloqués",
@@ -417,32 +499,54 @@ const fr: Dictionary = {
     srNote:
       "Journal DNS simulé : les domaines adultes se résolvent en NXDOMAIN, les moteurs de recherche sont réécrits vers leurs points d'accès SafeSearch, et tout le reste se résout normalement.",
   },
-  whatsNew: {
-    eyebrow: "Nouveau dans la version 1.0",
-    title: "Fin de la bêta. Plus léger, plus rapide, en six langues.",
+  blur: {
+    eyebrow: "Nouveau — Extension Safari",
+    title: "Les images explicites, floutées avant que vous les voyiez.",
     intro:
-      "CleanBrowse sort de bêta — la 1.0 est la première version complète. Le moteur a été reconstruit pour être plus rapide et plus léger, l'app s'ouvre à cinq nouvelles langues, et SafeSearch passe sous votre contrôle.",
-    langTitle: "Parle votre langue",
-    langBody:
-      "Toute l'app — réglages, alertes, tout — est désormais disponible en six langues, écriture de droite à gauche comprise.",
-    safeTitle: "SafeSearch, selon vos règles",
-    safeBody:
-      "Décidez exactement du niveau de rigueur de la recherche. Activez ou désactivez SafeSearch moteur par moteur — Google, YouTube, Bing et DuckDuckGo — depuis le nouveau panneau de réglages.",
-    safeOn: "activé",
-    perfTitle: "Plus léger sur votre Mac",
-    perfBody:
-      "Le moteur DNS a été reconstruit pour la 1.0 — les requêtes se résolvent plus vite, la mémoire consommée baisse, et l'app reste invisible dans votre barre de menus jusqu'à ce que vous en ayez besoin.",
-    perfPoints: [
-      "Résolution DNS plus rapide",
-      "Empreinte mémoire réduite",
-      "Impact minimal sur la batterie",
+      "Bloquer des sites ne suffit pas — les images explicites se cachent sur des pages que vous utilisez vraiment. La nouvelle extension Safari classe chaque image et chaque frame vidéo grâce à l'apprentissage automatique local, et floute tout contenu explicite avant son affichage.",
+    points: [
+      {
+        title: "Flouter d'abord, révéler ensuite",
+        body: "Chaque image démarre floutée et n'est révélée qu'une fois validée par le modèle. Les frames vidéo sont vérifiées pendant la lecture — les scènes explicites sont interceptées en plein flux.",
+      },
+      {
+        title: "Partout où va Safari",
+        body: "Google Images, les fils des réseaux sociaux, les plateformes de streaming comme Netflix — si Safari peut l'afficher, le filtre l'a déjà vérifié.",
+      },
+      {
+        title: "Privé par conception",
+        body: "La classification s'exécute entièrement sur votre Mac avec Core ML. Aucune image, aucune URL, aucun pixel ne quitte votre machine — et ce qui ne peut pas être vérifié reste flouté.",
+      },
     ],
+    chips: ["Google Images", "Réseaux sociaux", "Netflix & streaming"],
+    demoBadge: "Core ML · en local",
+    demoBlurred: "Floutée",
+    demoNote:
+      "Illustration de résultats d'images Safari : les images explicites apparaissent floutées tandis que les images sûres restent visibles.",
+  },
+  whatsNew: {
+    eyebrow: "Nouveau dans la version 1.3.0",
+    title: "Le bloqueur a appris à voir.",
+    intro:
+      "CleanBrowse 1.3.0 ajoute une quatrième couche de protection — une extension Safari qui floute les images NSFW grâce à l'apprentissage automatique local — et simplifie plus que jamais la gestion et la mise à jour de l'app depuis la barre de menus.",
+    blurTitle: "Floutage d'images NSFW dans Safari",
+    blurBody:
+      "La fonctionnalité phare de la 1.3.0 : les images et les frames vidéo sont classées en local et floutées avant d'atteindre votre écran — sur la recherche, les réseaux sociaux et les sites de streaming.",
+    blurTag: "Floutée",
+    menuTitle: "Un clic depuis la barre de menus",
+    menuBody:
+      "Un nouveau raccourci dans la fenêtre vous amène directement aux réglages des extensions Safari — activer le filtre d'images prend quelques secondes.",
+    updateTitle: "Mises à jour depuis les réglages",
+    updateBody:
+      "Vérifiez les nouvelles versions directement dans CleanBrowse — les nouvelles protections vous parviennent dès leur sortie, sans retélécharger depuis le site.",
+    updateFrom: "v1.2.0",
+    updateTo: "v1.3.0",
   },
   how: {
     eyebrow: "Fonctionnement",
-    title: "Trois couches. Aucun moyen de les contourner.",
+    title: "Quatre couches. Aucun moyen de les contourner.",
     intro:
-      "Les extensions de navigateur peuvent être désinstallées et les réglages réinitialisés. CleanBrowse agit en dessous de tout cela — au niveau du système — pour une protection qui tient partout.",
+      "Les extensions de navigateur peuvent être désinstallées et les réglages réinitialisés. CleanBrowse agit en dessous de tout cela — au niveau du système — pour une protection qui tient partout. Et dans Safari, une quatrième couche attrape ce qu'aucune liste de blocage ne pourrait attraper.",
     layerLabel: "Couche",
     layers: [
       {
@@ -456,6 +560,10 @@ const fr: Dictionary = {
       {
         title: "SafeSearch imposé",
         body: "Google, YouTube, Bing et DuckDuckGo sont verrouillés sur leurs points d'accès SafeSearch au niveau IP, sur plus de 190 domaines nationaux. Les résultats de recherche restent propres aussi.",
+      },
+      {
+        title: "Floutage d'images en local",
+        body: "Une extension Safari classe chaque image et chaque frame vidéo grâce à l'apprentissage automatique local et floute le contenu explicite avant son affichage — même sur des sites qu'aucune liste ne bloquerait.",
       },
     ],
   },
@@ -488,7 +596,7 @@ const fr: Dictionary = {
   },
   roadmap: {
     eyebrow: "Feuille de route",
-    title: "La version 1.0 n'est que le début.",
+    title: "La version 1.3.0 n'est que le début.",
     items: [
       {
         title: "Résolveur DNS personnalisé",
@@ -518,7 +626,7 @@ const fr: Dictionary = {
   },
   cta: {
     title: "Prêt pour un Internet plus propre ?",
-    body: "Téléchargez CleanBrowse 1.0 gratuitement — ou laissez votre e-mail pour être informé des nouveautés en premier.",
+    body: "Téléchargez CleanBrowse 1.3.0 gratuitement — ou laissez votre e-mail pour être informé des nouveautés en premier.",
   },
   signup: {
     placeholder: "Votre adresse e-mail",
@@ -554,12 +662,22 @@ const fr: Dictionary = {
 
 const es: Dictionary = {
   meta: {
-    title: "CleanBrowse — Bloqueador gratuito de contenido adulto para macOS",
+    title: "CleanBrowse — Bloqueador gratuito de contenido adulto y difuminado de imágenes NSFW para macOS",
     description:
-      "Una app gratuita en la barra de menús de macOS que bloquea el contenido adulto a nivel de DNS — en todos los navegadores y apps. Ya fuera de beta, en seis idiomas y con SafeSearch configurable. Creada por Omar Elsayed.",
+      "Una app gratuita en la barra de menús de macOS que bloquea el contenido adulto a nivel de DNS y difumina imágenes NSFW en Safari con IA local — en Google, redes sociales y plataformas de streaming como Netflix. En seis idiomas y con SafeSearch configurable. Creada por Omar Elsayed.",
+    keywords: [
+      "bloqueador de contenido adulto macOS",
+      "difuminar imágenes NSFW",
+      "extensión de Safari",
+      "difuminar imágenes explícitas",
+      "SafeSearch",
+      "filtrado DNS",
+      "control parental Mac",
+    ],
   },
   nav: {
     whatsNew: "Novedades",
+    blur: "Difuminado de imágenes",
     how: "Cómo funciona",
     roadmap: "Hoja de ruta",
     maker: "Acerca de",
@@ -570,11 +688,11 @@ const es: Dictionary = {
     language: "Idioma",
   },
   hero: {
-    badge: "Fuera de beta — la 1.0 es nuestra primera versión completa",
+    badge: "Nuevo en 1.3.0 — Safari ahora difumina las imágenes explícitas",
     title: "Internet, sin lo peor que tiene",
     titlePunct: ".",
     subtitle:
-      "CleanBrowse vive en la barra de menús de tu Mac y bloquea el contenido adulto a nivel de DNS — en cada navegador, en cada app. Gratis, privado y ahora en tu idioma.",
+      "CleanBrowse vive en la barra de menús de tu Mac y bloquea el contenido adulto a nivel de DNS — en cada navegador, en cada app. Y en Safari, ahora difumina las imágenes explícitas antes de que las veas. Gratis, privado y en tu idioma.",
     ctaNote: "Gratis para siempre · macOS 14+",
     statDomainsValue: "249.000+",
     statDomains: "dominios bloqueados",
@@ -601,32 +719,54 @@ const es: Dictionary = {
     srNote:
       "Registro DNS simulado: los dominios adultos se resuelven como NXDOMAIN, los buscadores se reescriben hacia sus puntos de SafeSearch y todo lo demás se resuelve con normalidad.",
   },
-  whatsNew: {
-    eyebrow: "Nuevo en la versión 1.0",
-    title: "Fuera de beta. Más ligero, más rápido y en seis idiomas.",
+  blur: {
+    eyebrow: "Nuevo — Extensión de Safari",
+    title: "Imágenes explícitas, difuminadas antes de que las veas.",
     intro:
-      "CleanBrowse sale de beta — la 1.0 es la primera versión completa. Reconstruye el motor para ser más rápido y ligero, abre la app a cinco idiomas nuevos y pone SafeSearch bajo tu control.",
-    langTitle: "Habla tu idioma",
-    langBody:
-      "Toda la app — ajustes, avisos, todo — está ahora disponible en seis idiomas, incluida la escritura de derecha a izquierda.",
-    safeTitle: "SafeSearch, con tus reglas",
-    safeBody:
-      "Decide exactamente cuán estricta debe ser la búsqueda. Activa o desactiva SafeSearch por buscador — Google, YouTube, Bing y DuckDuckGo — desde el nuevo panel de ajustes.",
-    safeOn: "activado",
-    perfTitle: "Más ligero en tu Mac",
-    perfBody:
-      "El motor DNS se reconstruyó para la 1.0 — las consultas se resuelven más rápido, el uso de memoria baja y la app permanece invisible en tu barra de menús hasta que la necesitas.",
-    perfPoints: [
-      "Resolución DNS más rápida",
-      "Menor consumo de memoria",
-      "Impacto mínimo en la batería",
+      "Bloquear sitios no basta — las imágenes explícitas se esconden en páginas que sí usas. La nueva extensión de Safari clasifica cada imagen y cada fotograma de vídeo con aprendizaje automático local, y difumina todo contenido explícito antes de mostrarlo.",
+    points: [
+      {
+        title: "Primero difuminar, luego revelar",
+        body: "Cada imagen empieza difuminada y solo se revela cuando el modelo la aprueba. Los fotogramas de vídeo se comprueban durante la reproducción — las escenas explícitas se interceptan en pleno streaming.",
+      },
+      {
+        title: "Allá donde vaya Safari",
+        body: "Google Imágenes, los feeds de redes sociales, plataformas de streaming como Netflix — si Safari puede mostrarlo, el filtro ya lo ha comprobado.",
+      },
+      {
+        title: "Privado por diseño",
+        body: "La clasificación se ejecuta por completo en tu Mac con Core ML. Ninguna imagen, URL ni píxel sale de tu equipo — y lo que no se puede comprobar permanece difuminado.",
+      },
     ],
+    chips: ["Google Imágenes", "Redes sociales", "Netflix y streaming"],
+    demoBadge: "Core ML · en local",
+    demoBlurred: "Difuminada",
+    demoNote:
+      "Ilustración de resultados de imágenes en Safari: las imágenes explícitas aparecen difuminadas mientras las seguras permanecen visibles.",
+  },
+  whatsNew: {
+    eyebrow: "Nuevo en la versión 1.3.0",
+    title: "El bloqueador aprendió a ver.",
+    intro:
+      "CleanBrowse 1.3.0 añade una cuarta capa de protección — una extensión de Safari que difumina imágenes NSFW con aprendizaje automático local — y hace más fácil que nunca gestionar y actualizar la app desde la barra de menús.",
+    blurTitle: "Difuminado de imágenes NSFW en Safari",
+    blurBody:
+      "La función estrella de la 1.3.0: las imágenes y los fotogramas de vídeo se clasifican en tu equipo y se difuminan antes de llegar a tu pantalla — en buscadores, redes sociales y sitios de streaming.",
+    blurTag: "Difuminada",
+    menuTitle: "A un clic desde la barra de menús",
+    menuBody:
+      "Un nuevo atajo en la ventana te lleva directo a los ajustes de extensiones de Safari — activar el filtro de imágenes lleva segundos.",
+    updateTitle: "Actualizaciones desde los ajustes",
+    updateBody:
+      "Comprueba si hay versiones nuevas desde el propio CleanBrowse — las nuevas protecciones te llegan en cuanto se publican, sin volver a descargar desde la web.",
+    updateFrom: "v1.2.0",
+    updateTo: "v1.3.0",
   },
   how: {
     eyebrow: "Cómo funciona",
-    title: "Tres capas. Sin forma de esquivarlas.",
+    title: "Cuatro capas. Sin forma de esquivarlas.",
     intro:
-      "Las extensiones del navegador se pueden desinstalar y los ajustes se pueden restablecer. CleanBrowse trabaja por debajo de todo eso — a nivel del sistema — para que la protección se mantenga en todas partes.",
+      "Las extensiones del navegador se pueden desinstalar y los ajustes se pueden restablecer. CleanBrowse trabaja por debajo de todo eso — a nivel del sistema — para que la protección se mantenga en todas partes. Y en Safari, una cuarta capa atrapa lo que ninguna lista de bloqueo podría atrapar.",
     layerLabel: "Capa",
     layers: [
       {
@@ -640,6 +780,10 @@ const es: Dictionary = {
       {
         title: "SafeSearch obligatorio",
         body: "Google, YouTube, Bing y DuckDuckGo quedan fijados a sus puntos de SafeSearch a nivel de IP, en más de 190 dominios por país. Los resultados de búsqueda también se mantienen limpios.",
+      },
+      {
+        title: "Difuminado de imágenes en local",
+        body: "Una extensión de Safari clasifica cada imagen y cada fotograma de vídeo con aprendizaje automático local y difumina el contenido explícito antes de mostrarlo — incluso en sitios que ninguna lista bloquearía.",
       },
     ],
   },
@@ -672,7 +816,7 @@ const es: Dictionary = {
   },
   roadmap: {
     eyebrow: "Hoja de ruta",
-    title: "La versión 1.0 es solo el principio.",
+    title: "La versión 1.3.0 es solo el principio.",
     items: [
       {
         title: "Resolutor DNS personalizado",
@@ -702,7 +846,7 @@ const es: Dictionary = {
   },
   cta: {
     title: "¿Listo para un Internet más limpio?",
-    body: "Descarga CleanBrowse 1.0 gratis — o deja tu correo y entérate antes que nadie de las novedades.",
+    body: "Descarga CleanBrowse 1.3.0 gratis — o deja tu correo y entérate antes que nadie de las novedades.",
   },
   signup: {
     placeholder: "Escribe tu correo",
@@ -738,12 +882,22 @@ const es: Dictionary = {
 
 const zh: Dictionary = {
   meta: {
-    title: "CleanBrowse — 免费的 macOS 成人内容拦截工具",
+    title: "CleanBrowse — 免费的 macOS 成人内容拦截与 NSFW 图片模糊工具",
     description:
-      "一款免费的 macOS 菜单栏应用，在 DNS 层面拦截成人内容——覆盖所有浏览器和应用。现已正式发布，支持六种语言和可配置的安全搜索。由 Omar Elsayed 开发。",
+      "一款免费的 macOS 菜单栏应用：在 DNS 层面拦截成人内容，并通过本地 AI 在 Safari 中模糊 NSFW 图片——覆盖 Google、社交媒体以及 Netflix 等流媒体平台。支持六种语言和可配置的安全搜索。由 Omar Elsayed 开发。",
+    keywords: [
+      "macOS 成人内容拦截",
+      "NSFW 图片模糊",
+      "Safari 扩展",
+      "模糊露骨图片",
+      "安全搜索",
+      "DNS 过滤",
+      "Mac 家长控制",
+    ],
   },
   nav: {
     whatsNew: "新功能",
+    blur: "图片模糊",
     how: "工作原理",
     roadmap: "路线图",
     maker: "关于",
@@ -754,11 +908,11 @@ const zh: Dictionary = {
     language: "语言",
   },
   hero: {
-    badge: "告别测试版——1.0 是首个正式版本",
+    badge: "1.3.0 新功能——Safari 现可模糊露骨图片",
     title: "互联网，去掉最糟的部分",
     titlePunct: "。",
     subtitle:
-      "CleanBrowse 常驻于 Mac 菜单栏，在 DNS 层面拦截成人内容——覆盖每个浏览器、每个应用。免费、私密，现在还说你的语言。",
+      "CleanBrowse 常驻于 Mac 菜单栏，在 DNS 层面拦截成人内容——覆盖每个浏览器、每个应用。现在，它还能在 Safari 中先于你的目光模糊露骨图片。免费、私密、说你的语言。",
     ctaNote: "永久免费 · macOS 14+",
     statDomainsValue: "249,000+",
     statDomains: "个域名被拦截",
@@ -785,28 +939,54 @@ const zh: Dictionary = {
     srNote:
       "模拟 DNS 查询日志：成人域名解析为 NXDOMAIN，搜索引擎被重写到安全搜索端点，其余一切正常解析。",
   },
-  whatsNew: {
-    eyebrow: "1.0 版新功能",
-    title: "正式发布。更轻、更快，支持六种语言。",
+  blur: {
+    eyebrow: "新功能——Safari 扩展",
+    title: "露骨图片，在你看到之前就已模糊。",
     intro:
-      "CleanBrowse 已结束测试——1.0 是首个正式版本。全新重写的引擎更快更轻，新增五种语言，并让安全搜索完全由你掌控。",
-    langTitle: "说你的语言",
-    langBody:
-      "整个应用——设置、提醒、一切——现已支持六种语言，包括从右到左的文字。",
-    safeTitle: "安全搜索，由你定规则",
-    safeBody:
-      "精确决定搜索的严格程度。在新的设置面板中，为每个引擎单独开关安全搜索——Google、YouTube、Bing 和 DuckDuckGo。",
-    safeOn: "开启",
-    perfTitle: "对 Mac 更轻量",
-    perfBody:
-      "1.0 版重写了 DNS 引擎——查询解析更快，内存占用更低，应用安静地待在菜单栏里，直到你需要它。",
-    perfPoints: ["更快的 DNS 解析", "更低的内存占用", "对电池影响极小"],
+      "仅仅拦截网站还不够——露骨图片就藏在你日常使用的页面里。全新的 Safari 扩展用本地机器学习对每张图片和每一帧视频进行分类，在渲染之前模糊一切露骨内容。",
+    points: [
+      {
+        title: "先模糊，后揭示",
+        body: "每张图片都从模糊开始，只有通过模型审核后才会显示。视频帧在播放过程中持续检查——露骨画面会在播放途中被拦下。",
+      },
+      {
+        title: "Safari 所到之处",
+        body: "Google 图片、社交媒体信息流、Netflix 等流媒体平台——只要 Safari 能显示，过滤器就已提前检查。",
+      },
+      {
+        title: "隐私为先的设计",
+        body: "分类完全通过 Core ML 在你的 Mac 上运行。任何图片、网址或像素都不会离开你的设备——无法检查的内容将保持模糊。",
+      },
+    ],
+    chips: ["Google 图片", "社交媒体", "Netflix 等流媒体"],
+    demoBadge: "Core ML · 本地运行",
+    demoBlurred: "已模糊",
+    demoNote:
+      "Safari 图片结果示意图：露骨图片显示为模糊，安全图片保持可见。",
+  },
+  whatsNew: {
+    eyebrow: "1.3.0 版新功能",
+    title: "拦截器学会了看。",
+    intro:
+      "CleanBrowse 1.3.0 加入第四层防护——一个用本地机器学习模糊 NSFW 图片的 Safari 扩展——并让你在菜单栏中更轻松地管理和更新应用。",
+    blurTitle: "Safari 中的 NSFW 图片模糊",
+    blurBody:
+      "1.3.0 的重磅功能：图片和视频帧在本地完成分类，并在抵达屏幕之前被模糊——覆盖搜索、社交媒体和流媒体网站。",
+    blurTag: "已模糊",
+    menuTitle: "菜单栏一键直达",
+    menuBody:
+      "弹窗中新增的快捷按钮可直接打开 Safari 扩展设置——启用图片过滤只需几秒。",
+    updateTitle: "在设置面板中更新",
+    updateBody:
+      "直接在 CleanBrowse 内检查新版本——新的防护在发布后第一时间送达，无需再从网站重新下载。",
+    updateFrom: "v1.2.0",
+    updateTo: "v1.3.0",
   },
   how: {
     eyebrow: "工作原理",
-    title: "三层防护。无从绕过。",
+    title: "四层防护。无从绕过。",
     intro:
-      "浏览器扩展可以被卸载，设置可以被重置。CleanBrowse 工作在这一切之下——系统层面——所以防护在任何地方都有效。",
+      "浏览器扩展可以被卸载，设置可以被重置。CleanBrowse 工作在这一切之下——系统层面——所以防护在任何地方都有效。而在 Safari 中，第四层防护还能拦下任何拦截列表都无法拦下的内容。",
     layerLabel: "防护层",
     layers: [
       {
@@ -820,6 +1000,10 @@ const zh: Dictionary = {
       {
         title: "强制安全搜索",
         body: "Google、YouTube、Bing 和 DuckDuckGo 在 IP 层面被固定到各自的安全搜索端点，覆盖 190 多个国家域名。搜索结果同样保持干净。",
+      },
+      {
+        title: "本地图片模糊",
+        body: "Safari 扩展用本地机器学习对每张图片和每一帧视频进行分类，在渲染之前模糊露骨内容——即使是任何列表都不会拦截的网站。",
       },
     ],
   },
@@ -852,7 +1036,7 @@ const zh: Dictionary = {
   },
   roadmap: {
     eyebrow: "路线图",
-    title: "1.0 版只是开始。",
+    title: "1.3.0 版只是开始。",
     items: [
       {
         title: "自定义 DNS 解析器",
@@ -882,7 +1066,7 @@ const zh: Dictionary = {
   },
   cta: {
     title: "准备好迎接更干净的互联网了吗？",
-    body: "免费下载 CleanBrowse 1.0——或留下邮箱，第一时间了解新功能。",
+    body: "免费下载 CleanBrowse 1.3.0——或留下邮箱，第一时间了解新功能。",
   },
   signup: {
     placeholder: "输入你的邮箱",
@@ -917,12 +1101,22 @@ const zh: Dictionary = {
 
 const de: Dictionary = {
   meta: {
-    title: "CleanBrowse — Kostenloser Blocker für nicht jugendfreie Inhalte auf macOS",
+    title: "CleanBrowse — Kostenloser Blocker für nicht jugendfreie Inhalte & NSFW-Bildfilter für macOS",
     description:
-      "Eine kostenlose macOS-Menüleisten-App, die nicht jugendfreie Inhalte auf DNS-Ebene blockiert — in jedem Browser und jeder App. Jetzt raus aus der Beta, in sechs Sprachen und mit konfigurierbarer SafeSearch. Entwickelt von Omar Elsayed.",
+      "Eine kostenlose macOS-Menüleisten-App, die nicht jugendfreie Inhalte auf DNS-Ebene blockiert und NSFW-Bilder in Safari mit lokaler KI unscharf macht — auf Google, in sozialen Netzwerken und auf Streaming-Plattformen wie Netflix. In sechs Sprachen, mit konfigurierbarer SafeSearch. Entwickelt von Omar Elsayed.",
+    keywords: [
+      "Blocker für nicht jugendfreie Inhalte macOS",
+      "NSFW-Bilder weichzeichnen",
+      "Safari-Erweiterung",
+      "explizite Bilder unscharf machen",
+      "SafeSearch",
+      "DNS-Filter",
+      "Kindersicherung Mac",
+    ],
   },
   nav: {
     whatsNew: "Neuigkeiten",
+    blur: "Bildfilter",
     how: "So funktioniert's",
     roadmap: "Roadmap",
     maker: "Über mich",
@@ -933,11 +1127,11 @@ const de: Dictionary = {
     language: "Sprache",
   },
   hero: {
-    badge: "Raus aus der Beta — 1.0 ist unsere erste Vollversion",
+    badge: "Neu in 1.3.0 — Safari macht explizite Bilder jetzt unscharf",
     title: "Das Internet, ohne das Schlimmste daran",
     titlePunct: ".",
     subtitle:
-      "CleanBrowse lebt in der Menüleiste deines Macs und blockiert nicht jugendfreie Inhalte auf DNS-Ebene — in jedem Browser, in jeder App. Kostenlos, privat und jetzt in deiner Sprache.",
+      "CleanBrowse lebt in der Menüleiste deines Macs und blockiert nicht jugendfreie Inhalte auf DNS-Ebene — in jedem Browser, in jeder App. Und in Safari macht es explizite Bilder jetzt unscharf, bevor du sie überhaupt siehst. Kostenlos, privat, in deiner Sprache.",
     ctaNote: "Für immer kostenlos · macOS 14+",
     statDomainsValue: "249.000+",
     statDomains: "blockierte Domains",
@@ -964,32 +1158,54 @@ const de: Dictionary = {
     srNote:
       "Simuliertes DNS-Protokoll: Nicht jugendfreie Domains werden als NXDOMAIN beantwortet, Suchmaschinen auf ihre SafeSearch-Endpunkte umgeschrieben, alles andere wird normal aufgelöst.",
   },
-  whatsNew: {
-    eyebrow: "Neu in Version 1.0",
-    title: "Raus aus der Beta. Leichter, schneller, in sechs Sprachen.",
+  blur: {
+    eyebrow: "Neu — Safari-Erweiterung",
+    title: "Explizite Bilder, unscharf bevor du sie siehst.",
     intro:
-      "CleanBrowse hat die Beta hinter sich — 1.0 ist die erste Vollversion. Die Engine wurde neu gebaut: schneller und leichter, mit fünf neuen Sprachen und SafeSearch unter deiner Kontrolle.",
-    langTitle: "Spricht deine Sprache",
-    langBody:
-      "Die komplette App — Einstellungen, Hinweise, alles — ist jetzt in sechs Sprachen verfügbar, rechts-nach-links-Schrift inklusive.",
-    safeTitle: "SafeSearch nach deinen Regeln",
-    safeBody:
-      "Bestimme genau, wie streng die Suche sein soll. Schalte SafeSearch pro Suchmaschine ein oder aus — Google, YouTube, Bing und DuckDuckGo — im neuen Einstellungsbereich.",
-    safeOn: "an",
-    perfTitle: "Leichter für deinen Mac",
-    perfBody:
-      "Die DNS-Engine wurde für 1.0 neu gebaut — Anfragen werden schneller aufgelöst, der Speicherverbrauch sinkt, und die App bleibt unsichtbar in der Menüleiste, bis du sie brauchst.",
-    perfPoints: [
-      "Schnellere DNS-Auflösung",
-      "Geringerer Speicherverbrauch",
-      "Minimale Auswirkung auf den Akku",
+      "Websites zu blockieren reicht nicht — explizite Bilder verstecken sich auf Seiten, die du tatsächlich nutzt. Die neue Safari-Erweiterung klassifiziert jedes Bild und jedes Videobild mit lokalem maschinellem Lernen und macht alles Explizite unscharf, bevor es angezeigt wird.",
+    points: [
+      {
+        title: "Erst unscharf, dann freigeben",
+        body: "Jedes Bild startet unscharf und wird erst angezeigt, wenn das Modell es freigibt. Videobilder werden während der Wiedergabe geprüft — explizite Szenen werden mitten im Stream abgefangen.",
+      },
+      {
+        title: "Überall, wo Safari hinkommt",
+        body: "Google Bilder, Social-Media-Feeds, Streaming-Plattformen wie Netflix — wenn Safari es anzeigen kann, hat der Filter es bereits geprüft.",
+      },
+      {
+        title: "Privat durch Design",
+        body: "Die Klassifizierung läuft vollständig auf deinem Mac mit Core ML. Kein Bild, keine URL, kein Pixel verlässt dein Gerät — und was sich nicht prüfen lässt, bleibt unscharf.",
+      },
     ],
+    chips: ["Google Bilder", "Soziale Netzwerke", "Netflix & Streaming"],
+    demoBadge: "Core ML · lokal",
+    demoBlurred: "Unscharf",
+    demoNote:
+      "Illustration von Safari-Bildergebnissen: Explizite Bilder erscheinen unscharf, sichere Bilder bleiben sichtbar.",
+  },
+  whatsNew: {
+    eyebrow: "Neu in Version 1.3.0",
+    title: "Der Blocker hat sehen gelernt.",
+    intro:
+      "CleanBrowse 1.3.0 ergänzt eine vierte Schutzschicht — eine Safari-Erweiterung, die NSFW-Bilder mit lokalem maschinellem Lernen unscharf macht — und macht Verwaltung und Updates der App aus der Menüleiste einfacher denn je.",
+    blurTitle: "NSFW-Bildfilter in Safari",
+    blurBody:
+      "Das Highlight von 1.3.0: Bilder und Videobilder werden lokal klassifiziert und unscharf gemacht, bevor sie deinen Bildschirm erreichen — bei der Suche, in sozialen Netzwerken und auf Streaming-Seiten.",
+    blurTag: "Unscharf",
+    menuTitle: "Ein Klick aus der Menüleiste",
+    menuBody:
+      "Ein neuer Shortcut im Fenster bringt dich direkt zu den Safari-Erweiterungseinstellungen — den Bildfilter zu aktivieren dauert Sekunden.",
+    updateTitle: "Updates aus den Einstellungen",
+    updateBody:
+      "Prüfe direkt in CleanBrowse auf neue Versionen — neue Schutzfunktionen erreichen dich, sobald sie erscheinen, ohne erneuten Download von der Website.",
+    updateFrom: "v1.2.0",
+    updateTo: "v1.3.0",
   },
   how: {
     eyebrow: "So funktioniert's",
-    title: "Drei Schichten. Kein Weg vorbei.",
+    title: "Vier Schichten. Kein Weg vorbei.",
     intro:
-      "Browser-Erweiterungen lassen sich deinstallieren, Einstellungen zurücksetzen. CleanBrowse arbeitet unterhalb von alldem — auf Systemebene — damit der Schutz überall hält.",
+      "Browser-Erweiterungen lassen sich deinstallieren, Einstellungen zurücksetzen. CleanBrowse arbeitet unterhalb von alldem — auf Systemebene — damit der Schutz überall hält. Und in Safari fängt eine vierte Schicht ab, was keine Sperrliste je erfassen könnte.",
     layerLabel: "Schicht",
     layers: [
       {
@@ -1003,6 +1219,10 @@ const de: Dictionary = {
       {
         title: "Erzwungene SafeSearch",
         body: "Google, YouTube, Bing und DuckDuckGo werden auf IP-Ebene auf ihre SafeSearch-Endpunkte festgelegt, über 190+ Länderdomains hinweg. Auch die Suchergebnisse bleiben sauber.",
+      },
+      {
+        title: "Lokaler Bildfilter",
+        body: "Eine Safari-Erweiterung klassifiziert jedes Bild und jedes Videobild mit lokalem maschinellem Lernen und macht explizite Inhalte unscharf, bevor sie angezeigt werden — selbst auf Seiten, die keine Sperrliste je blockieren würde.",
       },
     ],
   },
@@ -1035,7 +1255,7 @@ const de: Dictionary = {
   },
   roadmap: {
     eyebrow: "Roadmap",
-    title: "Version 1.0 ist erst der Anfang.",
+    title: "Version 1.3.0 ist erst der Anfang.",
     items: [
       {
         title: "Eigener DNS-Resolver",
@@ -1065,7 +1285,7 @@ const de: Dictionary = {
   },
   cta: {
     title: "Bereit für ein saubereres Internet?",
-    body: "Lade CleanBrowse 1.0 kostenlos herunter — oder hinterlasse deine E-Mail und erfahre als Erster von neuen Funktionen.",
+    body: "Lade CleanBrowse 1.3.0 kostenlos herunter — oder hinterlasse deine E-Mail und erfahre als Erster von neuen Funktionen.",
   },
   signup: {
     placeholder: "Deine E-Mail-Adresse",
