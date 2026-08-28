@@ -12,6 +12,7 @@ import FactoryKit
 final class AppDelegate: NSObject, NSApplicationDelegate {
     @Injected(\.hostFileService) private var hostFileService
     @Injected(\.notificationService) private var notificationService
+    @Injected(\.analyticsService) private var analyticsService
 
     let userDefaults = UserDefaults.standard
     let dnsProfileService = DNSProfileService()
@@ -36,7 +37,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 // MARK: - App LifeCycle
 extension AppDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        updateHostAndDNSBlockLists()
+        analyticsService.inilizeAnalytics()
+        analyticsService.trackEvent(for: "active_user", properties: nil)
+        initialeSetupOfTheApp()
         activateProxy()
         allowNotifications()
 
@@ -54,14 +57,15 @@ extension AppDelegate {
 
 // MARK: - Private AppDelegate Methods
 extension AppDelegate {
-    private func updateHostAndDNSBlockLists() {
-        let hasPreloadedDomains = userDefaults.bool(forKey: .hasPreloadedDomains)
+    private func initialeSetupOfTheApp() {
+        let openedTheAppBefore = userDefaults.bool(forKey: .openedTheAppBefore)
         let blockedDomains = SwiftDataManager.shared.fetch(BlockedDomain.self).map(\.domain)
         let allDomains = PreloadedDomains.domains + blockedDomains
 
-        if !hasPreloadedDomains {
+        if !openedTheAppBefore {
             updateAppContainerBlockList(with: allDomains)
             preloadDomainsInHostFile(with: allDomains)
+            analyticsService.trackEvent(for: "app_opened_for_first_time", properties: nil)
         }
     }
     
@@ -79,9 +83,9 @@ extension AppDelegate {
 
     private func preloadDomainsInHostFile(with domains: [String]) {
         Task {
-            try? await hostFileService.applyDomains(domains) // Consider this
-            if userDefaults.bool(forKey: .allSafeSearchEnabled) { try? await hostFileService.applySafeSearch() }
-            userDefaults.set(true, forKey: .hasPreloadedDomains)
+            try? await hostFileService.applyDomains(domains)
+            try? await hostFileService.applySafeSearch()
+            userDefaults.set(true, forKey: .openedTheAppBefore)
         }
     }
 }

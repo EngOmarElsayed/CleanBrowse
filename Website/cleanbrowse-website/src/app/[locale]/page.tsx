@@ -7,7 +7,7 @@ import DnsLog from "../components/DnsLog";
 import RoadPath from "../components/RoadPath";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { DMG_URL, GITHUB_URL } from "@/lib/links";
+import { DMG_URL, GITHUB_URL, APTABASE_URL } from "@/lib/links";
 
 function GitHubIcon() {
   return (
@@ -69,6 +69,25 @@ function FeatherIcon() {
       <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
       <line x1="16" y1="8" x2="2" y2="22" />
       <line x1="17.5" y1="15" x2="9" y2="15" />
+    </svg>
+  );
+}
+
+function LockIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-leaf">
+      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </svg>
+  );
+}
+
+function BarsIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-leaf">
+      <line x1="6" y1="20" x2="6" y2="14" />
+      <line x1="12" y1="20" x2="12" y2="8" />
+      <line x1="18" y1="20" x2="18" y2="11" />
     </svg>
   );
 }
@@ -234,6 +253,35 @@ export default async function Home({
         </div>
       </section>
 
+      {/* ── How it works ── */}
+      <section id="how" className="py-28 bg-mint/40 border-y border-line scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="max-w-2xl mb-16">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-leaf mb-5">
+              {dict.how.eyebrow}
+            </p>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink leading-tight mb-5">
+              {dict.how.title}
+            </h2>
+            <p className="text-moss text-lg leading-relaxed">{dict.how.intro}</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {dict.how.layers.map((layer, i) => (
+              <div key={layer.title} className="rounded-3xl bg-card border border-line p-9">
+                <span className="font-mono text-sm text-leaf">
+                  {dict.how.layerLabel} {LAYER_NUMBERS[i]}
+                </span>
+                <h3 className="font-display text-xl font-bold text-ink mt-4 mb-3">
+                  {layer.title}
+                </h3>
+                <p className="text-moss leading-relaxed">{layer.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── What's new in 1.0 ── */}
       <section id="whats-new" className="py-28 scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6">
@@ -315,39 +363,10 @@ export default async function Home({
         </div>
       </section>
 
-      {/* ── How it works ── */}
-      <section id="how" className="py-28 bg-mint/40 border-y border-line scroll-mt-16">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="max-w-2xl mb-16">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-leaf mb-5">
-              {dict.how.eyebrow}
-            </p>
-            <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink leading-tight mb-5">
-              {dict.how.title}
-            </h2>
-            <p className="text-moss text-lg leading-relaxed">{dict.how.intro}</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {dict.how.layers.map((layer, i) => (
-              <div key={layer.title} className="rounded-3xl bg-card border border-line p-9">
-                <span className="font-mono text-sm text-leaf">
-                  {dict.how.layerLabel} {LAYER_NUMBERS[i]}
-                </span>
-                <h3 className="font-display text-xl font-bold text-ink mt-4 mb-3">
-                  {layer.title}
-                </h3>
-                <p className="text-moss leading-relaxed">{layer.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── From the maker ── */}
-      <section id="maker" className="py-24 scroll-mt-16">
+      <section id="maker" className="relative overflow-hidden bg-pine text-white py-24 sm:py-28 scroll-mt-16">
         <div className="max-w-5xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-[2.5rem] bg-pine text-white p-10 sm:p-14 lg:p-16">
+          <div className="relative">
             {/* Decorative oversized quote mark */}
             <span
               aria-hidden="true"
@@ -376,6 +395,68 @@ export default async function Home({
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Privacy — what stays local, what's counted ── */}
+      <section id="privacy" className="py-28 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.05fr_1fr] gap-14 items-center">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-leaf mb-5">
+              {dict.privacy.eyebrow}
+            </p>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink leading-tight mb-5">
+              {dict.privacy.title}
+            </h2>
+            <p className="text-moss text-lg leading-relaxed mb-8">{dict.privacy.body}</p>
+            <a
+              href={APTABASE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-leaf-deep font-semibold hover:text-leaf transition-colors"
+            >
+              {dict.privacy.linkLabel}
+              <span aria-hidden="true" className="rtl-flip">→</span>
+            </a>
+          </div>
+
+          <div className="rounded-3xl bg-card border border-line p-8 sm:p-10">
+            <div className="grid sm:grid-cols-2 gap-10">
+              <div>
+                <div className="mb-5">
+                  <LockIcon />
+                </div>
+                <h3 className="font-display text-lg font-bold text-ink mb-4">
+                  {dict.privacy.stayTitle}
+                </h3>
+                <ul className="space-y-2.5 text-sm text-moss">
+                  {dict.privacy.stayPoints.map((point) => (
+                    <li key={point} className="flex gap-2.5">
+                      <span className="text-leaf mt-0.5">✓</span> {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <div className="mb-5">
+                  <BarsIcon />
+                </div>
+                <h3 className="font-display text-lg font-bold text-ink mb-4">
+                  {dict.privacy.countTitle}
+                </h3>
+                <ul className="space-y-2.5 text-sm text-moss">
+                  {dict.privacy.countPoints.map((point) => (
+                    <li key={point} className="flex gap-2.5">
+                      <span className="text-leaf mt-0.5">✓</span> {point}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <p className="mt-8 pt-6 border-t border-line text-sm text-moss leading-relaxed">
+              {dict.privacy.note}
+            </p>
           </div>
         </div>
       </section>

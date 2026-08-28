@@ -6,6 +6,7 @@
 //
 
 import FactoryKit
+import Sparkle
 
 extension Container {
     var hostFileService: Factory<HostsFileService> {
@@ -14,5 +15,18 @@ extension Container {
 
     var notificationService: Factory<NotificationServiceProtocol> {
         self { NotificationService() }.singleton
+    }
+
+    var analyticsService: Factory<CleanBrowseAnalyticsProtocol> {
+        self { CleanBrowseAnalytics() }.singleton
+    }
+
+@MainActor
+    var updateService: Factory<SPUStandardUpdaterController> {
+        self {
+            SPUStandardUpdaterController(
+                startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil
+            )
+        }.singleton
     }
 }

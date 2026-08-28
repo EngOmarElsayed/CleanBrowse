@@ -35,17 +35,17 @@ export default function Footer({
           </div>
 
           <nav className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
-            <a href={`/${locale}#whats-new`} className="hover:text-white transition-colors">
-              {dict.nav.whatsNew}
-            </a>
             <a href={`/${locale}#how`} className="hover:text-white transition-colors">
               {dict.nav.how}
             </a>
-            <a href={`/${locale}#roadmap`} className="hover:text-white transition-colors">
-              {dict.nav.roadmap}
+            <a href={`/${locale}#whats-new`} className="hover:text-white transition-colors">
+              {dict.nav.whatsNew}
             </a>
             <a href={`/${locale}#maker`} className="hover:text-white transition-colors">
               {dict.nav.maker}
+            </a>
+            <a href={`/${locale}#roadmap`} className="hover:text-white transition-colors">
+              {dict.nav.roadmap}
             </a>
             <a href={`/${locale}/contact`} className="hover:text-white transition-colors">
               {dict.nav.contact}

@@ -4,5 +4,9 @@
 <dict>
 	<key>NSSystemExtensionUsageDescription</key>
 	<string>CleanBrowse needs to install a system extension to block unwanted domains at the DNS level.</string>
+	<key>SUFeedURL</key>
+	<string>https://cleanbrowse.app/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>bXLx4DjuttpzsiLYxKoSoEdlJycucCj0R4cUwIv9nPw=</string>
 </dict>
 </plist>
