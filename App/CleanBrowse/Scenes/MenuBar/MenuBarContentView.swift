@@ -48,7 +48,7 @@ struct MenuBarContentView: View {
                 Button {
                     updateService.checkForUpdates(nil)
                 } label: {
-                    Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90.circle.fill")
+                    Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90.circle")
                         .font(.caption)
                 }
                 .help("Check for updates")
