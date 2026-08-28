@@ -5,10 +5,13 @@
 //  Created by Omar Elsayed on 18/08/2026.
 //
 
+import FactoryKit
 import SwiftUI
+import Sparkle
 
 struct SettingsView: View {
     @State private var viewModel: SettingsViewModel = SettingsViewModel()
+    @Injected(\.updateService) private var updateService
 
     @AppStorage(.allSafeSearchEnabled) var allSafeSearchEnabled: Bool = true
     @AppStorage(.googleSafeSearchEnabled) var googleSafeSearchEnabled: Bool = true
@@ -18,34 +21,53 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Label("Configure Safe Search", systemImage: "staroflife.shield.fill")
-                .font(.title2)
+            Text("Settings")
+                .font(.title)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
-            VStack(alignment: .leading, spacing: 8) {
-                SafeSearchSettingsToggle(isOn: $allSafeSearchEnabled, value: .all)
-                VStack(alignment: .leading, spacing: 4) {
-                    ForEach(SettingsSafeSearch.allCases) { value in
-                        switch value {
-                        case .google:
-                            SafeSearchSettingsToggle(isOn: $googleSafeSearchEnabled, value: value)
-                                .disabled(allSafeSearchEnabled)
-                        case .youtube:
-                            SafeSearchSettingsToggle(isOn: $youtubeSafeSearchEnabled, value: value)
-                                .disabled(allSafeSearchEnabled)
-                        case .bing:
-                            SafeSearchSettingsToggle(isOn: $bingSafeSearchEnabled, value: value)
-                                .disabled(allSafeSearchEnabled)
-                        case .duckDuckGo:
-                            SafeSearchSettingsToggle(isOn: $duckDuckGoSafeSearchEnabled, value: value)
-                                .disabled(allSafeSearchEnabled)
-                        default:
-                            EmptyView()
+            Divider()
+                .padding(.horizontal, -16)
+
+            VStack(alignment: .leading, spacing: 12) {
+                Section("Configure Safe Search") {
+                    VStack(alignment: .leading, spacing: 8) {
+                        SafeSearchSettingsToggle(isOn: $allSafeSearchEnabled, value: .all)
+                        VStack(alignment: .leading, spacing: 4) {
+                            ForEach(SettingsSafeSearch.allCases) { value in
+                                switch value {
+                                case .google:
+                                    SafeSearchSettingsToggle(isOn: $googleSafeSearchEnabled, value: value)
+                                        .disabled(allSafeSearchEnabled)
+                                case .youtube:
+                                    SafeSearchSettingsToggle(isOn: $youtubeSafeSearchEnabled, value: value)
+                                        .disabled(allSafeSearchEnabled)
+                                case .bing:
+                                    SafeSearchSettingsToggle(isOn: $bingSafeSearchEnabled, value: value)
+                                        .disabled(allSafeSearchEnabled)
+                                case .duckDuckGo:
+                                    SafeSearchSettingsToggle(isOn: $duckDuckGoSafeSearchEnabled, value: value)
+                                        .disabled(allSafeSearchEnabled)
+                                default:
+                                    EmptyView()
+                                }
+                            }
                         }
+                        .padding(.horizontal, 8)
                     }
+                    .padding(.horizontal, 8)
+                    .disabled(viewModel.isLoading)
                 }
-                .padding(.horizontal, 8)
+
+                Section("Genral") {
+                    Button {
+                        updateService.checkForUpdates(nil)
+                    } label: {
+                        Text("Check for updates")
+                            .font(.subheadline)
+                    }
+
+                }
             }
-            .disabled(viewModel.isLoading)
         }
         .onChange(of: allSafeSearchEnabled) { oldValue, newValue in
             _ = newValue ? viewModel.action(for: .enableAllSafeSearch): viewModel.action(for: .disableAllSafeSearch)
@@ -75,11 +97,10 @@ struct SettingsView: View {
                         Image(value.icon)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 15, height: 15)
+                            .frame(width: 12, height: 12)
                     }
 
                     Text(value.title)
-                        .fontWeight(value == .all ? .some(.bold): .none)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 

@@ -1,7 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {},
+    "" : {
+
+    },
     "Add domain to block..." : {
       "localizations" : {
         "ar" : {
@@ -274,6 +276,9 @@
         }
       }
     },
+    "Genral" : {
+
+    },
     "No Custom domains added yet" : {
       "localizations" : {
         "ar" : {
@@ -375,6 +380,9 @@
           }
         }
       }
+    },
+    "Safari NSFW image blur extension" : {
+
     },
     "SafeSearch Enabled on" : {
       "localizations" : {

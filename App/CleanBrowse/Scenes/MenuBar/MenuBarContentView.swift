@@ -8,12 +8,14 @@ import SwiftUI
 import AppKit
 import FactoryKit
 import UserNotifications
+import SafariServices
 import Sparkle
 
 //@Environment(\.modelContext) private var modelContext
 //@Query(sort: \BlockedDomain.dateAdded, order: .reverse) private var blockedDomains: [BlockedDomain]
 
 struct MenuBarContentView: View {
+    private let extensionBundleIdentifier = "com.omarelsayed.cleanbrowse.extension"
     @State private var showSettings: Bool = false
     @State private var isNotificationAuth: Bool = false
     @Injected(\.notificationService) private var notificationService
@@ -46,12 +48,12 @@ struct MenuBarContentView: View {
                 }
 
                 Button {
-                    updateService.checkForUpdates(nil)
+                    SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier)
                 } label: {
-                    Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90.circle")
+                    Image(systemName: "puzzlepiece.extension")
                         .font(.caption)
                 }
-                .help("Check for updates")
+                .help("Safari NSFW image blur extension")
 
                 Spacer()
 

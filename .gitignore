@@ -45,3 +45,13 @@ Pods/
 
 # Signing certificates — never commit
 .certificates/
+
+# Safari extension (built JS + CoreML model are generated — see build.js / Tools/convert_model.py)
+node_modules/
+extension/content.js
+extension/background.js
+Models/*.mlpackage
+Models/*.mlmodelc
+Models/labels.json
+__pycache__/
+.venv/

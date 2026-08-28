@@ -40,6 +40,7 @@ CleanBrowse is a lightweight macOS menu bar app that provides system-level prote
 - 🛡️ **System-wide blocking** — ~249,000 adult domains blocked via `/etc/hosts`, covering every app on your Mac
 - 🌐 **DNS proxy** — a Network Extension intercepts every DNS query type system-wide, so blocking can't be bypassed with alternative or encrypted DNS
 - 🔍 **Configurable SafeSearch** — enforces SafeSearch on Google, YouTube, Bing, and DuckDuckGo across ~190 country-code domains, with a per-engine toggle in the new settings panel
+- 🖼️ **Safari image filter** — a Safari Web Extension blurs NSFW images and video frames on-device (CoreML) before you ever see them; nothing leaves your Mac
 - 🗣️ **Speaks your language** — fully localized in English, Arabic (RTL included), French, Spanish, Chinese, and German
 - ➕ **Custom domain blocking** — add your own domains to the blocklist right from the menu bar
 - ⚡ **Faster & lighter** — the 1.0 engine resolves queries faster with a lower memory footprint and minimal battery impact
@@ -73,8 +74,14 @@ Grab the latest release from the [Releases](https://github.com/EngOmarElsayed/Cl
    ```bash
    git clone https://github.com/EngOmarElsayed/CleanBrowse.git
    ```
-2. Open `CleanBrowse.xcodeproj` in Xcode
-3. Build and run
+2. Build the Safari extension's JS bundle and CoreML model (both are generated, not committed):
+   ```bash
+   npm install && npm run build
+   python3 -m venv .venv && .venv/bin/pip install -r Tools/requirements.txt
+   .venv/bin/python Tools/convert_model.py   # downloads ~350MB, writes Models/BlurShieldNSFW.mlpackage
+   ```
+3. Open `CleanBrowse.xcodeproj` in Xcode
+4. Build and run
 
 > **Note:** the Network Extension entitlement requires an Apple Developer account to build and test locally.
 
