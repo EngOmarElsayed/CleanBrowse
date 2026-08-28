@@ -3,7 +3,8 @@ set -euo pipefail
 
 # ─────────────────────────────────────────────
 # CleanBrowse Release Script
-# Creates a DMG and publishes a GitHub release
+# Creates a DMG, publishes a GitHub release, and
+# uploads it to Vercel Blob + signs it for Sparkle
 # ─────────────────────────────────────────────
 
 REPO="EngOmarElsayed/CleanBrowse"
@@ -11,6 +12,7 @@ APP_PATH=""
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 BG_IMAGE="${REPO_ROOT}/assets/dmg-background.png"
+WEBSITE_DIR="${REPO_ROOT}/Website/cleanbrowse-website"
 
 # ── Parse arguments ──
 usage() {
@@ -92,6 +94,17 @@ fi
 # ── Read app info ──
 APP_VERSION=$(defaults read "${APP_PATH}/Contents/Info.plist" CFBundleShortVersionString 2>/dev/null || echo "unknown")
 MIN_MACOS=$(defaults read "${APP_PATH}/Contents/Info.plist" LSMinimumSystemVersion 2>/dev/null || echo "unknown")
+
+# ── Version sanity check (the appcast entry must match the binary) ──
+if [[ "$APP_VERSION" != "unknown" && "$VERSION" != "$APP_VERSION" ]]; then
+  echo ""
+  echo "⚠️  You entered ${VERSION}, but the app's CFBundleShortVersionString is ${APP_VERSION}."
+  read -rp "Continue anyway? (y/n): " VERSION_CONFIRM
+  if [[ "$VERSION_CONFIRM" != "y" && "$VERSION_CONFIRM" != "Y" ]]; then
+    echo "Release cancelled."
+    exit 0
+  fi
+fi
 
 VOLICON="${APP_PATH}/Contents/Resources/CleanBrowserLogo.icns"
 if [[ ! -f "$VOLICON" ]]; then
@@ -279,7 +292,35 @@ echo "  Release:  $RELEASE_URL"
 echo "  Download: $DOWNLOAD_URL"
 echo ""
 
+# ═══════════════════════════════════════════════
+# STEP 3: Upload to Vercel Blob + sign for Sparkle
+# ═══════════════════════════════════════════════
+echo "── Step 3: Website upload + Sparkle signing ──"
+echo ""
+
+DESKTOP_DMG="${HOME}/Desktop/${DMG_NAME}"
+cp "$DMG_PATH" "$DESKTOP_DMG"
+echo "→ Copied DMG to ${DESKTOP_DMG}"
+
+# upload-dmg.mjs uploads the DMG, signs it with Sparkle's sign_update,
+# prints the <enclosure> block for appcast.xml, and deletes the Desktop
+# copy on success (keeps it if signing fails, so it can be signed manually).
+if command -v node &>/dev/null && [[ -f "${WEBSITE_DIR}/scripts/upload-dmg.mjs" ]]; then
+  if ! (cd "$WEBSITE_DIR" && node scripts/upload-dmg.mjs "$VERSION"); then
+    echo ""
+    echo "⚠️  Website upload failed — the DMG is still at ${DESKTOP_DMG}."
+    echo "   Retry with: cd ${WEBSITE_DIR} && node scripts/upload-dmg.mjs ${VERSION}"
+  fi
+else
+  echo "⚠️  node or upload-dmg.mjs not found — run manually:"
+  echo "   cd ${WEBSITE_DIR} && node scripts/upload-dmg.mjs ${VERSION}"
+fi
+echo ""
+
 # ── Clean up DMG ──
 rm -f "$DMG_PATH"
 echo "→ Cleaned up local DMG."
+echo ""
+echo "Remaining: paste the printed <enclosure> into Website/cleanbrowse-website/public/appcast.xml,"
+echo "update its version numbers + release notes, and deploy the website."
 echo "Done!"

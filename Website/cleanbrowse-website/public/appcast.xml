@@ -4,15 +4,15 @@
   Served at https://cleanbrowse.app/appcast.xml (referenced by SUFeedURL in the app's Info.plist).
 
   For each release:
-    1. Build + notarize the DMG as usual.
-    2. Upload it:   node scripts/upload-dmg.mjs <dmg-path> <version>   (token comes from .env.local)
-    3. Sign it:     ./bin/sign_update CleanBrowse-<version>.dmg   (from the Sparkle release tools)
-    4. Add a new <item> ABOVE the previous ones, filling in:
+    1. Build + notarize the DMG as usual, and export it to ~/Desktop/CleanBrowse.dmg.
+    2. Run:  node scripts/upload-dmg.mjs <version>
+       (uploads to Vercel Blob, signs with Sparkle's sign_update, prints a ready-to-paste
+       <enclosure> block, then deletes the Desktop DMG; token comes from .env.local)
+    3. Add a new <item> ABOVE the previous ones, filling in:
          sparkle:version          = CURRENT_PROJECT_VERSION (build number, must increase every release)
          sparkle:shortVersionString = MARKETING_VERSION
-         url                      = the versioned blob URL printed by the upload script
-         sparkle:edSignature + length = printed by sign_update
-    5. Deploy the website.
+         enclosure                = the block printed by the script
+    4. Deploy the website.
 -->
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
   <channel>
@@ -36,8 +36,8 @@
       <enclosure
         url="https://mwxjmxew0wyerqxi.public.blob.vercel-storage.com/CleanBrowse-1.2.0.dmg"
         type="application/octet-stream"
-        sparkle:edSignature="REPLACE_WITH_OUTPUT_OF_sign_update"
-        length="REPLACE_WITH_LENGTH_FROM_sign_update" />
+        sparkle:edSignature="PXWEuKZE2vdTo12MP6yFFJt4O9LEUzWFw70ywbrxYfX2iV2wEvGO2RLIpz1MGkczYxJ9l06NMKKVHq5sirX1CA=="
+        length="6117545" />
     </item>
   </channel>
 </rss>
