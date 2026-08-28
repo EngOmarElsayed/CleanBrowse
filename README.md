@@ -5,10 +5,8 @@
 <h1 align="center">CleanBrowse</h1>
 
 <p align="center">
-  <a href="https://viberank.dev/apps/CleanBrowse" target="_blank" rel="noopener noreferrer"><img src="https://viberank.dev/badge?app=CleanBrowse&theme=dark" alt="CleanBrowse on VibeRank" /></a>
-</p>
-
-<p align="center">
+  <a href="https://viberank.dev/apps/CleanBrowse" target="_blank" rel="noopener noreferrer"><img src="https://viberank.dev/badge?app=CleanBrowse&theme=dark" alt="CleanBrowse on VibeRank" height="54" /></a>
+  &nbsp;
   <a href="https://www.producthunt.com/products/cleanbrowse-free-adult-content-blocker?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-cleanbrowse-free-adult-content-blocker" target="_blank" rel="noopener noreferrer"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1235078&theme=neutral" alt="CleanBrowse - Free Adult Content Blocker | Product Hunt" width="250" height="54" /></a>
 </p>
 
