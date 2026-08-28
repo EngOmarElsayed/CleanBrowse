@@ -3,16 +3,12 @@
   Sparkle update feed for CleanBrowse.
   Served at https://cleanbrowse.app/appcast.xml (referenced by SUFeedURL in the app's Info.plist).
 
-  For each release:
-    1. Build + notarize the DMG as usual, and export it to ~/Desktop/CleanBrowse.dmg.
-    2. Run:  node scripts/upload-dmg.mjs <version>
-       (uploads to Vercel Blob, signs with Sparkle's sign_update, prints a ready-to-paste
-       <enclosure> block, then deletes the Desktop DMG; token comes from .env.local)
-    3. Add a new <item> ABOVE the previous ones, filling in:
-         sparkle:version          = CURRENT_PROJECT_VERSION (build number, must increase every release)
-         sparkle:shortVersionString = MARKETING_VERSION
-         enclosure                = the block printed by the script
-    4. Deploy the website.
+  This file is written by scripts/upload-dmg.mjs (invoked by scripts/release.sh),
+  which uploads + signs the DMG and inserts the new release entry automatically:
+    sparkle:version            = CFBundleVersion (build number, must increase every release)
+    sparkle:shortVersionString = MARKETING_VERSION
+  The ONLY remaining manual step after a release: review the diff, commit, and
+  deploy the website — Sparkle offers the previous version until this file is live.
 -->
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
   <channel>

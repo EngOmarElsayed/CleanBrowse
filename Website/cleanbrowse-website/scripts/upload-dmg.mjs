@@ -1,5 +1,5 @@
 import { put } from "@vercel/blob";
-import { readFileSync, existsSync, readdirSync, unlinkSync } from "fs";
+import { readFileSync, writeFileSync, existsSync, readdirSync, unlinkSync } from "fs";
 import { resolve, dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { homedir } from "os";
@@ -19,7 +19,21 @@ if (!process.env.BLOB_READ_WRITE_TOKEN) {
 // Usage:
 //   node scripts/upload-dmg.mjs <version>              → uses ~/Desktop/CleanBrowse.dmg, deletes it on success
 //   node scripts/upload-dmg.mjs <dmg-path> <version>   → uses the given file, keeps it
-const args = process.argv.slice(2);
+//
+// Optional flags (release.sh passes these; with them the script also writes the
+// new <item> into public/appcast.xml so no manual paste step remains):
+//   --build <n>     CFBundleVersion of the release (sparkle:version)
+//   --min-os <v>    LSMinimumSystemVersion (sparkle:minimumSystemVersion)
+// Release notes come from the APPCAST_NOTES env var (plain text, one bullet per line).
+const rawArgs = process.argv.slice(2);
+let buildNumber = null;
+let minOS = null;
+const args = [];
+for (let i = 0; i < rawArgs.length; i++) {
+  if (rawArgs[i] === "--build") buildNumber = rawArgs[++i];
+  else if (rawArgs[i] === "--min-os") minOS = rawArgs[++i];
+  else args.push(rawArgs[i]);
+}
 let dmgPath, version, deleteAfter;
 if (args.length === 1) {
   dmgPath = join(homedir(), "Desktop", "CleanBrowse.dmg");
@@ -34,7 +48,8 @@ if (args.length === 1) {
     "Usage:\n" +
       "  node scripts/upload-dmg.mjs <version>              (uses ~/Desktop/CleanBrowse.dmg, deletes it when done)\n" +
       "  node scripts/upload-dmg.mjs <dmg-path> <version>   (uses the given file, keeps it)\n" +
-      "Example: node scripts/upload-dmg.mjs 1.2.0"
+      "  Optional: --build <CFBundleVersion> --min-os <version>  (also updates public/appcast.xml)\n" +
+      "Example: node scripts/upload-dmg.mjs 1.2.0 --build 2 --min-os 14.6"
   );
   process.exit(1);
 }
@@ -81,23 +96,78 @@ const stable = await put("CleanBrowse.dmg", file, {
 });
 console.log("Uploaded (website button, stable):", stable.url);
 
-// 3. Sign the DMG for Sparkle and print a ready-to-paste appcast enclosure.
+// 3. Sign the DMG for Sparkle, then write the new <item> into public/appcast.xml
+//    (falls back to printing a paste-ready enclosure when --build wasn't given).
 const signUpdate = findSignUpdate();
 let signed = false;
 if (signUpdate) {
   try {
     const output = execFileSync(signUpdate, [dmgPath], { encoding: "utf8" }).trim();
     signed = true;
-    console.log("\nPaste this into the <item> in public/appcast.xml:\n");
-    console.log(`      <enclosure`);
-    console.log(`        url="${versioned.url}"`);
-    console.log(`        type="application/octet-stream"`);
-    console.log(`        ${output.replace(/ length=/, `\n        length=`)} />`);
+    const enclosure =
+      `      <enclosure\n` +
+      `        url="${versioned.url}"\n` +
+      `        type="application/octet-stream"\n` +
+      `        ${output.replace(/ length=/, `\n        length=`)} />`;
+
+    if (buildNumber) {
+      updateAppcast(enclosure);
+    } else {
+      console.log("\nPaste this into the <item> in public/appcast.xml:\n");
+      console.log(enclosure);
+    }
   } catch (err) {
     console.error("\nsign_update failed:", err.message);
   }
 } else {
   console.error("\nsign_update not found in DerivedData — build the app in Xcode once, or sign manually.");
+}
+
+function updateAppcast(enclosure) {
+  const appcastPath = join(dirname(fileURLToPath(import.meta.url)), "..", "public", "appcast.xml");
+  let xml = readFileSync(appcastPath, "utf8");
+
+  // Notes: plain text from APPCAST_NOTES, one bullet per line ("- " prefix optional).
+  const notesLines = (process.env.APPCAST_NOTES || "")
+    .split("\n")
+    .map((l) => l.replace(/^\s*[-•]\s*/, "").trim())
+    .filter(Boolean);
+  const notesHtml = notesLines.length
+    ? `        <ul>\n${notesLines.map((l) => `          <li>${l.replaceAll("]]>", "]]&gt;")}</li>`).join("\n")}\n        </ul>`
+    : `        <ul>\n          <li>Bug fixes and improvements.</li>\n        </ul>`;
+
+  const item =
+    `    <item>\n` +
+    `      <title>Version ${version}</title>\n` +
+    `      <sparkle:version>${buildNumber}</sparkle:version>\n` +
+    `      <sparkle:shortVersionString>${version}</sparkle:shortVersionString>\n` +
+    (minOS ? `      <sparkle:minimumSystemVersion>${minOS}</sparkle:minimumSystemVersion>\n` : "") +
+    `      <description><![CDATA[\n` +
+    `        <h2>What's new in ${version}</h2>\n` +
+    `${notesHtml}\n` +
+    `      ]]></description>\n` +
+    `      <pubDate>${new Date().toUTCString()}</pubDate>\n` +
+    `${enclosure}\n` +
+    `    </item>`;
+
+  // Idempotent re-runs: drop any existing item for this same version first.
+  // Anchored on the exact structure this script generates (<item> then <title>),
+  // so free text in comments can never satisfy the match.
+  const sameVersion = new RegExp(
+    `\\n?[ \\t]*<item>\\s*<title>Version ${version.replaceAll(".", "\\.")}</title>[\\s\\S]*?</item>`,
+    "g"
+  );
+  xml = xml.replace(sameVersion, "");
+
+  // Newest item goes first, right after the <language> line.
+  const anchor = /(<language>[^<]*<\/language>)/;
+  if (!anchor.test(xml)) {
+    console.error("\nCould not find insertion point in appcast.xml — paste this <item> manually:\n\n" + item);
+    return;
+  }
+  xml = xml.replace(anchor, `$1\n${item}`);
+  writeFileSync(appcastPath, xml);
+  console.log(`\nUpdated public/appcast.xml with the ${version} item (build ${buildNumber}).`);
 }
 
 // 4. Clean up the Desktop copy — but only if signing succeeded, so the
@@ -111,4 +181,8 @@ if (deleteAfter) {
   }
 }
 
-console.log("\nRemaining: update public/appcast.xml (version, notes, enclosure) and deploy the website.");
+if (buildNumber && signed) {
+  console.log("\nRemaining: review the appcast.xml diff, then commit and deploy the website.");
+} else {
+  console.log("\nRemaining: update public/appcast.xml (version, notes, enclosure) and deploy the website.");
+}

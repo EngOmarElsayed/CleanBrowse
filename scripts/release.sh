@@ -93,6 +93,7 @@ fi
 
 # ── Read app info ──
 APP_VERSION=$(defaults read "${APP_PATH}/Contents/Info.plist" CFBundleShortVersionString 2>/dev/null || echo "unknown")
+BUILD_NUMBER=$(defaults read "${APP_PATH}/Contents/Info.plist" CFBundleVersion 2>/dev/null || echo "unknown")
 MIN_MACOS=$(defaults read "${APP_PATH}/Contents/Info.plist" LSMinimumSystemVersion 2>/dev/null || echo "unknown")
 
 # ── Version sanity check (the appcast entry must match the binary) ──
@@ -304,18 +305,19 @@ DESKTOP_DMG="${HOME}/Desktop/${DMG_NAME}"
 cp "$DMG_PATH" "$DESKTOP_DMG"
 echo "→ Copied DMG to ${DESKTOP_DMG}"
 
-# upload-dmg.mjs uploads the DMG, signs it with Sparkle's sign_update,
-# prints the <enclosure> block for appcast.xml, and deletes the Desktop
-# copy on success (keeps it if signing fails, so it can be signed manually).
+# upload-dmg.mjs uploads the DMG, signs it with Sparkle's sign_update, writes
+# the new <item> into public/appcast.xml (version, build, notes, enclosure),
+# and deletes the Desktop copy on success (keeps it if signing fails, so it
+# can be signed manually).
 if command -v node &>/dev/null && [[ -f "${WEBSITE_DIR}/scripts/upload-dmg.mjs" ]]; then
-  if ! (cd "$WEBSITE_DIR" && node scripts/upload-dmg.mjs "$VERSION"); then
+  if ! (cd "$WEBSITE_DIR" && APPCAST_NOTES="$CUSTOM_NOTES" node scripts/upload-dmg.mjs "$VERSION" --build "$BUILD_NUMBER" --min-os "$MIN_MACOS"); then
     echo ""
     echo "⚠️  Website upload failed — the DMG is still at ${DESKTOP_DMG}."
-    echo "   Retry with: cd ${WEBSITE_DIR} && node scripts/upload-dmg.mjs ${VERSION}"
+    echo "   Retry with: cd ${WEBSITE_DIR} && APPCAST_NOTES=\"...\" node scripts/upload-dmg.mjs ${VERSION} --build ${BUILD_NUMBER} --min-os ${MIN_MACOS}"
   fi
 else
   echo "⚠️  node or upload-dmg.mjs not found — run manually:"
-  echo "   cd ${WEBSITE_DIR} && node scripts/upload-dmg.mjs ${VERSION}"
+  echo "   cd ${WEBSITE_DIR} && node scripts/upload-dmg.mjs ${VERSION} --build ${BUILD_NUMBER} --min-os ${MIN_MACOS}"
 fi
 echo ""
 
@@ -323,6 +325,10 @@ echo ""
 rm -f "$DMG_PATH"
 echo "→ Cleaned up local DMG."
 echo ""
-echo "Remaining: paste the printed <enclosure> into Website/cleanbrowse-website/public/appcast.xml,"
-echo "update its version numbers + release notes, and deploy the website."
+echo "╔══════════════════════════════════════════════════════════════╗"
+echo "║  LAST STEP (required for auto-updates to see this release):  ║"
+echo "║  Review the appcast.xml diff, then commit + deploy the       ║"
+echo "║  website. Until it's deployed, Sparkle keeps offering the    ║"
+echo "║  previous version.                                           ║"
+echo "╚══════════════════════════════════════════════════════════════╝"
 echo "Done!"
