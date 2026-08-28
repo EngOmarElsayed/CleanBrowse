@@ -135,9 +135,11 @@ if [[ -d "$MOUNT_POINT" ]]; then
   hdiutil detach "$MOUNT_POINT" -quiet 2>/dev/null || true
 fi
 
-# ── Create writable DMG ──
-echo "→ Creating writable DMG..."
-hdiutil create -size 50m -fs HFS+ -volname "$VOL_NAME" "$DMG_TEMP" -quiet
+# ── Create writable DMG (sized to fit the app + headroom) ──
+APP_SIZE_MB=$(du -sm "$APP_PATH" | cut -f1)
+DMG_SIZE_MB=$((APP_SIZE_MB + 60))
+echo "→ Creating writable DMG (${DMG_SIZE_MB}MB for a ${APP_SIZE_MB}MB app)..."
+hdiutil create -size "${DMG_SIZE_MB}m" -fs HFS+ -volname "$VOL_NAME" "$DMG_TEMP" -quiet
 
 # ── Mount it ──
 echo "→ Mounting DMG..."
