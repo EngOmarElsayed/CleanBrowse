@@ -21,18 +21,19 @@
     <description>Most recent updates to CleanBrowse</description>
     <language>en</language>
     <item>
-      <title>Version 1.2.0</title>
-      <sparkle:version>2</sparkle:version>
-      <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
+      <title>Version 1.3.0</title>
+      <sparkle:version>3</sparkle:version>
+      <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.6</sparkle:minimumSystemVersion>
       <description><![CDATA[
-        <h2>What's new in 1.2.0</h2>
+        <h2>What's new in 1.3.0</h2>
         <ul>
-          <li>Automatic updates — CleanBrowse can now update itself.</li>
-          <li>Anonymous usage analytics (Aptabase) so we know which features matter — never who you are.</li>
+          <li>Safari image filter — a new extension blurs NSFW images and video frames on-device (Core ML) before you ever see them. Enable it in Safari ▸ Settings ▸ Extensions.</li>
+          <li>One-click shortcut from the menu bar straight to Safari's extension settings.</li>
+          <li>All new features fully localized in six languages.</li>
         </ul>
       ]]></description>
-      <pubDate>Fri, 28 Aug 2026 12:00:00 +0000</pubDate>
+      <pubDate>Fri, 28 Aug 2026 16:00:00 +0000</pubDate>
       <enclosure
         url="https://mwxjmxew0wyerqxi.public.blob.vercel-storage.com/CleanBrowse-1.3.0.dmg"
         type="application/octet-stream"
