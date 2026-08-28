@@ -1,13 +1,31 @@
 import { put } from "@vercel/blob";
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import { readFileSync, existsSync } from "fs";
+import { resolve, dirname, join } from "path";
+import { fileURLToPath } from "url";
+
+// Load BLOB_READ_WRITE_TOKEN from .env.local (gitignored — never commit the token).
+if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  const envPath = join(dirname(fileURLToPath(import.meta.url)), "..", ".env.local");
+  if (existsSync(envPath)) {
+    for (const line of readFileSync(envPath, "utf8").split("\n")) {
+      const match = line.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/);
+      if (match && !process.env[match[1]]) process.env[match[1]] = match[2];
+    }
+  }
+}
 
 const [dmgPath, version] = process.argv.slice(2);
 if (!dmgPath || !version) {
   console.error(
-    "Usage: BLOB_READ_WRITE_TOKEN=<token> node scripts/upload-dmg.mjs <path-to-CleanBrowse.dmg> <version>\n" +
-      "Example: node scripts/upload-dmg.mjs ~/Desktop/CleanBrowse.dmg 1.5"
+    "Usage: node scripts/upload-dmg.mjs <path-to-CleanBrowse.dmg> <version>\n" +
+      "Example: node scripts/upload-dmg.mjs ~/Desktop/CleanBrowse.dmg 1.2.0\n" +
+      "(reads BLOB_READ_WRITE_TOKEN from .env.local or the environment)"
   );
+  process.exit(1);
+}
+
+if (!process.env.BLOB_READ_WRITE_TOKEN) {
+  console.error("BLOB_READ_WRITE_TOKEN not found — add it to .env.local or pass it in the environment.");
   process.exit(1);
 }
 
