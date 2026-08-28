@@ -37,38 +37,41 @@ function DownloadIcon() {
   );
 }
 
-function GlobeIcon() {
+function EyeOffIcon({ size = 28 }: { size?: number }) {
   return (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-leaf">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20" />
-      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-leaf">
+      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+      <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
+      <line x1="1" y1="1" x2="23" y2="23" />
     </svg>
   );
 }
 
-function SlidersIcon() {
+function PuzzleIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-leaf">
-      <line x1="4" y1="21" x2="4" y2="14" />
-      <line x1="4" y1="10" x2="4" y2="3" />
-      <line x1="12" y1="21" x2="12" y2="12" />
-      <line x1="12" y1="8" x2="12" y2="3" />
-      <line x1="20" y1="21" x2="20" y2="16" />
-      <line x1="20" y1="12" x2="20" y2="3" />
-      <line x1="1" y1="14" x2="7" y2="14" />
-      <line x1="9" y1="8" x2="15" y2="8" />
-      <line x1="17" y1="16" x2="23" y2="16" />
+      <path d="M19.44 12.99a1.5 1.5 0 0 1 0-2.12l1.12-1.12a1.5 1.5 0 0 0 0-2.12l-2.19-2.19a1.5 1.5 0 0 0-2.12 0l-1.12 1.12a1.5 1.5 0 0 1-2.12 0l-.44-.44a1.5 1.5 0 0 1 0-2.12l.06-.06a1.5 1.5 0 0 0 0-2.12l-.5-.5a1.5 1.5 0 0 0-2.12 0L3.44 7.89a1.5 1.5 0 0 0 0 2.12l.5.5a1.5 1.5 0 0 0 2.12 0l.06-.06a1.5 1.5 0 0 1 2.12 0l.44.44a1.5 1.5 0 0 1 0 2.12l-1.12 1.12a1.5 1.5 0 0 0 0 2.12l2.19 2.19a1.5 1.5 0 0 0 2.12 0l1.12-1.12a1.5 1.5 0 0 1 2.12 0l.06.06a1.5 1.5 0 0 0 2.12 0l.5-.5a1.5 1.5 0 0 0 0-2.12z" />
     </svg>
   );
 }
 
-function FeatherIcon() {
+function RefreshIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-leaf">
-      <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
-      <line x1="16" y1="8" x2="2" y2="22" />
-      <line x1="17.5" y1="15" x2="9" y2="15" />
+      <polyline points="23 4 23 10 17 10" />
+      <polyline points="1 20 1 14 7 14" />
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+    </svg>
+  );
+}
+
+function PhotoGlyph() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <circle cx="8.5" cy="8.5" r="1.5" />
+      <polyline points="21 15 16 10 5 21" />
     </svg>
   );
 }
@@ -103,16 +106,10 @@ function ShieldCheckIcon() {
 
 /* ─────────────────────────── Content data ─────────────────────────────── */
 
-const LANGUAGES = [
-  { native: "English", name: "English" },
-  { native: "العربية", name: "Arabic" },
-  { native: "Français", name: "French" },
-  { native: "Español", name: "Spanish" },
-  { native: "中文", name: "Chinese" },
-  { native: "Deutsch", name: "German" },
-];
+const LAYER_NUMBERS = ["01", "02", "03", "04"];
 
-const LAYER_NUMBERS = ["01", "02", "03"];
+// Demo grid for the Safari image-blur illustration: which tiles are "blurred"
+const DEMO_TILES = [false, true, false, false, false, true];
 
 /* ───────────────────────────── Page ──────────────────────────────────── */
 
@@ -125,8 +122,31 @@ export default async function Home({
   if (!isLocale(locale)) notFound();
   const dict = getDictionary(locale);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "CleanBrowse",
+    operatingSystem: "macOS 14.0 or later",
+    applicationCategory: "UtilitiesApplication",
+    softwareVersion: "1.3.0",
+    description: dict.meta.description,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    downloadUrl: DMG_URL,
+    author: { "@type": "Person", name: "Omar Elsayed" },
+    featureList: [
+      "System-wide adult content blocking via /etc/hosts and a DNS proxy",
+      "NSFW image and video-frame blurring in Safari with on-device Core ML",
+      "Enforced SafeSearch on Google, YouTube, Bing, and DuckDuckGo",
+      "Custom domain blocking",
+    ],
+  };
+
   return (
     <main className="min-h-screen overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar locale={locale} dict={dict.nav} />
 
       {/* ── Hero ── */}
@@ -197,7 +217,7 @@ export default async function Home({
                 src="/screenshot.png"
                 alt={dict.hero.screenshotAlt}
                 width={480}
-                height={417}
+                height={498}
                 className="rounded-2xl border border-line shadow-2xl shadow-ink/15"
                 priority
               />
@@ -253,6 +273,88 @@ export default async function Home({
         </div>
       </section>
 
+      {/* ── Safari image blur (new in 1.3.0) ── */}
+      <section id="blur" className="py-28 scroll-mt-16">
+        <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-[1.05fr_1fr] gap-14 items-center">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-leaf mb-5">
+              {dict.blur.eyebrow}
+            </p>
+            <h2 className="font-display text-4xl sm:text-5xl font-bold text-ink leading-tight mb-5">
+              {dict.blur.title}
+            </h2>
+            <p className="text-moss text-lg leading-relaxed mb-10">{dict.blur.intro}</p>
+
+            <div className="space-y-7 mb-10">
+              {dict.blur.points.map((point) => (
+                <div key={point.title} className="border-s-2 border-leaf/30 ps-5">
+                  <h3 className="font-display text-lg font-bold text-ink mb-1.5">
+                    {point.title}
+                  </h3>
+                  <p className="text-moss leading-relaxed">{point.body}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {dict.blur.chips.map((chip) => (
+                <span
+                  key={chip}
+                  className="px-3 py-1.5 rounded-full bg-mint text-leaf-deep text-sm font-medium"
+                >
+                  {chip}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Illustration: browser window with a grid of image results, explicit ones blurred */}
+          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+            <div
+              role="img"
+              aria-label={dict.blur.demoNote}
+              className="rounded-3xl bg-card border border-line shadow-2xl shadow-ink/10 p-4 sm:p-5"
+            >
+              <div className="flex items-center gap-1.5 mb-4 px-1" aria-hidden="true">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-300" />
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-300" />
+                <span className="w-2.5 h-2.5 rounded-full bg-leaf-bright/70" />
+                <span className="ms-3 flex-1 h-6 rounded-full bg-mint/70 border border-line" />
+              </div>
+              <div className="grid grid-cols-3 gap-2.5" aria-hidden="true">
+                {DEMO_TILES.map((isBlurred, i) => (
+                  <div
+                    key={i}
+                    className="relative aspect-square rounded-xl overflow-hidden border border-line"
+                  >
+                    {isBlurred ? (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-br from-rose-200 via-orange-100 to-rose-300">
+                          <span className="absolute top-2 start-2 w-5 h-5 rounded-full bg-rose-300/80" />
+                          <span className="absolute bottom-2 end-2 w-8 h-4 rounded-md bg-orange-200/90" />
+                        </div>
+                        <div className="absolute inset-0 backdrop-blur-md bg-white/40 flex flex-col items-center justify-center gap-1 text-ink/60">
+                          <EyeOffIcon size={18} />
+                          <span className="text-[10px] font-mono">{dict.blur.demoBlurred}</span>
+                        </div>
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-mint to-leaf/25 flex items-center justify-center text-leaf/70">
+                        <PhotoGlyph />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="float-soft absolute -bottom-4 start-6 flex items-center gap-2 px-4 py-2.5 rounded-xl bg-pine text-white font-mono text-xs shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-leaf-bright" />
+              {dict.blur.demoBadge}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── How it works ── */}
       <section id="how" className="py-28 bg-mint/40 border-y border-line scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6">
@@ -266,7 +368,7 @@ export default async function Home({
             <p className="text-moss text-lg leading-relaxed">{dict.how.intro}</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {dict.how.layers.map((layer, i) => (
               <div key={layer.title} className="rounded-3xl bg-card border border-line p-9">
                 <span className="font-mono text-sm text-leaf">
@@ -296,68 +398,70 @@ export default async function Home({
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {/* Languages card */}
+            {/* Image blur card */}
             <div className="rounded-3xl bg-card border border-line p-9 hover:border-leaf/40 hover:shadow-lg hover:shadow-leaf/5 transition-all">
               <div className="mb-6">
-                <GlobeIcon />
+                <EyeOffIcon />
               </div>
               <h3 className="font-display text-xl font-bold text-ink mb-3">
-                {dict.whatsNew.langTitle}
+                {dict.whatsNew.blurTitle}
               </h3>
-              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.langBody}</p>
-              <div className="flex flex-wrap gap-2">
-                {LANGUAGES.map((lang) => (
-                  <span
-                    key={lang.name}
-                    title={lang.name}
-                    className="px-3 py-1.5 rounded-full bg-mint text-leaf-deep text-sm font-medium"
+              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.blurBody}</p>
+              <div className="grid grid-cols-3 gap-2" aria-hidden="true">
+                {[false, true, false].map((isBlurred, i) => (
+                  <div
+                    key={i}
+                    className="relative aspect-square rounded-lg overflow-hidden border border-line"
                   >
-                    {lang.native}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* SafeSearch card */}
-            <div className="rounded-3xl bg-card border border-line p-9 hover:border-leaf/40 hover:shadow-lg hover:shadow-leaf/5 transition-all">
-              <div className="mb-6">
-                <SlidersIcon />
-              </div>
-              <h3 className="font-display text-xl font-bold text-ink mb-3">
-                {dict.whatsNew.safeTitle}
-              </h3>
-              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.safeBody}</p>
-              <div className="space-y-2.5 font-mono text-[13px]">
-                {["Google", "YouTube", "Bing", "DuckDuckGo"].map((engine) => (
-                  <div key={engine} className="flex items-center justify-between">
-                    <span className="text-ink/70">{engine}</span>
-                    <span className="inline-flex items-center gap-1.5 text-leaf-deep">
-                      <span className="w-7 h-4 rounded-full bg-leaf relative">
-                        <span className="absolute end-0.5 top-0.5 w-3 h-3 rounded-full bg-white" />
-                      </span>
-                      {dict.whatsNew.safeOn}
-                    </span>
+                    {isBlurred ? (
+                      <>
+                        <div className="absolute inset-0 bg-gradient-to-br from-rose-200 to-orange-200" />
+                        <div className="absolute inset-0 backdrop-blur-md bg-white/40 flex items-center justify-center text-ink/60">
+                          <EyeOffIcon size={16} />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 bg-gradient-to-br from-mint to-leaf/25 flex items-center justify-center text-leaf/70">
+                        <PhotoGlyph />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Performance card */}
+            {/* Menu bar shortcut card */}
             <div className="rounded-3xl bg-card border border-line p-9 hover:border-leaf/40 hover:shadow-lg hover:shadow-leaf/5 transition-all">
               <div className="mb-6">
-                <FeatherIcon />
+                <PuzzleIcon />
               </div>
               <h3 className="font-display text-xl font-bold text-ink mb-3">
-                {dict.whatsNew.perfTitle}
+                {dict.whatsNew.menuTitle}
               </h3>
-              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.perfBody}</p>
-              <ul className="space-y-2.5 text-sm text-moss">
-                {dict.whatsNew.perfPoints.map((point) => (
-                  <li key={point} className="flex gap-2.5">
-                    <span className="text-leaf mt-0.5">✓</span> {point}
-                  </li>
-                ))}
-              </ul>
+              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.menuBody}</p>
+              <span className="inline-block font-mono text-xs bg-mint text-leaf-deep px-3 py-1.5 rounded-lg" dir="ltr">
+                Safari ▸ Extensions ▸ CleanBrowse
+              </span>
+            </div>
+
+            {/* In-app updates card */}
+            <div className="rounded-3xl bg-card border border-line p-9 hover:border-leaf/40 hover:shadow-lg hover:shadow-leaf/5 transition-all">
+              <div className="mb-6">
+                <RefreshIcon />
+              </div>
+              <h3 className="font-display text-xl font-bold text-ink mb-3">
+                {dict.whatsNew.updateTitle}
+              </h3>
+              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.updateBody}</p>
+              <div className="inline-flex items-center gap-2.5 font-mono text-sm">
+                <span className="px-2.5 py-1 rounded-lg bg-ink/5 text-moss">
+                  {dict.whatsNew.updateFrom}
+                </span>
+                <span className="text-moss rtl-flip" aria-hidden="true">→</span>
+                <span className="px-2.5 py-1 rounded-lg bg-leaf text-white font-medium">
+                  {dict.whatsNew.updateTo}
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -477,13 +581,13 @@ export default async function Home({
             {/* The winding road, drawn through every checkpoint */}
             <RoadPath />
 
-            {/* Start cap — where v1.0 stands today */}
+            {/* Start cap — where v1.3.0 stands today */}
             <div className="relative grid grid-cols-[2.5rem_1fr] lg:flex lg:justify-center mb-12">
               <span
                 data-road-point
                 className="justify-self-center inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-leaf text-white font-mono text-xs font-medium border-4 border-card shadow-md shadow-leaf/25"
               >
-                v1.0
+                v1.3.0
               </span>
             </div>
 

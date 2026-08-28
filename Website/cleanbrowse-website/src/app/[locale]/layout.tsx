@@ -39,6 +39,7 @@ export async function generateMetadata({
   return {
     title: dict.meta.title,
     description: dict.meta.description,
+    keywords: dict.meta.keywords,
     icons: {
       icon: [
         { url: "/Favicons/favicon.ico", sizes: "any" },
@@ -58,6 +59,13 @@ export async function generateMetadata({
       description: dict.meta.description,
       type: "website",
       locale,
+      images: [{ url: "/screenshot.png", width: 944, height: 980 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: dict.meta.title,
+      description: dict.meta.description,
+      images: ["/screenshot.png"],
     },
   };
 }

@@ -7,15 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E43AB831093101FEED09AD6 /* BlurShieldNSFW.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = B44FECA0A1B17D006A27C609 /* BlurShieldNSFW.mlpackage */; };
 		417558732F4D8C40007DF6FE /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D3B63D2F3FAE860073C910 /* NetworkExtension.framework */; };
 		4175587D2F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 417558722F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4181B7A330309276001B3421 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4181B7A230309276001B3421 /* FactoryKit */; };
+		4185005F3041C8720093CB17 /* BlurShieldKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4185005E3041C8720093CB17 /* BlurShieldKit */; };
 		4185FF1930416BBF0093CB17 /* Aptabase in Frameworks */ = {isa = PBXBuildFile; productRef = 4185FF1830416BBF0093CB17 /* Aptabase */; };
 		4185FF21304176C90093CB17 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 4185FF20304176C90093CB17 /* Sparkle */; };
 		41C5E02630349446004E4606 /* UserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 41C5E02530349446004E4606 /* UserDefaults */; };
+		5F466D8888393D35AFEEC849 /* BlurShieldKit in Frameworks */ = {isa = PBXBuildFile; productRef = 799F697703570D6B4D4129C4 /* BlurShieldKit */; };
+		740394110C88F6DA76A18061 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED2428D655C21FC018DBF73 /* SafariWebExtensionHandler.swift */; };
+		AED3FF75F6AF1D248894A88B /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 6336A535AAF21E78B6443EFC /* background.js */; };
+		C510A29EF6C8F1D85D7BFF00 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD7BF76FB8CCAB4AD78ABDF /* Cocoa.framework */; };
+		D5674BFC35BD246AD0C7922C /* CleanBrowse Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 3037FA28CC89C225E4887596 /* CleanBrowse Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		FC075390572EDCC8991E5F06 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = C9F67B8D5D07210453E95DBB /* manifest.json */; };
+		FFCAC9B4037581D29833A292 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = EA98D482C91CC43B20CEA83D /* content.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1257CAF19410709391B10F49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 41857F1A2F3E75C5003C2389 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DD2BC4EAF881B0A976100A0;
+			remoteInfo = "CleanBrowse Extension";
+		};
 		4175587B2F4D8C40007DF6FE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 41857F1A2F3E75C5003C2389 /* Project object */;
@@ -43,6 +59,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				D5674BFC35BD246AD0C7922C /* CleanBrowse Extension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,9 +67,17 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1104617C60F7A58C539891F9 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3037FA28CC89C225E4887596 /* CleanBrowse Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "CleanBrowse Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3ED2428D655C21FC018DBF73 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
 		417558722F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = com.omarelsayed.cleanbrowse.proxy.systemextension; sourceTree = BUILT_PRODUCTS_DIR; };
 		41857F222F3E75C5003C2389 /* CleanBrowse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CleanBrowse.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41D3B63D2F3FAE860073C910 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		4CD7BF76FB8CCAB4AD78ABDF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		6336A535AAF21E78B6443EFC /* background.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; path = background.js; sourceTree = "<group>"; };
+		B44FECA0A1B17D006A27C609 /* BlurShieldNSFW.mlpackage */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.mlpackage; path = BlurShieldNSFW.mlpackage; sourceTree = "<group>"; };
+		C9F67B8D5D07210453E95DBB /* manifest.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		EA98D482C91CC43B20CEA83D /* content.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -111,9 +136,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F60A8A3098B99FF1641B749D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C510A29EF6C8F1D85D7BFF00 /* Cocoa.framework in Frameworks */,
+				5F466D8888393D35AFEEC849 /* BlurShieldKit in Frameworks */,
+				4185005F3041C8720093CB17 /* BlurShieldKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2BAFC1435F0464A75B4171EB /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				4CD7BF76FB8CCAB4AD78ABDF /* Cocoa.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
+		312AFCF3C28F543915B51CC8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B44FECA0A1B17D006A27C609 /* BlurShieldNSFW.mlpackage */,
+			);
+			name = Models;
+			path = ../Models;
+			sourceTree = "<group>";
+		};
 		41857F192F3E75C5003C2389 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +173,9 @@
 				417558742F4D8C40007DF6FE /* proxy */,
 				41D3B63C2F3FAE860073C910 /* Frameworks */,
 				41857F232F3E75C5003C2389 /* Products */,
+				E07100DC08D84741728F944B /* CleanBrowse Extension */,
+				312AFCF3C28F543915B51CC8 /* Models */,
+				EBF4CD8EB183C735B4206B8C /* extension */,
 			);
 			sourceTree = "<group>";
 		};
@@ -129,6 +184,7 @@
 			children = (
 				41857F222F3E75C5003C2389 /* CleanBrowse.app */,
 				417558722F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension */,
+				3037FA28CC89C225E4887596 /* CleanBrowse Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -137,8 +193,29 @@
 			isa = PBXGroup;
 			children = (
 				41D3B63D2F3FAE860073C910 /* NetworkExtension.framework */,
+				2BAFC1435F0464A75B4171EB /* OS X */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E07100DC08D84741728F944B /* CleanBrowse Extension */ = {
+			isa = PBXGroup;
+			children = (
+				3ED2428D655C21FC018DBF73 /* SafariWebExtensionHandler.swift */,
+				1104617C60F7A58C539891F9 /* Info.plist */,
+			);
+			path = "CleanBrowse Extension";
+			sourceTree = "<group>";
+		};
+		EBF4CD8EB183C735B4206B8C /* extension */ = {
+			isa = PBXGroup;
+			children = (
+				C9F67B8D5D07210453E95DBB /* manifest.json */,
+				EA98D482C91CC43B20CEA83D /* content.js */,
+				6336A535AAF21E78B6443EFC /* background.js */,
+			);
+			name = extension;
+			path = ../extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,8 +237,6 @@
 				417558742F4D8C40007DF6FE /* proxy */,
 			);
 			name = proxy;
-			packageProductDependencies = (
-			);
 			productName = proxy;
 			productReference = 417558722F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension */;
 			productType = "com.apple.product-type.system-extension";
@@ -180,6 +255,7 @@
 			);
 			dependencies = (
 				4175587C2F4D8C40007DF6FE /* PBXTargetDependency */,
+				13B702500D2D628C9F9CE4BA /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				41857F242F3E75C5003C2389 /* CleanBrowse */,
@@ -194,6 +270,27 @@
 			productName = CleanBrowse;
 			productReference = 41857F222F3E75C5003C2389 /* CleanBrowse.app */;
 			productType = "com.apple.product-type.application";
+		};
+		4DD2BC4EAF881B0A976100A0 /* CleanBrowse Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8C7677146447406E87DCFDA8 /* Build configuration list for PBXNativeTarget "CleanBrowse Extension" */;
+			buildPhases = (
+				C0CC2486007869EF08EB3CF9 /* Sources */,
+				F60A8A3098B99FF1641B749D /* Frameworks */,
+				D6100D360929D5EE948673F1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CleanBrowse Extension";
+			packageProductDependencies = (
+				799F697703570D6B4D4129C4 /* BlurShieldKit */,
+				4185005E3041C8720093CB17 /* BlurShieldKit */,
+			);
+			productName = "CleanBrowse Extension";
+			productReference = 3037FA28CC89C225E4887596 /* CleanBrowse Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -232,6 +329,7 @@
 				41C5E02430349446004E4606 /* XCRemoteSwiftPackageReference "SwiftUserDefaults" */,
 				4185FF1730416BBF0093CB17 /* XCRemoteSwiftPackageReference "aptabase-swift" */,
 				4185FF1F304176C90093CB17 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				4185005D3041C8720093CB17 /* XCRemoteSwiftPackageReference "BlurShieldKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 41857F232F3E75C5003C2389 /* Products */;
@@ -240,6 +338,7 @@
 			targets = (
 				41857F212F3E75C5003C2389 /* CleanBrowse */,
 				417558712F4D8C40007DF6FE /* proxy */,
+				4DD2BC4EAF881B0A976100A0 /* CleanBrowse Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -256,6 +355,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6100D360929D5EE948673F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FC075390572EDCC8991E5F06 /* manifest.json in Resources */,
+				FFCAC9B4037581D29833A292 /* content.js in Resources */,
+				AED3FF75F6AF1D248894A88B /* background.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,9 +385,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C0CC2486007869EF08EB3CF9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				740394110C88F6DA76A18061 /* SafariWebExtensionHandler.swift in Sources */,
+				2E43AB831093101FEED09AD6 /* BlurShieldNSFW.mlpackage in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		13B702500D2D628C9F9CE4BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CleanBrowse Extension";
+			target = 4DD2BC4EAF881B0A976100A0 /* CleanBrowse Extension */;
+			targetProxy = 1257CAF19410709391B10F49 /* PBXContainerItemProxy */;
+		};
 		4175587C2F4D8C40007DF6FE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 417558712F4D8C40007DF6FE /* proxy */;
@@ -287,13 +411,54 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		3FA122B953FACB93888D6EF8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				COREML_CODEGEN_LANGUAGE = Swift;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = 9PYC9KWKRS;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CleanBrowse Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "CleanBrowse Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 1.3.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse.extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		417558802F4D8C40007DF6FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = proxy/proxyDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 9PYC9KWKRS;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -318,7 +483,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse.proxy;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -339,7 +504,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 9PYC9KWKRS;
 				ENABLE_APP_SANDBOX = YES;
@@ -365,7 +530,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse.proxy;
 				PRODUCT_NAME = "$(inherited)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -509,7 +674,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 9PYC9KWKRS;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -538,7 +703,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -562,7 +727,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = 9PYC9KWKRS;
 				ENABLE_APP_SANDBOX = NO;
@@ -592,7 +757,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -606,6 +771,44 @@
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
+		};
+		ACA926E2AA350F73F360D112 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COREML_CODEGEN_LANGUAGE = Swift;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 9PYC9KWKRS;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "CleanBrowse Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "CleanBrowse Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
+				MARKETING_VERSION = 1.3.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.omarelsayed.cleanbrowse.extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -637,6 +840,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		8C7677146447406E87DCFDA8 /* Build configuration list for PBXNativeTarget "CleanBrowse Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FA122B953FACB93888D6EF8 /* Release */,
+				ACA926E2AA350F73F360D112 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -646,6 +858,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 3.3.2;
+			};
+		};
+		4185005D3041C8720093CB17 /* XCRemoteSwiftPackageReference "BlurShieldKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EngOmarElsayed/BlurShieldKit";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 		4185FF1730416BBF0093CB17 /* XCRemoteSwiftPackageReference "aptabase-swift" */ = {
@@ -680,6 +900,11 @@
 			package = 4181B7A130309276001B3421 /* XCRemoteSwiftPackageReference "Factory" */;
 			productName = FactoryKit;
 		};
+		4185005E3041C8720093CB17 /* BlurShieldKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4185005D3041C8720093CB17 /* XCRemoteSwiftPackageReference "BlurShieldKit" */;
+			productName = BlurShieldKit;
+		};
 		4185FF1830416BBF0093CB17 /* Aptabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4185FF1730416BBF0093CB17 /* XCRemoteSwiftPackageReference "aptabase-swift" */;
@@ -694,6 +919,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 41C5E02430349446004E4606 /* XCRemoteSwiftPackageReference "SwiftUserDefaults" */;
 			productName = UserDefaults;
+		};
+		799F697703570D6B4D4129C4 /* BlurShieldKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BlurShieldKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
