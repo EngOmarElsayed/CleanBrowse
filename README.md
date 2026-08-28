@@ -9,6 +9,10 @@
 </p>
 
 <p align="center">
+  <a href="https://www.producthunt.com/products/cleanbrowse-free-adult-content-blocker?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-cleanbrowse-free-adult-content-blocker" target="_blank" rel="noopener noreferrer"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1235078&theme=neutral" alt="CleanBrowse - Free Adult Content Blocker | Product Hunt" width="250" height="54" /></a>
+</p>
+
+<p align="center">
   <a href="https://github.com/EngOmarElsayed/CleanBrowse/releases/latest"><img src="https://img.shields.io/github/v/release/EngOmarElsayed/CleanBrowse?style=flat-square" alt="Latest Release"></a>
   <a href="https://github.com/EngOmarElsayed/CleanBrowse/releases"><img src="https://img.shields.io/github/downloads/EngOmarElsayed/CleanBrowse/total?style=flat-square" alt="Downloads"></a>
   <img src="https://img.shields.io/badge/platform-macOS%2014%2B-blue?style=flat-square" alt="Platform">

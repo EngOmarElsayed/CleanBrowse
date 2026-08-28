@@ -7,7 +7,7 @@ import DnsLog from "../components/DnsLog";
 import RoadPath from "../components/RoadPath";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { DMG_URL, GITHUB_URL, APTABASE_URL } from "@/lib/links";
+import { DMG_URL, GITHUB_URL, APTABASE_URL, PRODUCT_HUNT_URL, productHuntBadge } from "@/lib/links";
 
 function GitHubIcon() {
   return (
@@ -192,6 +192,23 @@ export default async function Home({
               </div>
 
               <p className="mt-5 text-sm text-moss text-center">{dict.hero.ctaNote}</p>
+
+              <div className="mt-5 flex justify-center">
+                <a
+                  href={PRODUCT_HUNT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-transform hover:-translate-y-0.5"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={productHuntBadge("light")}
+                    alt="CleanBrowse - Free Adult Content Blocker | Product Hunt"
+                    width={250}
+                    height={54}
+                  />
+                </a>
+              </div>
             </div>
 
             <div className="rise-in rise-delay-4 mt-10 flex flex-wrap gap-x-8 gap-y-3 justify-center lg:justify-start font-mono text-[13px] text-moss tnum">
