@@ -10,6 +10,7 @@
 		417558732F4D8C40007DF6FE /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41D3B63D2F3FAE860073C910 /* NetworkExtension.framework */; };
 		4175587D2F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 417558722F4D8C40007DF6FE /* com.omarelsayed.cleanbrowse.proxy.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4181B7A330309276001B3421 /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4181B7A230309276001B3421 /* FactoryKit */; };
+		4185FF1930416BBF0093CB17 /* Aptabase in Frameworks */ = {isa = PBXBuildFile; productRef = 4185FF1830416BBF0093CB17 /* Aptabase */; };
 		41C5E02630349446004E4606 /* UserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 41C5E02530349446004E4606 /* UserDefaults */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,7 @@
 			files = (
 				4181B7A330309276001B3421 /* FactoryKit in Frameworks */,
 				41C5E02630349446004E4606 /* UserDefaults in Frameworks */,
+				4185FF1930416BBF0093CB17 /* Aptabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +186,7 @@
 			packageProductDependencies = (
 				4181B7A230309276001B3421 /* FactoryKit */,
 				41C5E02530349446004E4606 /* UserDefaults */,
+				4185FF1830416BBF0093CB17 /* Aptabase */,
 			);
 			productName = CleanBrowse;
 			productReference = 41857F222F3E75C5003C2389 /* CleanBrowse.app */;
@@ -224,6 +227,7 @@
 			packageReferences = (
 				4181B7A130309276001B3421 /* XCRemoteSwiftPackageReference "Factory" */,
 				41C5E02430349446004E4606 /* XCRemoteSwiftPackageReference "SwiftUserDefaults" */,
+				4185FF1730416BBF0093CB17 /* XCRemoteSwiftPackageReference "aptabase-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 41857F232F3E75C5003C2389 /* Products */;
@@ -640,6 +644,14 @@
 				minimumVersion = 3.3.2;
 			};
 		};
+		4185FF1730416BBF0093CB17 /* XCRemoteSwiftPackageReference "aptabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aptabase/aptabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.11;
+			};
+		};
 		41C5E02430349446004E4606 /* XCRemoteSwiftPackageReference "SwiftUserDefaults" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/EngOmarElsayed/SwiftUserDefaults.git";
@@ -655,6 +667,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4181B7A130309276001B3421 /* XCRemoteSwiftPackageReference "Factory" */;
 			productName = FactoryKit;
+		};
+		4185FF1830416BBF0093CB17 /* Aptabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4185FF1730416BBF0093CB17 /* XCRemoteSwiftPackageReference "aptabase-swift" */;
+			productName = Aptabase;
 		};
 		41C5E02530349446004E4606 /* UserDefaults */ = {
 			isa = XCSwiftPackageProductDependency;

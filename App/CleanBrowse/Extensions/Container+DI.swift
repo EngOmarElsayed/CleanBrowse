@@ -15,4 +15,8 @@ extension Container {
     var notificationService: Factory<NotificationServiceProtocol> {
         self { NotificationService() }.singleton
     }
+
+    var analyticsService: Factory<CleanBrowseAnalyticsProtocol> {
+        self { CleanBrowseAnalytics() }.singleton
+    }
 }

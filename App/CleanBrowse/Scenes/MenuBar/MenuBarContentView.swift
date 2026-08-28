@@ -16,6 +16,7 @@ struct MenuBarContentView: View {
     @State private var showSettings: Bool = false
     @State private var isNotificationAuth: Bool = false
     @Injected(\.notificationService) private var notificationService
+    @Injected(\.analyticsService) private var analyticsService
 
     var body: some View {
         VStack(spacing: 0) {
@@ -44,6 +45,7 @@ struct MenuBarContentView: View {
                 Spacer()
 
                 Button {
+                    analyticsService.trackEvent(for: "app_terminated_by_user", properties: nil)
                     NSApp.terminate(nil)
                 } label: {
                     Image(systemName: "power")
