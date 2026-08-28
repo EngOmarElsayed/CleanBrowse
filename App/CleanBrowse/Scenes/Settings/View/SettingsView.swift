@@ -21,12 +21,14 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Settings")
-                .font(.title)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Settings")
+                    .font(.title)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-            Divider()
-                .padding(.horizontal, -16)
+                Divider()
+                    .padding(.horizontal, -16)
+            }
 
             VStack(alignment: .leading, spacing: 12) {
                 Section("Configure Safe Search") {
