@@ -60,7 +60,7 @@ struct SettingsView: View {
                     .disabled(viewModel.isLoading)
                 }
 
-                Section("Genral") {
+                Section("General") {
                     Button {
                         updateService.checkForUpdates(nil)
                     } label: {
