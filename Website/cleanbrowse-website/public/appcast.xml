@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Sparkle update feed for CleanBrowse.
+  Served at https://cleanbrowse.app/appcast.xml (referenced by SUFeedURL in the app's Info.plist).
+
+  For each release:
+    1. Build + notarize the DMG as usual.
+    2. Upload it:   BLOB_READ_WRITE_TOKEN=<token> node scripts/upload-dmg.mjs <dmg-path> <version>
+    3. Sign it:     ./bin/sign_update CleanBrowse-<version>.dmg   (from the Sparkle release tools)
+    4. Add a new <item> ABOVE the previous ones, filling in:
+         sparkle:version          = CURRENT_PROJECT_VERSION (build number, must increase every release)
+         sparkle:shortVersionString = MARKETING_VERSION
+         url                      = the versioned blob URL printed by the upload script
+         sparkle:edSignature + length = printed by sign_update
+    5. Deploy the website.
+-->
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>CleanBrowse</title>
+    <link>https://cleanbrowse.app</link>
+    <description>Most recent updates to CleanBrowse</description>
+    <language>en</language>
+    <item>
+      <title>Version 1.2.0</title>
+      <sparkle:version>2</sparkle:version>
+      <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.6</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h2>What's new in 1.2.0</h2>
+        <ul>
+          <li>Automatic updates — CleanBrowse can now update itself.</li>
+          <li>Anonymous usage analytics (Aptabase) so we know which features matter — never who you are.</li>
+        </ul>
+      ]]></description>
+      <pubDate>Fri, 28 Aug 2026 12:00:00 +0000</pubDate>
+      <enclosure
+        url="https://mwxjmxew0wyerqxi.public.blob.vercel-storage.com/CleanBrowse-1.2.0.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="REPLACE_WITH_OUTPUT_OF_sign_update"
+        length="REPLACE_WITH_LENGTH_FROM_sign_update" />
+    </item>
+  </channel>
+</rss>

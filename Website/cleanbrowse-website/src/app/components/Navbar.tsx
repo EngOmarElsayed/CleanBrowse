@@ -52,10 +52,10 @@ export default function Navbar({
   }, []);
 
   const navLinks = [
-    { label: dict.whatsNew, href: `/${locale}#whats-new`, key: "whats-new" },
     { label: dict.how, href: `/${locale}#how`, key: "how" },
-    { label: dict.roadmap, href: `/${locale}#roadmap`, key: "roadmap" },
+    { label: dict.whatsNew, href: `/${locale}#whats-new`, key: "whats-new" },
     { label: dict.maker, href: `/${locale}#maker`, key: "maker" },
+    { label: dict.roadmap, href: `/${locale}#roadmap`, key: "roadmap" },
     { label: dict.contact, href: `/${locale}/contact`, key: "contact" },
   ];
 
