@@ -78,13 +78,34 @@ function findSignUpdate() {
 
 const file = readFileSync(dmgPath);
 
+// Single-line progress with speed and ETA — a 150MB+ DMG on a slow
+// connection looks frozen without it.
+function progressReporter(label) {
+  const start = Date.now();
+  const mb = (bytes) => (bytes / 1048576).toFixed(1);
+  return ({ loaded, total, percentage }) => {
+    const elapsed = (Date.now() - start) / 1000;
+    const speed = elapsed > 0 ? loaded / elapsed : 0;
+    const eta = speed > 0 ? Math.round((total - loaded) / speed) : 0;
+    const etaLabel = eta >= 60 ? `${Math.floor(eta / 60)}m${String(eta % 60).padStart(2, "0")}s` : `${eta}s`;
+    process.stdout.write(
+      `\r  ${label}: ${percentage.toFixed(1)}%  (${mb(loaded)}/${mb(total)} MB, ${mb(speed)} MB/s, ~${etaLabel} left)   `
+    );
+    if (loaded >= total) process.stdout.write("\n");
+  };
+}
+
 // 1. Versioned, immutable copy — this is what appcast.xml must point to.
 //    Sparkle verifies the EdDSA signature against the exact bytes, so a
 //    version's URL must never be overwritten with a different binary.
+//    multipart: chunked upload with per-part retries — a dropped packet on a
+//    weak connection re-sends one chunk instead of failing the whole upload.
 const versioned = await put(`CleanBrowse-${version}.dmg`, file, {
   access: "public",
   addRandomSuffix: false,
   allowOverwrite: true, // safe for re-runs of the SAME version; never reuse a version number after shipping
+  multipart: true,
+  onUploadProgress: progressReporter(`CleanBrowse-${version}.dmg`),
 });
 console.log("Uploaded (appcast, immutable):", versioned.url);
 
@@ -93,6 +114,8 @@ const stable = await put("CleanBrowse.dmg", file, {
   access: "public",
   addRandomSuffix: false,
   allowOverwrite: true, // this URL is meant to always serve the latest release
+  multipart: true,
+  onUploadProgress: progressReporter("CleanBrowse.dmg (stable)"),
 });
 console.log("Uploaded (website button, stable):", stable.url);
 
