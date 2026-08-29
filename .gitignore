@@ -55,3 +55,6 @@ Models/*.mlmodelc
 Models/labels.json
 __pycache__/
 .venv/
+
+# Marketing playbook — keep private
+MARKETING.md

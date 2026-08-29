@@ -69,7 +69,6 @@ export function reveal(el) {
   el.classList.remove('bs-pending', 'bs-blocked', 'bs-unchecked');
   restoreInlineStyles(el);
   restoreDraggable(el);
-  el.removeEventListener('click', onRevealClick, true);
   restoreTitle(el);
   // Keep (or set) the stamp: a revealed element must not fall back under the
   // pre-classification veil selector.
@@ -81,17 +80,17 @@ export function reveal(el) {
 export function markBlocked(el) {
   saveTitle(el);
   gate(el, 'bs-blocked');
-  el.removeEventListener('click', onRevealClick, true);
   el.title = 'Blur Extension: blocked';
 }
 
 // The model never produced a verdict (fetch/bridge error, timeout): fail
-// closed, but leave a confirm-gated click-to-reveal escape hatch.
+// closed, but leave a confirm-gated click-to-reveal escape hatch. The click
+// handling lives in installRevealGuard, keyed off the isolated-world gated
+// state — no per-element listener a wrapper or overlay could preempt.
 export function markUnchecked(el) {
   saveTitle(el);
   gate(el, 'bs-unchecked');
   el.title = 'Blur Extension: not verified — click to reveal';
-  el.addEventListener('click', onRevealClick, true);
 }
 
 export function isBlurred(el) {
@@ -223,13 +222,39 @@ function restoreTitle(el) {
   else el.removeAttribute('title');
 }
 
-function onRevealClick(event) {
-  if (!event.isTrusted) return;
-  // Only unchecked elements are revealable; a blocked element never has this
-  // listener, but guard anyway in case the page replays a captured event.
-  if (gated.get(event.currentTarget) !== 'bs-unchecked') return;
-  event.preventDefault();
-  event.stopPropagation();
-  if (!confirm('Blur Extension: this image could not be verified. Reveal it?')) return;
-  reveal(event.currentTarget);
+// A per-element click listener can be beaten to the event by an ancestor's
+// capture handler, or never fire at all when the site stretches a button or
+// overlay across the image (the overlay becomes the target, so the gated
+// element isn't even in the path). One document-level capture listener —
+// installed at document_start, ahead of any page handler — sees the click
+// first and finds the gated element itself.
+const revealGuarded = new WeakSet(); // documents with the reveal guard installed
+
+export function installRevealGuard(doc) {
+  if (revealGuarded.has(doc)) return;
+  revealGuarded.add(doc);
+  doc.addEventListener('click', event => {
+    if (!event.isTrusted) return;
+    const el = uncheckedTarget(event, doc);
+    if (!el) return;
+    // Swallow the click before asking: a click on an unverified blur must
+    // never reach the page, whatever the user decides.
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if (!confirm('Blur Extension: this image could not be verified. Reveal it?')) return;
+    reveal(el);
+  }, true);
+}
+
+function uncheckedTarget(event, doc) {
+  for (const node of event.composedPath()) {
+    if (gated.get(node) === 'bs-unchecked') return node;
+  }
+  // A benign overlay (e.g. a button stretched across an avatar) makes itself
+  // the click target, keeping the gated element out of the event path — fall
+  // back to hit-testing the click point.
+  for (const node of doc.elementsFromPoint?.(event.clientX, event.clientY) ?? []) {
+    if (gated.get(node) === 'bs-unchecked') return node;
+  }
+  return null;
 }
