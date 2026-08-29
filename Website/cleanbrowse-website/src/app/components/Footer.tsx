@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
-import { GITHUB_URL, PRODUCT_HUNT_URL, productHuntBadge } from "@/lib/links";
+import { GITHUB_URL, PRODUCT_HUNT_REVIEW_URL, productHuntReviewBadge } from "@/lib/links";
 
 export default function Footer({
   locale,
@@ -33,15 +33,15 @@ export default function Footer({
               {dict.footer.taglinePost}
             </p>
             <a
-              href={PRODUCT_HUNT_URL}
+              href={PRODUCT_HUNT_REVIEW_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block mt-4 transition-transform hover:-translate-y-0.5"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={productHuntBadge("dark")}
-                alt="CleanBrowse - Free Adult Content Blocker | Product Hunt"
+                src={productHuntReviewBadge("dark")}
+                alt="Review CleanBrowse on Product Hunt"
                 width={250}
                 height={54}
               />

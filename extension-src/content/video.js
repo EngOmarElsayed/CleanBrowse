@@ -4,11 +4,19 @@ import { tryVideoFrameThumbnail, TAINTED } from './acquire.js';
 // Live-frame sampling, pattern ported from Browse's video-scanner.js:
 // sample every 1.5s while playing, plus one-shot samples on loadeddata and
 // seeked. Verdict policy is BlurShield's, not Browse's: blur-first until the
-// first frame verdict, nsfw = permanent block, error = fail closed with
+// first frame verdict; nsfw = segment block (sampling continues, and the blur
+// lifts after SAFE_STREAK_TO_REVEAL consecutive safe frames — one explicit
+// scene must not condemn the whole video); error = fail closed with
 // click-to-reveal. Cross-origin video without CORS headers can never be read
 // (tainted canvas) — it stays visible by design (v1 decision); DRM players
 // that draw black frames classify neutral and reveal the same way.
 export const SAMPLE_INTERVAL_MS = 1500;
+
+// One nsfw frame blurs instantly, but recovery is hysteretic: a brief
+// cutaway inside an explicit scene must not flash it back on screen, so the
+// block lifts only after this many consecutive safe verdicts (~3s of safe
+// playback at the sample interval).
+export const SAFE_STREAK_TO_REVEAL = 2;
 
 const watched = new WeakSet();
 // Videos whose visual state is controlled by frame sampling. Once live
@@ -26,6 +34,7 @@ export function watchVideo(video, sendMessage, opts = {}) {
   const capture = opts.capture ?? tryVideoFrameThumbnail;
 
   let status = 'pending'; // pending | safe | blocked | unchecked | unclassifiable
+  let safeStreak = 0; // consecutive safe verdicts while blocked
   let inFlight = false;
   let timer = null;
 
@@ -38,7 +47,7 @@ export function watchVideo(video, sendMessage, opts = {}) {
   }
 
   async function sample() {
-    if (status === 'blocked' || status === 'unclassifiable' || inFlight) return;
+    if (status === 'unclassifiable' || inFlight) return;
     const frame = capture(video);
     if (frame === TAINTED) {
       status = 'unclassifiable';
@@ -59,17 +68,27 @@ export function watchVideo(video, sendMessage, opts = {}) {
       response = { verdict: 'error' };
     }
     inFlight = false;
-    if (status === 'blocked' || status === 'unclassifiable') return;
+    if (status === 'unclassifiable') return;
 
     if (response?.verdict === 'nsfw') {
       status = 'blocked';
+      safeStreak = 0;
       frameOwned.add(video);
       markBlocked(video);
-      stopSampling();
+      // Keep sampling: the block is per-segment, not per-video — it lifts
+      // once enough consecutive frames come back safe.
     } else if (response?.verdict === 'safe') {
+      if (status === 'blocked' && ++safeStreak < SAFE_STREAK_TO_REVEAL) return;
       status = 'safe';
+      safeStreak = 0;
       if (frameOwned.has(video)) reveal(video);
       // Keep sampling: content can turn nsfw mid-playback.
+    } else if (status === 'blocked') {
+      // Bridge died mid-block: stay blocked (fail closed, no reveal for
+      // ML-confirmed nsfw) and stop the retry spam; the next play/seek
+      // samples again, so a recovered bridge resumes recovery checks.
+      safeStreak = 0;
+      stopSampling();
     } else {
       // Bridge/native failure: fail closed, click-to-reveal. Sampling stops
       // (retrying a dead bridge every 1.5s is spam) but restarts on the next
@@ -113,6 +132,7 @@ export function watchVideo(video, sendMessage, opts = {}) {
   // New source = new content: any prior verdict (even blocked) is stale.
   video.addEventListener('emptied', () => {
     stopSampling();
+    safeStreak = 0;
     if (status !== 'pending') {
       status = 'pending';
       if (frameOwned.has(video)) blur(video);

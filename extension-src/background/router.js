@@ -2,10 +2,12 @@ export function createRouter({ cache, fetchThumbnail, classifyNative, getThresho
   const inFlight = new Map(); // url -> Promise<verdict>
 
   async function classify(url, thumbnailBase64) {
-    const threshold = await getThreshold();
-    const cached = cache.get(url);
-    if (cached !== undefined) return verdictFor(cached, threshold);
     try {
+      // getThreshold sits inside the timeout too: a stalled storage/native
+      // read must degrade to an error verdict, not hang the caller's await.
+      const threshold = await withTimeout(getThreshold(), timeoutMs);
+      const cached = cache.get(url);
+      if (cached !== undefined) return verdictFor(cached, threshold);
       const thumbnail = thumbnailBase64 ?? await withTimeout(fetchThumbnail(url), timeoutMs);
       const scores = await withTimeout(classifyNative(thumbnail), timeoutMs);
       cache.set(url, scores);
@@ -32,7 +34,7 @@ export function createRouter({ cache, fetchThumbnail, classifyNative, getThresho
   async function handleClassifyFrame({ thumbnailBase64 }) {
     if (!thumbnailBase64) return { verdict: 'error', message: 'no frame' };
     try {
-      const threshold = await getThreshold();
+      const threshold = await withTimeout(getThreshold(), timeoutMs);
       const scores = await withTimeout(classifyNative(thumbnailBase64), timeoutMs);
       return verdictFor(scores, threshold);
     } catch (error) {
