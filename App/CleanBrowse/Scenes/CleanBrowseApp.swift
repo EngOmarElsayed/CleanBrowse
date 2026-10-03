@@ -15,7 +15,6 @@ struct CleanBrowseApp: App {
         MenuBarExtra("CleanBrowse", systemImage: "staroflife.shield.fill") {
             MenuBarContentView()
                 .modelContainer(SwiftDataManager.shared.container)
-                .environment(appDelegate.dnsProfileService)
         }
         .menuBarExtraStyle(.window)
 

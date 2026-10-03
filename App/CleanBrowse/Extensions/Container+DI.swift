@@ -21,6 +21,14 @@ extension Container {
         self { CleanBrowseAnalytics() }.singleton
     }
 
+  var dnsProxyExtensionManger: Factory<DNSProxyExtensionMangerProtocol> {
+    self { DNSProxyExtensionManger() }.singleton
+  }
+
+  var dnsProfileService: Factory<DNSProfileServiceProtocol> {
+    self { DNSProfileService() }
+  }
+
 @MainActor
     var updateService: Factory<SPUStandardUpdaterController> {
         self {
