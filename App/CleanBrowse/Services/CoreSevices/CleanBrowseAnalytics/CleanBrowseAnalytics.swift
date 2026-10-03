@@ -18,11 +18,11 @@ extension CleanBrowseAnalytics: CleanBrowseAnalyticsProtocol {
         analyticsService.initialize(appKey: appKey)
     }
     
-    func trackEvent(for eventName: String, properties: [String : String]?) {
-        if let properties {
-            analyticsService.trackEvent(eventName, with: properties)
+    func trackEvent(for event: AnalyticsEvent) {
+        if let properties = event.properties {
+            analyticsService.trackEvent(event.name, with: properties)
         } else {
-            analyticsService.trackEvent(eventName)
+            analyticsService.trackEvent(event.name)
         }
     }
 }

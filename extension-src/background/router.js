@@ -45,9 +45,9 @@ export function createRouter({ cache, fetchThumbnail, classifyNative, getThresho
   return { handleClassify, handleClassifyFrame };
 }
 
-// Explicit content (porn + hentai) blurs at a fixed 0.5 floor the slider
+// Explicit content (porn + hentai) blurs at a fixed 0.65 floor the slider
 // cannot raise; suggestive content (sexy) blurs at the user's threshold.
-const EXPLICIT_FLOOR = 0.5;
+const EXPLICIT_FLOOR = 0.65;
 
 function verdictFor(scores, threshold) {
   const explicit = scores.porn + scores.hentai;

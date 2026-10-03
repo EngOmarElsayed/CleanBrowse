@@ -10,6 +10,7 @@ import FactoryKit
 
 struct AddDomainView: View {
   @Injected(\.dnsProfileService) private var dnsProfileService
+  @Injected(\.analyticsService) private var analyticsService
   @Environment(\.modelContext) private var modelContext
   @Query private var blockedDomains: [BlockedDomain]
 
@@ -67,10 +68,12 @@ struct AddDomainView: View {
     // Check if already blocked (custom domains or preloaded list)
     if blockedDomains.contains(where: { $0.domain == normalized }) {
       errorMessage = "This domain is already blocked."
+      analyticsService.trackEvent(for: .customDomainAdded(.duplicate))
       return
     }
     if PreloadedDomains.domainSet.contains(normalized) {
       errorMessage = "This domain is already in the built-in blocklist."
+      analyticsService.trackEvent(for: .customDomainAdded(.builtin))
       return
     }
 
@@ -83,6 +86,7 @@ struct AddDomainView: View {
       let blocked = BlockedDomain(domain: normalized)
       modelContext.insert(blocked)
       try? modelContext.save()
+      analyticsService.trackEvent(for: .customDomainAdded(.added))
 
       showSuccess = true
       domainText = ""

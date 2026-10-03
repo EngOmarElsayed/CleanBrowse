@@ -12,6 +12,7 @@ import Sparkle
 struct SettingsView: View {
     @State private var viewModel: SettingsViewModel = SettingsViewModel()
     @Injected(\.updateService) private var updateService
+    @Injected(\.analyticsService) private var analyticsService
 
     @AppStorage(.allSafeSearchEnabled) var allSafeSearchEnabled: Bool = true
     @AppStorage(.googleSafeSearchEnabled) var googleSafeSearchEnabled: Bool = true
@@ -62,6 +63,7 @@ struct SettingsView: View {
 
                 Section("General") {
                     Button {
+                        analyticsService.trackEvent(for: .updateCheckClicked)
                         updateService.checkForUpdates(nil)
                     } label: {
                         Text("Check for updates")

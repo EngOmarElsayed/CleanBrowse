@@ -13,6 +13,7 @@ import NetworkExtension
 protocol DNSProxyExtensionMangerProtocol {
   @concurrent func activateAndInstallProxyExtension() async
   @concurrent func checkProxyStatus() async
+  @concurrent func isProxyEnabled() async -> Bool
   @concurrent func deactivateProxy() async
 }
 
@@ -72,6 +73,13 @@ extension DNSProxyExtensionManger: DNSProxyExtensionMangerProtocol {
       isProxyActive = false
       NSLog("[CleanBrowse] Failed to check proxy status: \(error)")
     }
+  }
+
+  /// Whether the DNS proxy is currently enabled in the system's network preferences.
+  @concurrent func isProxyEnabled() async -> Bool {
+    let manager = NEDNSProxyManager.shared()
+    guard (try? await manager.loadFromPreferences()) != nil else { return false }
+    return manager.isEnabled
   }
 
   /// Deactivates the DNS Proxy extension.

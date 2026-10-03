@@ -7,6 +7,8 @@
 import Cocoa
 import ServiceManagement
 import FactoryKit
+import SafariServices
+import NetworkExtension
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
@@ -39,8 +41,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 extension AppDelegate {
   func applicationDidFinishLaunching(_ notification: Notification) {
     analyticsService.inilizeAnalytics()
-    analyticsService.trackEvent(for: "active_user", properties: nil)
+    analyticsService.trackEvent(for: .activeUser)
+    trackSafariExtensionState()
     initialeSetupOfTheApp()
+    observeDNSProxyState()
     activateProxy()
     allowNotifications()
 
@@ -67,9 +71,31 @@ extension AppDelegate {
       Task {
         await updateAppContainerBlockList(with: allDomains)
         await preloadDomainsInHostFile(with: allDomains)
-        analyticsService.trackEvent(for: "app_opened_for_first_time", properties: nil)
+        analyticsService.trackEvent(for: .appOpenedForFirstTime)
       }
     }
+  }
+
+  private func trackSafariExtensionState() {
+    Task {
+      let isEnabled = await SFSafariExtensionManager.isCleanBrowseExtensionEnabled()
+      analyticsService.trackEvent(for: .safariExtensionState(enabled: isEnabled))
+    }
+  }
+
+  private func observeDNSProxyState() {
+    NotificationCenter.default.addObserver(
+      forName: .NEDNSProxyConfigurationDidChange,
+      object: nil,
+      queue: .main
+    ) { _ in
+      Task { await self.dnsProxyConfigurationDidChange() }
+    }
+  }
+
+  private func dnsProxyConfigurationDidChange() async {
+    let isEnabled = await dnsProxyExtensionManger.isProxyEnabled()
+    analyticsService.trackEvent(for: .dnsProxyStateChanged(enabled: isEnabled))
   }
 
   private func allowNotifications() {

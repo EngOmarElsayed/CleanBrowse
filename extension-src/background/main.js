@@ -3,8 +3,8 @@ import { createRouter } from './router.js';
 
 // Fixed sensitivity for the suggestive (sexy) class — not user-configurable
 // (the settings popup was removed by design; explicit content has its own
-// fixed 0.5 floor in the router).
-const SEXY_THRESHOLD = 0.5;
+// fixed 0.65 floor in the router).
+const SEXY_THRESHOLD = 0.65;
 const MAX_IMAGE_BYTES = 20 * 1024 * 1024;
 
 async function fetchThumbnail(url, size = 224) {

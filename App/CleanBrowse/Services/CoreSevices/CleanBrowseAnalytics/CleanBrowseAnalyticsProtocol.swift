@@ -9,5 +9,5 @@ import Foundation
 
 protocol CleanBrowseAnalyticsProtocol {
     func inilizeAnalytics()
-    func trackEvent(for eventName: String, properties: [String: String]?)
+    func trackEvent(for event: AnalyticsEvent)
 }

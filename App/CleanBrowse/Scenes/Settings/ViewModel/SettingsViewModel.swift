@@ -35,6 +35,8 @@ final class SettingsViewModel {
     @Injected(\.addSafeSearchEntry) private var addSafeSearchEntry
     @ObservationIgnored
     @Injected(\.addAllSafeSearchEntry) private var addAllSafeSearchEntry
+    @ObservationIgnored
+    @Injected(\.analyticsService) private var analyticsService
 }
 
 // MARK: - Action
@@ -61,8 +63,10 @@ extension SettingsViewModel {
             isLoading = true
             setAllFlags(to: true)
             try await addAllSafeSearchEntry()
+            trackToggle(.all, enabled: true, success: true)
             isLoading = false
         } catch {
+            trackToggle(.all, enabled: true, success: false)
             setAllFlags(to: false)
             isLoading = false
         }
@@ -74,8 +78,10 @@ extension SettingsViewModel {
             isLoading = true
             guard let feature = SettingsSafeSearch.mapToDomain(value: value) else { return }
             try await addSafeSearchEntry(for: feature)
+            trackToggle(value, enabled: true, success: true)
             isLoading = false
         } catch {
+            trackToggle(value, enabled: true, success: false)
             setFlag(for: value, to: false)
             isLoading = false
         }
@@ -87,8 +93,10 @@ extension SettingsViewModel {
             isLoading = true
             guard let feature = SettingsSafeSearch.mapToDomain(value: value) else { return }
             try await removeSafeSearchEntry(for: feature)
+            trackToggle(value, enabled: false, success: true)
             isLoading = false
         } catch {
+            trackToggle(value, enabled: false, success: false)
             setFlag(for: value, to: true)
             isLoading = false
         }
@@ -100,8 +108,10 @@ extension SettingsViewModel {
             isLoading = true
             setAllFlags(to: false)
             try await removeAllSafeSearchEntry()
+            trackToggle(.all, enabled: false, success: true)
             isLoading = false
         } catch {
+            trackToggle(.all, enabled: false, success: false)
             setAllFlags(to: true)
             isLoading = false
         }
@@ -113,6 +123,10 @@ extension SettingsViewModel {
         youtubeSafeSearchEnabled = value
         bingSafeSearchEnabled = value
         duckDuckGoSafeSearchEnabled = value
+    }
+
+    func trackToggle(_ engine: SettingsSafeSearch, enabled: Bool, success: Bool) {
+        analyticsService.trackEvent(for: .safeSearchToggled(engine: engine, enabled: enabled, success: success))
     }
 
     func setFlag(for value: SettingsSafeSearch, to flag: Bool) {

@@ -15,7 +15,6 @@ import Sparkle
 //@Query(sort: \BlockedDomain.dateAdded, order: .reverse) private var blockedDomains: [BlockedDomain]
 
 struct MenuBarContentView: View {
-    private let extensionBundleIdentifier = "com.omarelsayed.cleanbrowse.extension"
     @State private var showSettings: Bool = false
     @State private var isNotificationAuth: Bool = false
     @Injected(\.notificationService) private var notificationService
@@ -35,6 +34,7 @@ struct MenuBarContentView: View {
 
             HStack(alignment: .center) {
                 Button {
+                    analyticsService.trackEvent(for: .settingsOpened)
                     showSettings = true
                 } label: {
                     Image(systemName: "gearshape")
@@ -48,7 +48,11 @@ struct MenuBarContentView: View {
                 }
 
                 Button {
-                    SFSafariApplication.showPreferencesForExtension(withIdentifier: extensionBundleIdentifier)
+                    Task {
+                        let isEnabled = await SFSafariExtensionManager.isCleanBrowseExtensionEnabled()
+                        analyticsService.trackEvent(for: .safariExtensionSettingsOpened(extensionEnabled: isEnabled))
+                    }
+                    SFSafariApplication.showPreferencesForExtension(withIdentifier: SFSafariExtensionManager.cleanBrowseExtensionIdentifier)
                 } label: {
                     Image(systemName: "puzzlepiece.extension")
                         .font(.caption)
@@ -58,7 +62,7 @@ struct MenuBarContentView: View {
                 Spacer()
 
                 Button {
-                    analyticsService.trackEvent(for: "app_terminated_by_user", properties: nil)
+                    analyticsService.trackEvent(for: .appTerminatedByUser)
                     NSApp.terminate(nil)
                 } label: {
                     Image(systemName: "power")
