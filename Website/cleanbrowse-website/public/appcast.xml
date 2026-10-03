@@ -17,6 +17,25 @@
     <description>Most recent updates to CleanBrowse</description>
     <language>en</language>
     <item>
+      <title>Version 1.3.2</title>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.3.2</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.6</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h2>What's new in 1.3.2</h2>
+        <ul>
+          <li>Some prefourmence enhancments</li>
+          <li>Adjusted safari extension blur threshold</li>
+        </ul>
+      ]]></description>
+      <pubDate>Sat, 03 Oct 2026 09:11:57 GMT</pubDate>
+      <enclosure
+        url="https://mwxjmxew0wyerqxi.public.blob.vercel-storage.com/CleanBrowse-1.3.2.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="9qv/Ey25tKYGo9JjFiIrh9jrcQHIGSNVPo57FlApyIEH8z6jKARk7TW3SmhwstfIeH8tynFgmm80OiI/hi91BQ=="
+        length="164815059" />
+    </item>
+    <item>
       <title>Version 1.3.1</title>
       <sparkle:version>4</sparkle:version>
       <sparkle:shortVersionString>1.3.1</sparkle:shortVersionString>
