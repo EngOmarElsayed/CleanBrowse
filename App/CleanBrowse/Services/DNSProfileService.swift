@@ -90,6 +90,35 @@ extension DNSProfileService: DNSProfileServiceProtocol {
     }
   }
 
+  /// Removes a single domain from the existing blocklist file.
+  ///
+  /// - Parameter domain: The domain to remove from the blocklist.
+  @concurrent func removeFromBlocklist(_ domain: String) async {
+    guard let blocklistURL = await blocklistURL() else { return }
+
+    do {
+      let contents = try String(contentsOf: blocklistURL, encoding: .utf8)
+      let domainToRemove = domain.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+
+      let domains = contents.components(separatedBy: .newlines)
+      let remainingDomains = domains.filter { $0 != domainToRemove }
+
+      guard remainingDomains.count < domains.count else {
+        NSLog("[CleanBrowse] \(domainToRemove) not found in blocklist")
+        return
+      }
+
+      try remainingDomains
+        .joined(separator: "\n")
+        .write(to: blocklistURL, atomically: true, encoding: .utf8)
+
+      notifyExtension()
+      NSLog("[CleanBrowse] Removed \(domainToRemove) from blocklist")
+    } catch {
+      NSLog("[CleanBrowse] Failed to remove from blocklist: \(error)")
+    }
+  }
+
   /// Returns the blocklist URL, creating the parent directory if needed.
   @concurrent private func blocklistURL() async -> URL? {
     let dir = Self.sharedBlocklistDir
