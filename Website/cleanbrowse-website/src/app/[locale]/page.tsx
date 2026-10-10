@@ -48,10 +48,25 @@ function EyeOffIcon({ size = 28 }: { size?: number }) {
   );
 }
 
-function PuzzleIcon() {
+function ListIcon() {
   return (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-leaf">
-      <path d="M19.44 12.99a1.5 1.5 0 0 1 0-2.12l1.12-1.12a1.5 1.5 0 0 0 0-2.12l-2.19-2.19a1.5 1.5 0 0 0-2.12 0l-1.12 1.12a1.5 1.5 0 0 1-2.12 0l-.44-.44a1.5 1.5 0 0 1 0-2.12l.06-.06a1.5 1.5 0 0 0 0-2.12l-.5-.5a1.5 1.5 0 0 0-2.12 0L3.44 7.89a1.5 1.5 0 0 0 0 2.12l.5.5a1.5 1.5 0 0 0 2.12 0l.06-.06a1.5 1.5 0 0 1 2.12 0l.44.44a1.5 1.5 0 0 1 0 2.12l-1.12 1.12a1.5 1.5 0 0 0 0 2.12l2.19 2.19a1.5 1.5 0 0 0 2.12 0l1.12-1.12a1.5 1.5 0 0 1 2.12 0l.06.06a1.5 1.5 0 0 0 2.12 0l.5-.5a1.5 1.5 0 0 0 0-2.12z" />
+      <line x1="8" y1="6" x2="21" y2="6" />
+      <line x1="8" y1="12" x2="21" y2="12" />
+      <line x1="8" y1="18" x2="21" y2="18" />
+      <line x1="3" y1="6" x2="3.01" y2="6" />
+      <line x1="3" y1="12" x2="3.01" y2="12" />
+      <line x1="3" y1="18" x2="3.01" y2="18" />
+    </svg>
+  );
+}
+
+function LightbulbIcon() {
+  return (
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="text-leaf">
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+      <path d="M12 2a7 7 0 0 0-4 12.74V16a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-1.26A7 7 0 0 0 12 2z" />
     </svg>
   );
 }
@@ -128,7 +143,7 @@ export default async function Home({
     name: "CleanBrowse",
     operatingSystem: "macOS 14.0 or later",
     applicationCategory: "UtilitiesApplication",
-    softwareVersion: "1.3.0",
+    softwareVersion: "1.4.0",
     description: dict.meta.description,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     downloadUrl: DMG_URL,
@@ -138,6 +153,7 @@ export default async function Home({
       "NSFW image and video-frame blurring in Safari with on-device Core ML",
       "Enforced SafeSearch on Google, YouTube, Bing, and DuckDuckGo",
       "Custom domain blocking",
+      "View and remove custom blocked domains from the menu bar",
     ],
   };
 
@@ -401,7 +417,7 @@ export default async function Home({
         </div>
       </section>
 
-      {/* ── What's new in 1.0 ── */}
+      {/* ── What's new in 1.4.0 ── */}
       <section id="whats-new" className="py-28 scroll-mt-16">
         <div className="max-w-6xl mx-auto px-6">
           <div className="max-w-2xl mb-16">
@@ -415,49 +431,41 @@ export default async function Home({
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {/* Image blur card */}
+            {/* Custom block list card */}
             <div className="rounded-3xl bg-card border border-line p-9 hover:border-leaf/40 hover:shadow-lg hover:shadow-leaf/5 transition-all">
               <div className="mb-6">
-                <EyeOffIcon />
+                <ListIcon />
               </div>
               <h3 className="font-display text-xl font-bold text-ink mb-3">
-                {dict.whatsNew.blurTitle}
+                {dict.whatsNew.listTitle}
               </h3>
-              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.blurBody}</p>
-              <div className="grid grid-cols-3 gap-2" aria-hidden="true">
-                {[false, true, false].map((isBlurred, i) => (
-                  <div
-                    key={i}
-                    className="relative aspect-square rounded-lg overflow-hidden border border-line"
+              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.listBody}</p>
+              <ul className="space-y-1.5 font-mono text-xs" dir="ltr" aria-hidden="true">
+                {["distracting.example", "forum.example", "videos.example"].map((domain, i) => (
+                  <li
+                    key={domain}
+                    className={`flex items-center justify-between rounded-lg px-3 py-1.5 ${
+                      i === 1 ? "bg-mint text-leaf-deep" : "bg-ink/5 text-moss"
+                    }`}
                   >
-                    {isBlurred ? (
-                      <>
-                        <div className="absolute inset-0 bg-gradient-to-br from-rose-200 to-orange-200" />
-                        <div className="absolute inset-0 backdrop-blur-md bg-white/40 flex items-center justify-center text-ink/60">
-                          <EyeOffIcon size={16} />
-                        </div>
-                      </>
-                    ) : (
-                      <div className="absolute inset-0 bg-gradient-to-br from-mint to-leaf/25 flex items-center justify-center text-leaf/70">
-                        <PhotoGlyph />
-                      </div>
-                    )}
-                  </div>
+                    {domain}
+                    {i === 1 && <span className="text-rose-700">✕</span>}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
 
-            {/* Menu bar shortcut card */}
+            {/* In-app tips card */}
             <div className="rounded-3xl bg-card border border-line p-9 hover:border-leaf/40 hover:shadow-lg hover:shadow-leaf/5 transition-all">
               <div className="mb-6">
-                <PuzzleIcon />
+                <LightbulbIcon />
               </div>
               <h3 className="font-display text-xl font-bold text-ink mb-3">
-                {dict.whatsNew.menuTitle}
+                {dict.whatsNew.tipsTitle}
               </h3>
-              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.menuBody}</p>
-              <span className="inline-block font-mono text-xs bg-mint text-leaf-deep px-3 py-1.5 rounded-lg" dir="ltr">
-                Safari ▸ Extensions ▸ CleanBrowse
+              <p className="text-moss leading-relaxed mb-6">{dict.whatsNew.tipsBody}</p>
+              <span className="inline-block text-xs font-medium bg-mint text-leaf-deep px-3 py-1.5 rounded-lg">
+                {dict.whatsNew.tipsChip}
               </span>
             </div>
 
@@ -598,13 +606,13 @@ export default async function Home({
             {/* The winding road, drawn through every checkpoint */}
             <RoadPath />
 
-            {/* Start cap — where v1.3.0 stands today */}
+            {/* Start cap — where v1.4.0 stands today */}
             <div className="relative grid grid-cols-[2.5rem_1fr] lg:flex lg:justify-center mb-12">
               <span
                 data-road-point
                 className="justify-self-center inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-leaf text-white font-mono text-xs font-medium border-4 border-card shadow-md shadow-leaf/25"
               >
-                v1.3.0
+                v1.4.0
               </span>
             </div>
 

@@ -28,7 +28,7 @@ const en = {
     language: "Language",
   },
   hero: {
-    badge: "New in 1.3.0 — Safari now blurs explicit images",
+    badge: "New in 1.4.0 — manage your custom block list",
     title: "The internet, minus the worst of it",
     titlePunct: ".",
     subtitle:
@@ -85,22 +85,22 @@ const en = {
       "Illustration of Safari image results: explicit images appear blurred while safe images stay visible.",
   },
   whatsNew: {
-    eyebrow: "New in version 1.3.0",
-    title: "The blocker just learned to see.",
+    eyebrow: "New in version 1.4.0",
+    title: "Your block list, in your hands.",
     intro:
-      "CleanBrowse 1.3.0 adds a fourth layer of protection — a Safari extension that blurs NSFW images using on-device machine learning — and makes the app easier to manage and update from the menu bar.",
-    blurTitle: "NSFW image blur in Safari",
-    blurBody:
-      "The headline feature of 1.3.0: images and video frames are classified on-device and blurred before they reach your screen — on search, social media, and streaming sites.",
-    blurTag: "Blurred",
-    menuTitle: "One click from the menu bar",
-    menuBody:
-      "A new shortcut in the popover takes you straight to Safari's extension settings, so turning the image filter on takes seconds.",
+      "CleanBrowse 1.4.0 makes the protection you've set up easier to see and manage: review every domain you've blocked, remove the ones you don't need, and discover features with in-app tips.",
+    listTitle: "Your custom block list",
+    listBody:
+      "Every domain you've added, in one list from the menu bar. Hover over a domain and remove it with a click.",
+    tipsTitle: "Tips that show you around",
+    tipsBody:
+      "A small card in the menu bar points you to features you haven't tried yet — like Safari image blur — and goes away once you've seen them.",
+    tipsChip: "New · Tip 1 of 3",
     updateTitle: "Updates from the settings panel",
     updateBody:
       "Check for new versions right inside CleanBrowse — new protections reach you the moment they ship, no re-downloading from the site.",
-    updateFrom: "v1.2.0",
-    updateTo: "v1.3.0",
+    updateFrom: "v1.3.2",
+    updateTo: "v1.4.0",
   },
   how: {
     eyebrow: "How it works",
@@ -156,7 +156,7 @@ const en = {
   },
   roadmap: {
     eyebrow: "Roadmap",
-    title: "Version 1.3.0 is just the start.",
+    title: "Version 1.4.0 is just the start.",
     items: [
       {
         title: "Custom DNS resolver",
@@ -178,7 +178,7 @@ const en = {
       },
       {
         title: "Blocked-domain explorer",
-        body: "Browse everything CleanBrowse blocks, and instantly check whether a domain is on the list.",
+        body: "Search all 249,000+ built-in domains and instantly check whether any site is blocked.",
         status: "Planned",
         active: false,
       },
@@ -186,7 +186,7 @@ const en = {
   },
   cta: {
     title: "Ready for a cleaner internet?",
-    body: "Download CleanBrowse 1.3.0 for free — or leave your email and hear about new features first.",
+    body: "Download CleanBrowse 1.4.0 for free — or leave your email and hear about new features first.",
   },
   signup: {
     placeholder: "Enter your email",
@@ -249,7 +249,7 @@ const ar: Dictionary = {
     language: "اللغة",
   },
   hero: {
-    badge: "جديد في 1.3.0 — Safari يموّه الصور غير اللائقة الآن",
+    badge: "جديد في 1.4.0 — أدِر قائمة الحظر المخصصة",
     title: "الإنترنت، من دون أسوأ ما فيه",
     titlePunct: ".",
     subtitle:
@@ -306,22 +306,22 @@ const ar: Dictionary = {
       "رسم توضيحي لنتائج الصور في Safari: تظهر الصور الفاضحة مموّهة بينما تبقى الصور الآمنة ظاهرة.",
   },
   whatsNew: {
-    eyebrow: "الجديد في الإصدار 1.3.0",
-    title: "الحاجب تعلّم أن يرى.",
+    eyebrow: "الجديد في الإصدار 1.4.0",
+    title: "قائمة الحظر بين يديك.",
     intro:
-      "يضيف الإصدار 1.3.0 من CleanBrowse طبقة حماية رابعة — ملحق Safari يموّه الصور غير اللائقة بتعلّم آلي يعمل على جهازك — ويجعل إدارة التطبيق وتحديثه من شريط القوائم أسهل من أي وقت مضى.",
-    blurTitle: "تمويه الصور غير اللائقة في Safari",
-    blurBody:
-      "الميزة الأبرز في 1.3.0: تُصنَّف الصور وإطارات الفيديو على جهازك وتُموَّه قبل أن تصل إلى شاشتك — في البحث وشبكات التواصل ومواقع البث.",
-    blurTag: "مموّهة",
-    menuTitle: "نقرة واحدة من شريط القوائم",
-    menuBody:
-      "اختصار جديد في النافذة ينقلك مباشرة إلى إعدادات ملحقات Safari، فتفعيل مرشّح الصور يستغرق ثوانٍ.",
+      "يجعل الإصدار 1.4.0 من CleanBrowse الحماية التي أعددتها أسهل في العرض والإدارة: راجع كل نطاق حظرته، وأزل ما لا تحتاجه، واكتشف الميزات عبر نصائح داخل التطبيق.",
+    listTitle: "قائمة الحظر المخصصة",
+    listBody:
+      "كل نطاق أضفته في قائمة واحدة من شريط القوائم. مرّر المؤشر فوق النطاق وأزله بنقرة.",
+    tipsTitle: "نصائح ترشدك",
+    tipsBody:
+      "بطاقة صغيرة في شريط القوائم تدلّك على ميزات لم تجربها بعد — مثل تمويه الصور في Safari — وتختفي بعد أن تراها.",
+    tipsChip: "جديد · نصيحة 1 من 3",
     updateTitle: "التحديثات من لوحة الإعدادات",
     updateBody:
       "تحقق من الإصدارات الجديدة من داخل CleanBrowse مباشرة — تصلك وسائل الحماية الجديدة فور صدورها، دون إعادة التنزيل من الموقع.",
-    updateFrom: "v1.2.0",
-    updateTo: "v1.3.0",
+    updateFrom: "v1.3.2",
+    updateTo: "v1.4.0",
   },
   how: {
     eyebrow: "كيف يعمل",
@@ -377,7 +377,7 @@ const ar: Dictionary = {
   },
   roadmap: {
     eyebrow: "خارطة الطريق",
-    title: "الإصدار 1.3.0 مجرد البداية.",
+    title: "الإصدار 1.4.0 مجرد البداية.",
     items: [
       {
         title: "خادم DNS مخصص",
@@ -399,7 +399,7 @@ const ar: Dictionary = {
       },
       {
         title: "استعراض النطاقات المحجوبة",
-        body: "تصفّح كل ما يحجبه CleanBrowse، وتحقق فورًا مما إذا كان نطاق ما ضمن القائمة.",
+        body: "ابحث في أكثر من 249,000 نطاق مدمج، وتحقّق فورًا مما إذا كان أي موقع محظورًا.",
         status: "مخطط له",
         active: false,
       },
@@ -407,7 +407,7 @@ const ar: Dictionary = {
   },
   cta: {
     title: "جاهز لإنترنت أنظف؟",
-    body: "حمّل CleanBrowse 1.3.0 مجانًا — أو اترك بريدك الإلكتروني لتكون أول من يعرف بالميزات الجديدة.",
+    body: "حمّل CleanBrowse 1.4.0 مجانًا — أو اترك بريدك الإلكتروني لتكون أول من يعرف بالميزات الجديدة.",
   },
   signup: {
     placeholder: "أدخل بريدك الإلكتروني",
@@ -468,7 +468,7 @@ const fr: Dictionary = {
     language: "Langue",
   },
   hero: {
-    badge: "Nouveau en 1.3.0 — Safari floute désormais les images explicites",
+    badge: "Nouveau en 1.4.0 — gérez votre liste de blocage personnalisée",
     title: "Internet, sans ce qu'il a de pire",
     titlePunct: ".",
     subtitle:
@@ -525,22 +525,22 @@ const fr: Dictionary = {
       "Illustration de résultats d'images Safari : les images explicites apparaissent floutées tandis que les images sûres restent visibles.",
   },
   whatsNew: {
-    eyebrow: "Nouveau dans la version 1.3.0",
-    title: "Le bloqueur a appris à voir.",
+    eyebrow: "Nouveau dans la version 1.4.0",
+    title: "Votre liste de blocage, entre vos mains.",
     intro:
-      "CleanBrowse 1.3.0 ajoute une quatrième couche de protection — une extension Safari qui floute les images NSFW grâce à l'apprentissage automatique local — et simplifie plus que jamais la gestion et la mise à jour de l'app depuis la barre de menus.",
-    blurTitle: "Floutage d'images NSFW dans Safari",
-    blurBody:
-      "La fonctionnalité phare de la 1.3.0 : les images et les frames vidéo sont classées en local et floutées avant d'atteindre votre écran — sur la recherche, les réseaux sociaux et les sites de streaming.",
-    blurTag: "Floutée",
-    menuTitle: "Un clic depuis la barre de menus",
-    menuBody:
-      "Un nouveau raccourci dans la fenêtre vous amène directement aux réglages des extensions Safari — activer le filtre d'images prend quelques secondes.",
+      "CleanBrowse 1.4.0 rend la protection que vous avez configurée plus facile à voir et à gérer : consultez chaque domaine bloqué, supprimez ceux dont vous n'avez plus besoin et découvrez les fonctionnalités grâce aux astuces intégrées.",
+    listTitle: "Votre liste de blocage personnalisée",
+    listBody:
+      "Tous les domaines que vous avez ajoutés, dans une seule liste depuis la barre de menus. Survolez un domaine et supprimez-le d'un clic.",
+    tipsTitle: "Des astuces pour vous guider",
+    tipsBody:
+      "Une petite carte dans la barre de menus vous signale les fonctionnalités que vous n'avez pas encore essayées — comme le floutage d'images dans Safari — puis disparaît une fois vue.",
+    tipsChip: "Nouveau · Astuce 1 sur 3",
     updateTitle: "Mises à jour depuis les réglages",
     updateBody:
       "Vérifiez les nouvelles versions directement dans CleanBrowse — les nouvelles protections vous parviennent dès leur sortie, sans retélécharger depuis le site.",
-    updateFrom: "v1.2.0",
-    updateTo: "v1.3.0",
+    updateFrom: "v1.3.2",
+    updateTo: "v1.4.0",
   },
   how: {
     eyebrow: "Fonctionnement",
@@ -596,7 +596,7 @@ const fr: Dictionary = {
   },
   roadmap: {
     eyebrow: "Feuille de route",
-    title: "La version 1.3.0 n'est que le début.",
+    title: "La version 1.4.0 n'est que le début.",
     items: [
       {
         title: "Résolveur DNS personnalisé",
@@ -618,7 +618,7 @@ const fr: Dictionary = {
       },
       {
         title: "Explorateur de domaines bloqués",
-        body: "Parcourez tout ce que CleanBrowse bloque et vérifiez instantanément si un domaine figure sur la liste.",
+        body: "Recherchez parmi plus de 249 000 domaines intégrés et vérifiez instantanément si un site est bloqué.",
         status: "Prévu",
         active: false,
       },
@@ -626,7 +626,7 @@ const fr: Dictionary = {
   },
   cta: {
     title: "Prêt pour un Internet plus propre ?",
-    body: "Téléchargez CleanBrowse 1.3.0 gratuitement — ou laissez votre e-mail pour être informé des nouveautés en premier.",
+    body: "Téléchargez CleanBrowse 1.4.0 gratuitement — ou laissez votre e-mail pour être informé des nouveautés en premier.",
   },
   signup: {
     placeholder: "Votre adresse e-mail",
@@ -688,7 +688,7 @@ const es: Dictionary = {
     language: "Idioma",
   },
   hero: {
-    badge: "Nuevo en 1.3.0 — Safari ahora difumina las imágenes explícitas",
+    badge: "Nuevo en 1.4.0 — gestiona tu lista de bloqueo personalizada",
     title: "Internet, sin lo peor que tiene",
     titlePunct: ".",
     subtitle:
@@ -745,22 +745,22 @@ const es: Dictionary = {
       "Ilustración de resultados de imágenes en Safari: las imágenes explícitas aparecen difuminadas mientras las seguras permanecen visibles.",
   },
   whatsNew: {
-    eyebrow: "Nuevo en la versión 1.3.0",
-    title: "El bloqueador aprendió a ver.",
+    eyebrow: "Nuevo en la versión 1.4.0",
+    title: "Tu lista de bloqueo, en tus manos.",
     intro:
-      "CleanBrowse 1.3.0 añade una cuarta capa de protección — una extensión de Safari que difumina imágenes NSFW con aprendizaje automático local — y hace más fácil que nunca gestionar y actualizar la app desde la barra de menús.",
-    blurTitle: "Difuminado de imágenes NSFW en Safari",
-    blurBody:
-      "La función estrella de la 1.3.0: las imágenes y los fotogramas de vídeo se clasifican en tu equipo y se difuminan antes de llegar a tu pantalla — en buscadores, redes sociales y sitios de streaming.",
-    blurTag: "Difuminada",
-    menuTitle: "A un clic desde la barra de menús",
-    menuBody:
-      "Un nuevo atajo en la ventana te lleva directo a los ajustes de extensiones de Safari — activar el filtro de imágenes lleva segundos.",
+      "CleanBrowse 1.4.0 hace que la protección que has configurado sea más fácil de ver y gestionar: revisa cada dominio que has bloqueado, elimina los que ya no necesitas y descubre funciones con consejos dentro de la app.",
+    listTitle: "Tu lista de bloqueo personalizada",
+    listBody:
+      "Todos los dominios que has añadido, en una sola lista desde la barra de menús. Pasa el cursor sobre un dominio y elimínalo con un clic.",
+    tipsTitle: "Consejos que te guían",
+    tipsBody:
+      "Una pequeña tarjeta en la barra de menús te muestra funciones que aún no has probado — como el difuminado de imágenes en Safari — y desaparece una vez vista.",
+    tipsChip: "Nuevo · Consejo 1 de 3",
     updateTitle: "Actualizaciones desde los ajustes",
     updateBody:
       "Comprueba si hay versiones nuevas desde el propio CleanBrowse — las nuevas protecciones te llegan en cuanto se publican, sin volver a descargar desde la web.",
-    updateFrom: "v1.2.0",
-    updateTo: "v1.3.0",
+    updateFrom: "v1.3.2",
+    updateTo: "v1.4.0",
   },
   how: {
     eyebrow: "Cómo funciona",
@@ -816,7 +816,7 @@ const es: Dictionary = {
   },
   roadmap: {
     eyebrow: "Hoja de ruta",
-    title: "La versión 1.3.0 es solo el principio.",
+    title: "La versión 1.4.0 es solo el principio.",
     items: [
       {
         title: "Resolutor DNS personalizado",
@@ -838,7 +838,7 @@ const es: Dictionary = {
       },
       {
         title: "Explorador de dominios bloqueados",
-        body: "Consulta todo lo que CleanBrowse bloquea y comprueba al instante si un dominio está en la lista.",
+        body: "Busca entre más de 249.000 dominios integrados y comprueba al instante si un sitio está bloqueado.",
         status: "Planificado",
         active: false,
       },
@@ -846,7 +846,7 @@ const es: Dictionary = {
   },
   cta: {
     title: "¿Listo para un Internet más limpio?",
-    body: "Descarga CleanBrowse 1.3.0 gratis — o deja tu correo y entérate antes que nadie de las novedades.",
+    body: "Descarga CleanBrowse 1.4.0 gratis — o deja tu correo y entérate antes que nadie de las novedades.",
   },
   signup: {
     placeholder: "Escribe tu correo",
@@ -908,7 +908,7 @@ const zh: Dictionary = {
     language: "语言",
   },
   hero: {
-    badge: "1.3.0 新功能——Safari 现可模糊露骨图片",
+    badge: "1.4.0 新功能——管理你的自定屏蔽列表",
     title: "互联网，去掉最糟的部分",
     titlePunct: "。",
     subtitle:
@@ -965,22 +965,22 @@ const zh: Dictionary = {
       "Safari 图片结果示意图：露骨图片显示为模糊，安全图片保持可见。",
   },
   whatsNew: {
-    eyebrow: "1.3.0 版新功能",
-    title: "拦截器学会了看。",
+    eyebrow: "1.4.0 版新功能",
+    title: "屏蔽列表，尽在掌握。",
     intro:
-      "CleanBrowse 1.3.0 加入第四层防护——一个用本地机器学习模糊 NSFW 图片的 Safari 扩展——并让你在菜单栏中更轻松地管理和更新应用。",
-    blurTitle: "Safari 中的 NSFW 图片模糊",
-    blurBody:
-      "1.3.0 的重磅功能：图片和视频帧在本地完成分类，并在抵达屏幕之前被模糊——覆盖搜索、社交媒体和流媒体网站。",
-    blurTag: "已模糊",
-    menuTitle: "菜单栏一键直达",
-    menuBody:
-      "弹窗中新增的快捷按钮可直接打开 Safari 扩展设置——启用图片过滤只需几秒。",
+      "CleanBrowse 1.4.0 让你设置的防护更易查看和管理：查看每个已屏蔽的域名，移除不再需要的域名，并通过应用内提示发现更多功能。",
+    listTitle: "自定屏蔽列表",
+    listBody:
+      "你添加的所有域名都集中在菜单栏的一个列表中。将指针悬停在域名上，一键即可移除。",
+    tipsTitle: "贴心的使用提示",
+    tipsBody:
+      "菜单栏中的小卡片会为你指出尚未尝试的功能——比如 Safari 图片模糊——看过之后便会消失。",
+    tipsChip: "新功能 · 提示 1/3",
     updateTitle: "在设置面板中更新",
     updateBody:
       "直接在 CleanBrowse 内检查新版本——新的防护在发布后第一时间送达，无需再从网站重新下载。",
-    updateFrom: "v1.2.0",
-    updateTo: "v1.3.0",
+    updateFrom: "v1.3.2",
+    updateTo: "v1.4.0",
   },
   how: {
     eyebrow: "工作原理",
@@ -1036,7 +1036,7 @@ const zh: Dictionary = {
   },
   roadmap: {
     eyebrow: "路线图",
-    title: "1.3.0 版只是开始。",
+    title: "1.4.0 版只是开始。",
     items: [
       {
         title: "自定义 DNS 解析器",
@@ -1058,7 +1058,7 @@ const zh: Dictionary = {
       },
       {
         title: "已拦截域名一览",
-        body: "浏览 CleanBrowse 拦截的全部内容，并即时查询某个域名是否在列表中。",
+        body: "搜索超过 249,000 个内置域名，即刻查看任意网站是否已被屏蔽。",
         status: "计划中",
         active: false,
       },
@@ -1066,7 +1066,7 @@ const zh: Dictionary = {
   },
   cta: {
     title: "准备好迎接更干净的互联网了吗？",
-    body: "免费下载 CleanBrowse 1.3.0——或留下邮箱，第一时间了解新功能。",
+    body: "免费下载 CleanBrowse 1.4.0——或留下邮箱，第一时间了解新功能。",
   },
   signup: {
     placeholder: "输入你的邮箱",
@@ -1127,7 +1127,7 @@ const de: Dictionary = {
     language: "Sprache",
   },
   hero: {
-    badge: "Neu in 1.3.0 — Safari macht explizite Bilder jetzt unscharf",
+    badge: "Neu in 1.4.0 — verwalte deine eigene Sperrliste",
     title: "Das Internet, ohne das Schlimmste daran",
     titlePunct: ".",
     subtitle:
@@ -1184,22 +1184,22 @@ const de: Dictionary = {
       "Illustration von Safari-Bildergebnissen: Explizite Bilder erscheinen unscharf, sichere Bilder bleiben sichtbar.",
   },
   whatsNew: {
-    eyebrow: "Neu in Version 1.3.0",
-    title: "Der Blocker hat sehen gelernt.",
+    eyebrow: "Neu in Version 1.4.0",
+    title: "Deine Sperrliste, in deiner Hand.",
     intro:
-      "CleanBrowse 1.3.0 ergänzt eine vierte Schutzschicht — eine Safari-Erweiterung, die NSFW-Bilder mit lokalem maschinellem Lernen unscharf macht — und macht Verwaltung und Updates der App aus der Menüleiste einfacher denn je.",
-    blurTitle: "NSFW-Bildfilter in Safari",
-    blurBody:
-      "Das Highlight von 1.3.0: Bilder und Videobilder werden lokal klassifiziert und unscharf gemacht, bevor sie deinen Bildschirm erreichen — bei der Suche, in sozialen Netzwerken und auf Streaming-Seiten.",
-    blurTag: "Unscharf",
-    menuTitle: "Ein Klick aus der Menüleiste",
-    menuBody:
-      "Ein neuer Shortcut im Fenster bringt dich direkt zu den Safari-Erweiterungseinstellungen — den Bildfilter zu aktivieren dauert Sekunden.",
+      "CleanBrowse 1.4.0 macht deinen Schutz übersichtlicher und leichter zu verwalten: Sieh dir jede blockierte Domain an, entferne die, die du nicht mehr brauchst, und entdecke Funktionen mit Tipps direkt in der App.",
+    listTitle: "Deine eigene Sperrliste",
+    listBody:
+      "Alle Domains, die du hinzugefügt hast, in einer Liste in der Menüleiste. Bewege den Zeiger über eine Domain und entferne sie mit einem Klick.",
+    tipsTitle: "Tipps, die dich herumführen",
+    tipsBody:
+      "Eine kleine Karte in der Menüleiste zeigt dir Funktionen, die du noch nicht ausprobiert hast — etwa den Bildfilter in Safari — und verschwindet, sobald du sie gesehen hast.",
+    tipsChip: "Neu · Tipp 1 von 3",
     updateTitle: "Updates aus den Einstellungen",
     updateBody:
       "Prüfe direkt in CleanBrowse auf neue Versionen — neue Schutzfunktionen erreichen dich, sobald sie erscheinen, ohne erneuten Download von der Website.",
-    updateFrom: "v1.2.0",
-    updateTo: "v1.3.0",
+    updateFrom: "v1.3.2",
+    updateTo: "v1.4.0",
   },
   how: {
     eyebrow: "So funktioniert's",
@@ -1255,7 +1255,7 @@ const de: Dictionary = {
   },
   roadmap: {
     eyebrow: "Roadmap",
-    title: "Version 1.3.0 ist erst der Anfang.",
+    title: "Version 1.4.0 ist erst der Anfang.",
     items: [
       {
         title: "Eigener DNS-Resolver",
@@ -1277,7 +1277,7 @@ const de: Dictionary = {
       },
       {
         title: "Blockierte Domains einsehen",
-        body: "Sieh alles ein, was CleanBrowse blockiert, und prüfe sofort, ob eine Domain auf der Liste steht.",
+        body: "Durchsuche alle über 249.000 integrierten Domains und prüfe sofort, ob eine Website blockiert ist.",
         status: "Geplant",
         active: false,
       },
@@ -1285,7 +1285,7 @@ const de: Dictionary = {
   },
   cta: {
     title: "Bereit für ein saubereres Internet?",
-    body: "Lade CleanBrowse 1.3.0 kostenlos herunter — oder hinterlasse deine E-Mail und erfahre als Erster von neuen Funktionen.",
+    body: "Lade CleanBrowse 1.4.0 kostenlos herunter — oder hinterlasse deine E-Mail und erfahre als Erster von neuen Funktionen.",
   },
   signup: {
     placeholder: "Deine E-Mail-Adresse",
