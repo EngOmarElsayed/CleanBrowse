@@ -16,4 +16,5 @@ extension String {
   static let duckDuckGoSafeSearchEnabled = "duckDuckGoSafeSearchEnabled"
   static let safariExtensionBadgeSeen = "safariExtensionBadgeSeen"
   static let blockListBadgeSeen = "blockListBadgeSeen"
+  static let dismissedTips = "dismissedTips"
 }

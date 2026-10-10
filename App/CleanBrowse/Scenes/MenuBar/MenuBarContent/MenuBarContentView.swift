@@ -31,14 +31,17 @@ struct MenuBarContentView: View {
           .padding([.horizontal, .top], 16)
 
         AddDomainView()
+
+        TipsCardView(onAction: handleTipAction)
+          .padding(.horizontal, 16)
+          .padding(.bottom, 12)
       }
 
       Divider()
 
       HStack(alignment: .center) {
         Button {
-          analyticsService.trackEvent(for: .settingsOpened)
-          showSettings = true
+          openSettings()
         } label: {
           Image(systemName: "gearshape")
             .font(.caption)
@@ -51,19 +54,7 @@ struct MenuBarContentView: View {
         }
 
         Button {
-          safariExtensionBadgeSeen = true
-          Task {
-            let isEnabled = await SFSafariExtensionManager.isCleanBrowseExtensionEnabled()
-            analyticsService
-              .trackEvent(
-                for: !safariExtensionBadgeSeen ? .safariExtensionSettingsFirstOpened(
-                  extensionEnabled: isEnabled
-                ): .safariExtensionSettingsOpened(
-                  extensionEnabled: isEnabled
-                )
-              )
-          }
-          SFSafariApplication.showPreferencesForExtension(withIdentifier: SFSafariExtensionManager.cleanBrowseExtensionIdentifier)
+          openSafariExtensionSettings()
         } label: {
           Image(systemName: "puzzlepiece.extension")
             .font(.caption)
@@ -72,12 +63,7 @@ struct MenuBarContentView: View {
         .help("Safari NSFW image blur extension")
 
         Button {
-          analyticsService
-            .trackEvent(
-              for: !blockListBadgeSeen ? .blockListFirstOpened: .blockListOpened
-            )
-          blockListBadgeSeen = true
-          showBlockList = true
+          openBlockList()
         } label: {
           Image(systemName: "list.bullet")
             .font(.caption)
@@ -106,6 +92,42 @@ struct MenuBarContentView: View {
     .frame(width: 340)
     .task {
       isNotificationAuth = await notificationService.authorizationStatus == .authorized
+    }
+  }
+}
+
+// MARK: - Actions
+extension MenuBarContentView {
+  private func openSettings() {
+    analyticsService.trackEvent(for: .settingsOpened)
+    showSettings = true
+  }
+
+  private func openSafariExtensionSettings() {
+    let isFirstOpen = !safariExtensionBadgeSeen
+    safariExtensionBadgeSeen = true
+    Task {
+      let isEnabled = await SFSafariExtensionManager.isCleanBrowseExtensionEnabled()
+      analyticsService.trackEvent(
+        for: isFirstOpen
+          ? .safariExtensionSettingsFirstOpened(extensionEnabled: isEnabled)
+          : .safariExtensionSettingsOpened(extensionEnabled: isEnabled)
+      )
+    }
+    SFSafariApplication.showPreferencesForExtension(withIdentifier: SFSafariExtensionManager.cleanBrowseExtensionIdentifier)
+  }
+
+  private func openBlockList() {
+    analyticsService.trackEvent(for: blockListBadgeSeen ? .blockListOpened : .blockListFirstOpened)
+    blockListBadgeSeen = true
+    showBlockList = true
+  }
+
+  private func handleTipAction(_ tip: TipCardCase) {
+    switch tip {
+    case .safariBlur: openSafariExtensionSettings()
+    case .customBlockList: openBlockList()
+    case .safeSearch: openSettings()
     }
   }
 }

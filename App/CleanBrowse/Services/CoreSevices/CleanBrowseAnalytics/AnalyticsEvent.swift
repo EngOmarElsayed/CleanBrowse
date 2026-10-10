@@ -28,6 +28,11 @@ enum AnalyticsEvent {
     case safariExtensionState(enabled: Bool)
     case updateCheckClicked
     case dnsProxyStateChanged(enabled: Bool)
+
+    case tipShown(TipCardCase, position: Int, count: Int)
+    case tipNextTapped(TipCardCase)
+    case tipActionTapped(TipCardCase)
+    case tipDismissed(TipCardCase)
 }
 
 // MARK: - Name & Properties
@@ -48,6 +53,10 @@ extension AnalyticsEvent {
         case .safariExtensionState: "safari_extension_state"
         case .updateCheckClicked: "update_check_clicked"
         case .dnsProxyStateChanged: "dns_proxy_state_changed"
+        case .tipShown: "tip_shown"
+        case .tipNextTapped: "tip_next_tapped"
+        case .tipActionTapped: "tip_action_tapped"
+        case .tipDismissed: "tip_dismissed"
         }
     }
 
@@ -64,6 +73,10 @@ extension AnalyticsEvent {
             ["extension_enabled": String(extensionEnabled)]
         case .safariExtensionState(let enabled), .dnsProxyStateChanged(let enabled):
             ["enabled": String(enabled)]
+        case let .tipShown(tip, position, count):
+            ["tip": tip.analyticsName, "position": "\(position) of \(count)"]
+        case .tipNextTapped(let tip), .tipActionTapped(let tip), .tipDismissed(let tip):
+            ["tip": tip.analyticsName]
         case .activeUser, .appOpenedForFirstTime, .appTerminatedByUser,
              .settingsOpened, .blockListOpened, .blockListFirstOpened, .updateCheckClicked:
             nil
@@ -87,6 +100,17 @@ private extension SettingsSafeSearch {
         case .youtube: "youtube"
         case .bing: "bing"
         case .duckDuckGo: "duckduckgo"
+        }
+    }
+}
+
+// MARK: - TipCardCase + Analytics
+private extension TipCardCase {
+    var analyticsName: String {
+        switch self {
+        case .safariBlur: "safari_blur"
+        case .customBlockList: "custom_block_list"
+        case .safeSearch: "safe_search"
         }
     }
 }
