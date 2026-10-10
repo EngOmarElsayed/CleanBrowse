@@ -35,6 +35,7 @@ import SystemExtensions
 protocol DNSProfileServiceProtocol {
   @concurrent func writeBlocklist(_ domains: [String]) async
   @concurrent func appendToBlocklist(_ domain: String) async
+  @concurrent func removeFromBlocklist(_ domain: String) async throws
 }
 
 // MARK: - DNSProfileService
@@ -93,7 +94,7 @@ extension DNSProfileService: DNSProfileServiceProtocol {
   /// Removes a single domain from the existing blocklist file.
   ///
   /// - Parameter domain: The domain to remove from the blocklist.
-  @concurrent func removeFromBlocklist(_ domain: String) async {
+  @concurrent func removeFromBlocklist(_ domain: String) async throws {
     guard let blocklistURL = await blocklistURL() else { return }
 
     do {
@@ -116,6 +117,7 @@ extension DNSProfileService: DNSProfileServiceProtocol {
       NSLog("[CleanBrowse] Removed \(domainToRemove) from blocklist")
     } catch {
       NSLog("[CleanBrowse] Failed to remove from blocklist: \(error)")
+      throw error
     }
   }
 

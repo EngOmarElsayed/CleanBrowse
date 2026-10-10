@@ -20,6 +20,8 @@ enum AnalyticsEvent {
     case settingsOpened
     case safeSearchToggled(engine: SettingsSafeSearch, enabled: Bool, success: Bool)
     case customDomainAdded(CustomDomainResult)
+    case blockListOpened
+    case customDomainRemoved(success: Bool)
     case safariExtensionSettingsOpened(extensionEnabled: Bool)
     case safariExtensionState(enabled: Bool)
     case updateCheckClicked
@@ -36,6 +38,8 @@ extension AnalyticsEvent {
         case .settingsOpened: "settings_opened"
         case .safeSearchToggled: "safesearch_toggled"
         case .customDomainAdded: "custom_domain_added"
+        case .blockListOpened: "block_list_opened"
+        case .customDomainRemoved: "custom_domain_removed"
         case .safariExtensionSettingsOpened: "safari_extension_settings_opened"
         case .safariExtensionState: "safari_extension_state"
         case .updateCheckClicked: "update_check_clicked"
@@ -49,12 +53,14 @@ extension AnalyticsEvent {
             ["engine": engine.analyticsName, "enabled": String(enabled), "success": String(success)]
         case .customDomainAdded(let result):
             ["result": result.rawValue]
+        case .customDomainRemoved(let success):
+            ["success": String(success)]
         case .safariExtensionSettingsOpened(let extensionEnabled):
             ["extension_enabled": String(extensionEnabled)]
         case .safariExtensionState(let enabled), .dnsProxyStateChanged(let enabled):
             ["enabled": String(enabled)]
         case .activeUser, .appOpenedForFirstTime, .appTerminatedByUser,
-             .settingsOpened, .updateCheckClicked:
+             .settingsOpened, .blockListOpened, .updateCheckClicked:
             nil
         }
     }

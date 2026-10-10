@@ -5,58 +5,110 @@
 //  Created by Omar Elsayed on 28/02/2026.
 
 import SwiftUI
+import SwiftData
 
 struct BlockedListView: View {
-    let domains: [BlockedDomain]
+  @Query private var blockedDomains: [BlockedDomain]
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 4) {
+      VStack(alignment: .leading, spacing: .zero) {
+        HStack(spacing: 4) {
+          Image(systemName: "lock.shield")
+            .font(.system(size: 12))
+            .foregroundStyle(.black)
+
+          Text("Custom Blocked Domains")
+            .font(.title3)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+
+        Divider()
+          .padding(.horizontal, -16)
+      }
+
+      BlockedDomains(blockedDomains: blockedDomains)
+        .padding(.top, 8)
+    }
+  }
+
+  // MARK: - Private View
+  struct BlockedDomains: View {
+    @Environment(\.modelContext) private var modelContext
+    private let viewModel: BlockedListViewModel = BlockedListViewModel()
+    let blockedDomains: [BlockedDomain]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text("Custom Blocked Sites")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .padding(.top, 8)
-                .padding(.horizontal, 16)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            if domains.isEmpty {
-                Text("No Custom domains added yet")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 16)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 4) {
-                        ForEach(domains) { domain in
-                            HStack(spacing: 8) {
-                                Image(systemName: "xmark.shield.fill")
-                                    .font(.caption)
-                                    .foregroundStyle(.red)
-
-                                Text(domain.domain)
-                                    .font(.system(.caption, design: .monospaced))
-                                    .lineLimit(1)
-
-                                Spacer()
-
-                                if domain.isPreloaded {
-                                    Text("Built-in")
-                                        .font(.caption2)
-                                        .foregroundStyle(.secondary)
-                                        .padding(.horizontal, 6)
-                                        .padding(.vertical, 2)
-                                        .background(.secondary.opacity(0.1), in: Capsule())
-                                }
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 3)
-                        }
-                    }
-                }
-                .frame(maxHeight: 200)
+      if blockedDomains.isEmpty {
+        Text("No Custom domains added yet")
+          .font(.caption)
+          .foregroundStyle(.tertiary)
+          .padding(.vertical, 8)
+          .padding(.horizontal, 16)
+          .frame(maxWidth: .infinity, alignment: .center)
+      } else {
+        ScrollView {
+          LazyVStack(alignment: .leading, spacing: 8) {
+            ForEach(blockedDomains) { domain in
+              BlockedDomainItemView(
+                item: domain,
+                removeAction: {
+                  Task { await viewModel.removeFromList(domain: domain, form: modelContext)}
+                })
             }
+          }
         }
-        .padding(.bottom, 8)
+        .frame(maxHeight: 200)
+      }
     }
+  }
+
+  struct BlockedDomainItemView: View {
+    @State private var showRemoveButton: Bool = false
+    let item: BlockedDomain
+    let removeAction: () -> Void
+
+    var body: some View {
+      HStack(spacing: .zero) {
+        Text(item.domain)
+          .font(.system(size: 10))
+          .fontDesign(.monospaced)
+          .fontWeight(.semibold)
+          .lineLimit(1)
+          .frame(maxWidth: .infinity, alignment: .leading)
+
+
+        Image(systemName: "x.circle.fill")
+          .font(.caption)
+          .foregroundStyle(Color(red: 153/255, green: 0/255, blue: 0))
+          .opacity(showRemoveButton ? 1: 0)
+          .onTapGesture(perform: removeAction)
+      }
+      .onContinuousHover { phase in
+        switch phase {
+          case .active:
+            showRemoveButton = true
+          case .ended:
+            showRemoveButton = false
+        }
+      }
+    }
+  }
+}
+
+import FactoryKit
+
+struct BlockedListViewModel {
+  @Injected(\.dnsProfileService) private var dnsProfileService
+  @Injected(\.analyticsService) private var analyticsService
+
+  func removeFromList(domain item: BlockedDomain, form context: ModelContext) async {
+    do {
+      try await dnsProfileService.removeFromBlocklist(item.domain)
+      context.delete(item)
+      analyticsService.trackEvent(for: .customDomainRemoved(success: true))
+    } catch {
+      analyticsService.trackEvent(for: .customDomainRemoved(success: false))
+    }
+  }
 }

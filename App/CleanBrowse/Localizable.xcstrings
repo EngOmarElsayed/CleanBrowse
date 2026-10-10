@@ -72,40 +72,6 @@
         }
       }
     },
-    "Built-in" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "مضمَّن"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Integriert"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Integrado"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Intégré"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "内置"
-          }
-        }
-      }
-    },
     "Check for updates" : {
       "localizations" : {
         "ar" : {
@@ -208,36 +174,70 @@
         }
       }
     },
-    "Custom Blocked Sites" : {
+    "Custom block list view" : {
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "المواقع المحظورة المخصصة"
+            "state" : "translated",
+            "value" : "عرض قائمة الحظر المخصصة"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Eigene blockierte Websites"
+            "state" : "translated",
+            "value" : "Eigene Sperrliste anzeigen"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Sitios bloqueados personalizados"
+            "state" : "translated",
+            "value" : "Ver la lista de bloqueo personalizada"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "Sites bloqués personnalisés"
+            "state" : "translated",
+            "value" : "Afficher la liste de blocage personnalisée"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "machine_translated",
-            "value" : "自定屏蔽网站"
+            "state" : "translated",
+            "value" : "查看自定屏蔽列表"
+          }
+        }
+      }
+    },
+    "Custom Blocked Domains" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "النطاقات المحظورة المخصصة"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eigene blockierte Domains"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dominios bloqueados personalizados"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Domaines bloqués personnalisés"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定屏蔽域名"
           }
         }
       }
