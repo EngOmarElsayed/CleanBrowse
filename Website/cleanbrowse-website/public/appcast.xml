@@ -17,6 +17,24 @@
     <description>Most recent updates to CleanBrowse</description>
     <language>en</language>
     <item>
+      <title>Version 1.4.0</title>
+      <sparkle:version>6</sparkle:version>
+      <sparkle:shortVersionString>1.4.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.6</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h2>What's new in 1.4.0</h2>
+        <ul>
+          <li>...</li>
+        </ul>
+      ]]></description>
+      <pubDate>Sat, 10 Oct 2026 11:30:23 GMT</pubDate>
+      <enclosure
+        url="https://mwxjmxew0wyerqxi.public.blob.vercel-storage.com/CleanBrowse-1.4.0.dmg"
+        type="application/octet-stream"
+        sparkle:edSignature="MJQyxOywKWwgVOZui9Y7kUD1zy9bLyc2gTcDEduSkQiaG9mIcbmjs67WxmVIHPwY4qVkhGCW/xr+FlG9w7E8DQ=="
+        length="164910717" />
+    </item>
+    <item>
       <title>Version 1.3.2</title>
       <sparkle:version>5</sparkle:version>
       <sparkle:shortVersionString>1.3.2</sparkle:shortVersionString>
