@@ -18,6 +18,8 @@ struct MenuBarContentView: View {
   @State private var showSettings: Bool = false
   @State private var showBlockList: Bool = false
   @State private var isNotificationAuth: Bool = false
+  @AppStorage(.safariExtensionBadgeSeen) private var safariExtensionBadgeSeen: Bool = false
+  @AppStorage(.blockListBadgeSeen) private var blockListBadgeSeen: Bool = false
   @Injected(\.notificationService) private var notificationService
   @Injected(\.analyticsService) private var analyticsService
   @Injected(\.updateService) private var updateService
@@ -49,24 +51,38 @@ struct MenuBarContentView: View {
         }
 
         Button {
+          safariExtensionBadgeSeen = true
           Task {
             let isEnabled = await SFSafariExtensionManager.isCleanBrowseExtensionEnabled()
-            analyticsService.trackEvent(for: .safariExtensionSettingsOpened(extensionEnabled: isEnabled))
+            analyticsService
+              .trackEvent(
+                for: !safariExtensionBadgeSeen ? .safariExtensionSettingsFirstOpened(
+                  extensionEnabled: isEnabled
+                ): .safariExtensionSettingsOpened(
+                  extensionEnabled: isEnabled
+                )
+              )
           }
           SFSafariApplication.showPreferencesForExtension(withIdentifier: SFSafariExtensionManager.cleanBrowseExtensionIdentifier)
         } label: {
           Image(systemName: "puzzlepiece.extension")
             .font(.caption)
         }
+        .newFeatureBadge(isVisible: !safariExtensionBadgeSeen)
         .help("Safari NSFW image blur extension")
 
         Button {
-          analyticsService.trackEvent(for: .blockListOpened)
+          analyticsService
+            .trackEvent(
+              for: !blockListBadgeSeen ? .blockListFirstOpened: .blockListOpened
+            )
+          blockListBadgeSeen = true
           showBlockList = true
         } label: {
           Image(systemName: "list.bullet")
             .font(.caption)
         }
+        .newFeatureBadge(isVisible: !blockListBadgeSeen)
         .help("Custom block list view")
         .popover(isPresented: $showBlockList, arrowEdge: .bottom) {
           BlockedListView()

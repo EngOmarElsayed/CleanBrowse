@@ -21,8 +21,10 @@ enum AnalyticsEvent {
     case safeSearchToggled(engine: SettingsSafeSearch, enabled: Bool, success: Bool)
     case customDomainAdded(CustomDomainResult)
     case blockListOpened
+    case blockListFirstOpened
     case customDomainRemoved(success: Bool)
     case safariExtensionSettingsOpened(extensionEnabled: Bool)
+    case safariExtensionSettingsFirstOpened(extensionEnabled: Bool)
     case safariExtensionState(enabled: Bool)
     case updateCheckClicked
     case dnsProxyStateChanged(enabled: Bool)
@@ -39,8 +41,10 @@ extension AnalyticsEvent {
         case .safeSearchToggled: "safesearch_toggled"
         case .customDomainAdded: "custom_domain_added"
         case .blockListOpened: "block_list_opened"
+        case .blockListFirstOpened: "block_list_first_opened"
         case .customDomainRemoved: "custom_domain_removed"
         case .safariExtensionSettingsOpened: "safari_extension_settings_opened"
+        case .safariExtensionSettingsFirstOpened: "safari_extension_settings_first_opened"
         case .safariExtensionState: "safari_extension_state"
         case .updateCheckClicked: "update_check_clicked"
         case .dnsProxyStateChanged: "dns_proxy_state_changed"
@@ -55,12 +59,13 @@ extension AnalyticsEvent {
             ["result": result.rawValue]
         case .customDomainRemoved(let success):
             ["success": String(success)]
-        case .safariExtensionSettingsOpened(let extensionEnabled):
+        case .safariExtensionSettingsOpened(let extensionEnabled),
+             .safariExtensionSettingsFirstOpened(let extensionEnabled):
             ["extension_enabled": String(extensionEnabled)]
         case .safariExtensionState(let enabled), .dnsProxyStateChanged(let enabled):
             ["enabled": String(enabled)]
         case .activeUser, .appOpenedForFirstTime, .appTerminatedByUser,
-             .settingsOpened, .blockListOpened, .updateCheckClicked:
+             .settingsOpened, .blockListOpened, .blockListFirstOpened, .updateCheckClicked:
             nil
         }
     }
